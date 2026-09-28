@@ -1,3 +1,6 @@
+import { site } from '../content';
+import Button from './ui/Button';
+
 const About = ({ title, description, buttonText, imageUrl }) => {
   return (
     <div className="grid grid-cols-12 sm:grid-cols-1">
@@ -26,24 +29,13 @@ const About = ({ title, description, buttonText, imageUrl }) => {
           </p>
         )}
 
-        <button
-          className="relative bg-white text-black px-7 py-5 sm:px-4 sm:py-2 rounded-2xl border-2 border-black overflow-hidden transition-all duration-300 group"
-          onClick={() =>
-            window.open(
-              "https://linktr.ee/juggujarat",
-              "_blank",
-              "noopener,noreferrer"
-            )
-          }
+        <Button
+          href={site.joinUrl}
+          shape="px-7 py-5 sm:px-4 sm:py-2 rounded-2xl border-2"
+          labelClassName="sm:text-[12px]"
         >
-          {/* Expanding background effect */}
-          <span className="absolute inset-0 bg-black scale-y-0 origin-bottom transition-transform duration-300 ease-in-out group-hover:scale-y-100"></span>
-
-          {/* Button text */}
-          <span className="relative z-10 text-black group-hover:text-white transition-colors duration-300 sm:text-[12px]">
-            {buttonText}
-          </span>
-        </button>
+          {buttonText}
+        </Button>
       </div>
 
       {/* Grid Item 2 */}

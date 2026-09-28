@@ -23,9 +23,13 @@
 // Sessions point at a conference via `conference: <slug>` (sessions.js);
 // speakers are derived from those sessions.
 
+// Slug of the legacy flagship page (also served at /community-day-for-java-2025).
+// The single place this string lives in code; routes and pages import it.
+export const CDJ_2025_SLUG = 'community-day-for-java-2025';
+
 export const conferences = [
   {
-    slug: 'community-day-for-java-2025',
+    slug: CDJ_2025_SLUG,
     name: 'Community Day for Java, 2025',
     tagline: 'Join the Biggest Java Community Event in Gujarat!',
     description: [

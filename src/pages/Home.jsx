@@ -1,21 +1,13 @@
-import { useEffect } from 'react';
-import AOS from 'aos';
 import 'aos/dist/aos.css'; 
-import Header from "./Header";
+import { site } from "../content";
 import { Typewriter } from "react-simple-typewriter";
 
 const Home = () => {
 
-  useEffect(() => {
-    AOS.init({
-        duration: 1000, 
-    });
-}, []);
 
   return (
     <div className="bg-[#E1EEFB] ">
       <div className="container mx-auto xl:max-w-screen-xl  sm:max-w-[345px] ">
-        <Header />
         <div className="pt-12 pb-11">
           <div className="grid grid-cols-1 justify-center items-center sm:grid-cols-1">
             <div className="flex items-center justify-center space-x-4 mt-4">
@@ -50,7 +42,7 @@ const Home = () => {
 
               {/* Text */}
               <h6 className="text-lg font-semibold text-gray-700 sm:text-[12px]">
-                500 Active Members
+                {site.stats.members} Active Members
               </h6>
             </div>
           </div>
@@ -60,7 +52,7 @@ const Home = () => {
               sm:text-[24px] "
             >
               <Typewriter
-          words={['Connect , Code , Learn']}
+          words={[site.tagline]}
           loop={0} // Infinite loop
           cursor
           cursorStyle="|"

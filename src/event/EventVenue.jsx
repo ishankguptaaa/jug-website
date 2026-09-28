@@ -1,17 +1,9 @@
-import { useEffect } from 'react';
-import BookYourSlotButton from '../Components/BookYourSlotButton'
-import AOS from 'aos';
+import BookYourSlotButton from '../components/BookYourSlotButton'
 import 'aos/dist/aos.css'; 
 
 
 const EventVenue = () => {
 
- useEffect(() => {
-        AOS.init({
-            duration: 1000, 
-            // once: true, 
-        });
-    }, []);
 
 
     return (

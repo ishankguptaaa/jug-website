@@ -1,20 +1,10 @@
-import { useEffect } from 'react';
-import Header from './Header'
-import BookYourSlotButton from '../Components/BookYourSlotButton'
-import AOS from 'aos';
+import BookYourSlotButton from '../components/BookYourSlotButton'
 
 const Event = () => {
 
-     useEffect(() => {
-              AOS.init({
-                  duration: 1000, 
-                  // once: true, 
-              });
-          }, []);
 
     return (
         <div className="bg-[#F6EAFF] relative">
-              <Header />
               {/* <div className="absolute bottom-0 left-0 top-[368px] sm:hidden">
                 <img src='/Home/Venkat.png' alt='' className="" data-aos="zoom-in-up" />
             </div> */}

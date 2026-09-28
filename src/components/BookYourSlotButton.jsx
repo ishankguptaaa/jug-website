@@ -20,7 +20,7 @@ function BookYourSlotButton() {
                     Book Your Slots
                 </span>
             </button>
-            <h1 className='font-raleway font-medium text-[14px] leading-[100%] tracking-[0%] mt-3 text-center text-black' >Limited Seats Available </h1>
+            <p className='font-raleway font-medium text-[14px] leading-[100%] tracking-[0%] mt-3 text-center text-black' >Limited Seats Available </p>
         </>
     )
 }

@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import BookYourSlotButton from '../Components/BookYourSlotButton';
-import { getSessionsForConference, isSpeakerSession, getSpeakerBySlug, formatTimeRange12 } from '../content';
-import AOS from 'aos';
+import BookYourSlotButton from '../components/BookYourSlotButton';
+import { getSessionsForConference, isSpeakerSession, getSpeakerBySlug, formatTimeRange12, CDJ_2025_SLUG } from '../content';
 import 'aos/dist/aos.css';
 
-const CONFERENCE_SLUG = 'community-day-for-java-2025';
+const CONFERENCE_SLUG = CDJ_2025_SLUG;
 
 // Build the schedule rows once: talks render as "Session N: <speakers>" with the
 // talk title underneath; other agenda slots render their own title/description.
@@ -23,7 +22,6 @@ const Schedule = () => {
     const [visibleCount, setVisibleCount] = useState(0);
 
     useEffect(() => {
-        AOS.init({ duration: 1000 });
 
         const interval = setInterval(() => {
             setVisibleCount((prevCount) => {
@@ -45,9 +43,9 @@ const Schedule = () => {
                 <div className='pt-[128px] pb-[155px] sm:pt-[50px] sm:pb-[50px]'>
                     <div className="flex flex-col items-center justify-center">
                         <div className='mt-[20px] sm:text-center'  data-aos="fade-down">
-                            <h1 className="font-raleway font-medium text-[56px] leading-[62px] sm:text-[28px] sm:leading-[36px]">
+                            <h2 className="font-raleway font-medium text-[56px] leading-[62px] sm:text-[28px] sm:leading-[36px]">
                                 Explore the Event Schedule!
-                            </h1>
+                            </h2>
                         </div>
                         <div className="mt-[36px] px-[10px]">
                             {scheduleData.slice(0, visibleCount).map((event, index) => (
@@ -57,14 +55,14 @@ const Schedule = () => {
                                     data-aos="fade-down"
                                 >
                                     <div className="w-[200px] text-left sm:text-center">
-                                        <h1 className="font-raleway font-medium text-[24px] leading-[62px] sm:text-[18px] sm:leading-[48px]">
+                                        <p className="font-raleway font-medium text-[24px] leading-[62px] sm:text-[18px] sm:leading-[48px]">
                                             {event.time}
-                                        </h1>
+                                        </p>
                                     </div>
                                     <div className="flex-1 sm:text-center">
-                                        <h1 className="font-raleway font-bold text-[20px] leading-[36px] sm:text-[18px] sm:leading-[32px] text-black">
+                                        <h3 className="font-raleway font-bold text-[20px] leading-[36px] sm:text-[18px] sm:leading-[32px] text-black">
                                             {event.title}
-                                        </h1>
+                                        </h3>
                                         <p className="font-raleway font-normal text-[16px] leading-[24px] sm:text-[16px] sm:leading-[24px] text-black">
                                             {event.description}
                                         </p>

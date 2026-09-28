@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-import AOS from 'aos';
 import 'aos/dist/aos.css'; 
 import { site } from '../content';
 
@@ -7,19 +5,13 @@ const [firstVideo, secondVideo] = site.featuredVideos;
 
 const Sessions = () => {
 
-    useEffect(() => {
-        AOS.init({
-            duration: 1000, 
-            // once: true, 
-        });
-    }, []);
 
     return (
         <div className="bg-[#EDD7FF] ">
             <div className="container mx-auto 2xl:max-w-screen-2xl  overflow-hidden ">
                 <div className='pt-[128px] pb-[100px] sm:pt-[50px] sm:pb-[50px]'>
                     <div className="flex justify-between items-center" data-aos="fade-up-right">
-                        <h1 className="font-raleway font-medium text-[56px] leading-[65px] sm:text-[24px] sm:leading-[34px] ">Our Sessions</h1>
+                        <h2 className="font-raleway font-medium text-[56px] leading-[65px] sm:text-[24px] sm:leading-[34px] ">Our Sessions</h2>
                         <button className="bg-[#FFFFFF] text-black px-[27px] py-[19px] sm:px-[12px] sm:py-[8px] rounded-2xl transition border border-black"
                             onClick={() => window.location.href = site.socials.youtube} >
                             View all

@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-import AOS from 'aos';
 import 'aos/dist/aos.css'; 
 import { getFeaturedSpeakers, getSpeakerRolePrefix } from '../content';
 
@@ -7,19 +5,13 @@ const experts = getFeaturedSpeakers();
 
 const Experts = () => {
 
-  useEffect(() => {
-    AOS.init({
-        duration: 1000, 
-        // once: true, 
-    });
-}, []);
 
   return (
     <div className="bg-[#FFFCEF] ">
       <div className="container mx-auto 2xl:max-w-screen-2xl   ">
         <div className='pt-[128px] pb-[100px] sm:pt-[50px] sm:pb-[50px]'>
           <div className="flex justify-between items-center sm:flex-col">
-          <h1 className="font-raleway font-medium text-[56px] leading-[65px] sm:text-[24px] sm:leading-[32px]">
+          <h2 className="font-raleway font-medium text-[56px] leading-[65px] sm:text-[24px] sm:leading-[32px]">
             Here Come the 
             <span className="relative inline-block ml-4 sm:ml-2">
               Experts!
@@ -27,7 +19,7 @@ const Experts = () => {
                   alt="Squiggly underline" 
                   className="absolute left-1/2 -translate-x-1/2 w-[100%] -mt-2 sm:w-[60px] sm:hidden" />
             </span>
-          </h1>
+          </h2>
             {/* <button className="bg-[#FFFFFF] text-black px-7 py-[19px] sm:px-0 sm:py-[6px] rounded-2xl transition border border-black sm:text-[12px]">
               Register as Speaker
             </button> */}

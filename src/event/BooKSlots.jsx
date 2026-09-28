@@ -1,4 +1,3 @@
-import Footer from './Footer';
 import { GoArrowUpRight } from "react-icons/go";
 
 
@@ -14,9 +13,9 @@ function BooKSlots() {
                 {/* Left Section (8 Columns) */}
                 <div className="  col-span-9 sm:grid-cols-1 sm:col-span-12">
                   {/* <div className=' border border-black'> */}
-                  <h1 className="font-raleway font-bold text-[85px] leading-[99px] sm:text-[26px] sm:leading-[40px] tracking-[1%]  mr-[250px] sm:mr-0">
+                  <h2 className="font-raleway font-bold text-[85px] leading-[99px] sm:text-[26px] sm:leading-[40px] tracking-[1%]  mr-[250px] sm:mr-0">
                     Book Your Ticket Today!
-                  </h1>
+                  </h2>
                   {/* </div> */}
                   <div className="  mt-4 ">
                     <p className="font-raleway font-medium text-[24px] leading-[28px] sm:text-[16px] sm:leading-[24px] tracking-[1%]">
@@ -47,8 +46,6 @@ function BooKSlots() {
             </div>
           </div>
         </div>
-        <Footer></Footer>
-        <h1 className='text-center mt-[72px] sm:text-[8px] sm:mt-4'>© Copyright 2025 All Rights Reserved</h1>
       </div>
     </div>
   )
