@@ -1,19 +1,11 @@
-import { useEffect } from 'react';
-import { getSpeakersForConference, getSpeakerRolePrefix } from '../content';
-import AOS from 'aos';
+import { getSpeakersForConference, getSpeakerRolePrefix, CDJ_2025_SLUG } from '../content';
 import 'aos/dist/aos.css'; 
 
-const CONFERENCE_SLUG = 'community-day-for-java-2025';
+const CONFERENCE_SLUG = CDJ_2025_SLUG;
 const speakers = getSpeakersForConference(CONFERENCE_SLUG);
 
 const Speaker = () => {
 
- useEffect(() => {
-        AOS.init({
-            duration: 1000, 
-            // once: true, 
-        });
-    }, []);
 
 
   return (
@@ -21,7 +13,7 @@ const Speaker = () => {
     <div className="container mx-auto 2xl:max-w-screen-2xl  overflow-hidden ">
       <div className='pt-[128px] pb-[100px] pl-[20px] pr-[20px] sm:pt-[50px] sm:pb-[50px]'  data-aos="zoom-in-up">
         <div className="flex justify-between items-center sm:flex-col sm:text-center">
-        <h1 className="font-raleway font-medium text-[56px] leading-[65px] sm:text-[20px] sm:leading-[32px]">
+        <h2 className="font-raleway font-medium text-[56px] leading-[65px] sm:text-[20px] sm:leading-[32px]">
         Java 
           <span className="relative inline-block ml-4 sm:ml-2">
           Innovators
@@ -32,7 +24,7 @@ const Speaker = () => {
           <span className='ml-2'>
           Taking the Stage! 
           </span>
-        </h1>
+        </h2>
         <button
                 className="relative bg-black text-white px-[63px] py-[20px] sm:px-[16px] sm:py-[8px] rounded-2xl border-2 border-black overflow-hidden transition-all duration-300 group
                 mt-7 sm:mt-2"

@@ -3,7 +3,14 @@ function FooterItem() {
     <div className='bg-[#FFFCEF]'>
 <div className='container mx-auto xl:max-w-screen-xl flex justify-center'>
     <div className="pt-[100px]  sm:pt-3 flex justify-center">
-      <img src="/Img/FooterBottomImg.png" alt="not found" className="" />
+      <img
+        src="/Img/FooterBottomImg.png"
+        alt=""
+        width="1286"
+        height="378"
+        loading="lazy"
+        decoding="async"
+      />
     </div>
     </div>
     </div>

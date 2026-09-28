@@ -1,4 +1,4 @@
-import About from "../Components/About";
+import About from "../components/About";
 
 const AboutCommunity = () => {
   return (

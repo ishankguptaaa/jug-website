@@ -9,11 +9,15 @@ export const site = {
     'Gujarat Java User Group (JUG) is a thriving community of Java developers, tech enthusiasts, and industry professionals. Join us to learn, network, and grow!',
   url: 'https://www.gujaratjug.org',
   logo: '/Home/community-logo.svg',
+  // Default social-share image (raster; SVG isn't supported by most OG consumers).
+  ogImage: '/Img/AboutCommunity.png',
   joinUrl: 'https://linktr.ee/juggujarat',
   volunteerFormUrl: 'https://forms.gle/TQrY7pC7k7heAw87A',
   lumaCalendarUrl: 'https://luma.com/juggujarat',
   lumaIcsUrl: 'https://api.lu.ma/ics/get?entity=calendar&id=cal-9GeA8E6xpITOUpi',
   timeZone: 'Asia/Kolkata',
+  // Shown in the footer until the client computes the current IST year.
+  copyrightStartYear: 2025,
   stats: {
     members: '500',
   },

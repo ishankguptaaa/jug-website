@@ -28,3 +28,11 @@
     font-style: normal;
   }
   
+/* Reduced motion: show AOS elements in their final state even before/without AOS.init. */
+@media (prefers-reduced-motion: reduce) {
+  [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

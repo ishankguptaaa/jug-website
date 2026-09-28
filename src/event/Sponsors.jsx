@@ -1,6 +1,6 @@
-import { getSponsorsForConference, getVenuesForConference } from '../content';
+import { getSponsorsForConference, getVenuesForConference, CDJ_2025_SLUG } from '../content';
 
-const CONFERENCE_SLUG = 'community-day-for-java-2025';
+const CONFERENCE_SLUG = CDJ_2025_SLUG;
 const platinumSponsors = getSponsorsForConference(CONFERENCE_SLUG, 'platinum');
 const goldSponsors = getSponsorsForConference(CONFERENCE_SLUG, 'gold');
 const venueSponsors = getVenuesForConference(CONFERENCE_SLUG);
@@ -18,9 +18,9 @@ const Sponsors = () => {
       <div className="container mx-auto xl:max-w-screen-xl  ">
         <div className='pt-[128px] pb-[155px] sm:pt-[50px] sm:pb-[50px]'>
           <div className='mt-[20px] text-center'>
-            <h1 className="font-raleway font-medium text-[56px] leading-[62px] sm:text-[28px] sm:leading-[32px] tracking-[0%]">
+            <h2 className="font-raleway font-medium text-[56px] leading-[62px] sm:text-[28px] sm:leading-[32px] tracking-[0%]">
               Our Esteemed Sponsors
-            </h1>
+            </h2>
 
             <div className="flex space-x-[72px] border  bg-gradient-to-r from-[#FAFAFA] via-[#C5C5C5] to-[#FAFAFA] p-2 mt-5 sm:hidden sm:mt-12 overflow-hidden">
               <h3 className="font-raleway font-bold text-[16px] leading-[16px] tracking-[0.5em] uppercase">

@@ -1,17 +1,9 @@
-import { useEffect } from 'react';
-import AOS from 'aos';
 import 'aos/dist/aos.css'; 
-import BookYourSlotButton from '../Components/BookYourSlotButton'
+import BookYourSlotButton from '../components/BookYourSlotButton'
 
 const Goodies = () => {
 
   
-   useEffect(() => {
-          AOS.init({
-              duration: 1000, 
-              // once: true, 
-          });
-      }, []);
 
 
   return (
@@ -19,9 +11,9 @@ const Goodies = () => {
       <div className="container mx-auto xl:max-w-screen-xl  ">
         <div className='pt-[128px] pb-[155px] sm:pt-[50px] sm:pb-[50px]'>
           <div className='mt-[20px] text-center'>
-            <h1 className="font-raleway font-medium text-[56px] leading-[62px] sm:text-[32px] sm:leading-[48px] tracking-[0%]">
+            <h2 className="font-raleway font-medium text-[56px] leading-[62px] sm:text-[32px] sm:leading-[48px] tracking-[0%]">
               More Than Just Talks
-            </h1>
+            </h2>
           </div>
           <div className="grid grid-cols-12 justify-center mt-11 sm:mt-6">
             <div className="col-span-12 flex flex-wrap justify-center gap-x-14 text-center ">
