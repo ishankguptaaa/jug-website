@@ -1,5 +1,3 @@
-import React from 'react'
-import FooterItem from '../Components/FooterItem'
 import { Link as ScrollLink } from "react-scroll";
 
 function Footer() {

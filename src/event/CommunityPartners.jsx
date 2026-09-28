@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css'; 
 import BookYourSlotButton from '../Components/BookYourSlotButton'
-import partners from "../data/communityPartners"
+import { getPartnersForConference } from '../content';
+
+const partners = getPartnersForConference('community-day-for-java-2025', 'community');
 
 const CommunityPartners = () => {
 
@@ -26,9 +28,9 @@ const CommunityPartners = () => {
           </div>
           <div className="grid grid-cols-12 justify-center mt-11 sm:mt-6">
             <div className="col-span-12 flex flex-wrap justify-center gap-x-14 text-center ">
-              {partners.map((partner, index) => (
-                <div key={partner.id} className="flex flex-col items-center justify-center max-w-xs sm:mt-5 md:mt-5 h-[162.79px] w-[204.08px] bg-[#ffffff] rounded-[19.06px]">
-                  <img src={partner.image} alt={partner.name} data-aos="zoom-in-up" className='cursor-pointer' onClick={() => window.open(partner.link, "noopener", "noreferrer")}/>
+              {partners.map((partner) => (
+                <div key={partner.slug} className="flex flex-col items-center justify-center max-w-xs sm:mt-5 md:mt-5 h-[162.79px] w-[204.08px] bg-[#ffffff] rounded-[19.06px]">
+                  <img src={partner.logo} alt={partner.name} data-aos="zoom-in-up" className='cursor-pointer' onClick={() => window.open(partner.website, "noopener", "noreferrer")}/>
                   {/* <p className='font-raleway font-medium mt-5 sm:mb-10 text-[20px] leading-[30px] tracking-[0%] text-black'>
                     {partner.name}
                   </p> */}

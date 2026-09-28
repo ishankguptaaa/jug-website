@@ -1,6 +1,9 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css'; 
+import { site } from '../content';
+
+const [firstVideo, secondVideo] = site.featuredVideos;
 
 const Sessions = () => {
 
@@ -18,7 +21,7 @@ const Sessions = () => {
                     <div className="flex justify-between items-center" data-aos="fade-up-right">
                         <h1 className="font-raleway font-medium text-[56px] leading-[65px] sm:text-[24px] sm:leading-[34px] ">Our Sessions</h1>
                         <button className="bg-[#FFFFFF] text-black px-[27px] py-[19px] sm:px-[12px] sm:py-[8px] rounded-2xl transition border border-black"
-                            onClick={() => window.location.href = 'https://www.youtube.com/@juggujarat'} >
+                            onClick={() => window.location.href = site.socials.youtube} >
                             View all
                         </button>
                     </div>
@@ -26,7 +29,7 @@ const Sessions = () => {
                         <div className=" col-span-6   " data-aos="fade-right">
                             <div className="iframe-container  rounded-lg ">
                                 <iframe
-                                    src="https://www.youtube.com/embed/65jLZYSIB3A?si=ePFhouw1u49R6grn"
+                                    src={firstVideo.embedUrl}
                                     title="YouTube video player"
                                     frameBorder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -38,7 +41,7 @@ const Sessions = () => {
                         <div className=" col-span-6 " data-aos="fade-left">
                             <div className="iframe-container  rounded-lg">
                                 <iframe
-                                    src='https://www.youtube.com/embed/5z53EUXWjtU?si=9BJdbWhAxrAVxi8s'
+                                    src={secondVideo.embedUrl}
                                     title="YouTube video player"
                                     frameBorder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

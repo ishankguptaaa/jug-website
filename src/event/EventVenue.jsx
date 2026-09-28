@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import About from '../Components/About'
+import { useEffect } from 'react';
 import BookYourSlotButton from '../Components/BookYourSlotButton'
 import AOS from 'aos';
 import 'aos/dist/aos.css'; 
@@ -52,7 +51,7 @@ const EventVenue = () => {
                             className="col-span-6 sm:grid-cols-1 sm:px-0 px-[100px] sm:mt-4 sm:order-1"
                             data-aos="fade-left" 
                         >
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3672.9108100708986!2d72.485711!3d22.990307!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e9aee6c89a621%3A0x872df2d55fbb0008!2sLJ%20University!5e0!3m2!1sen!2sin!4v1744317485542!5m2!1sen!2sin" className='border border-white border-[10px] h-[650px] w-full sm:h-[400px] sm:w-full sm:border-[5px]' allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3672.9108100708986!2d72.485711!3d22.990307!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e9aee6c89a621%3A0x872df2d55fbb0008!2sLJ%20University!5e0!3m2!1sen!2sin!4v1744317485542!5m2!1sen!2sin" className='border border-white border-[10px] h-[650px] w-full sm:h-[400px] sm:w-full sm:border-[5px]' allowfullscreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                         
                     </div>

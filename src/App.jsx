@@ -1,14 +1,9 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Header from './pages/Header';
 import Home from './pages/Home';
 import AboutCommunity from './pages/AboutCommunity';
 import Experts from './pages/Experts';
 import Sessions from './pages/Sessions';
-import BecomeSpeaker from './pages/BecomeSpeaker';
 import Volunteer from './pages/Volunteer';
 import { JoinJug } from './pages/JoinJug';
 import FooterItem from './Components/FooterItem';
@@ -17,7 +12,6 @@ import AboutEvent from './event/AboutEvent';
 import Schedule from './event/Schedule';
 import Goodies from './event/Goodies';
 import Sponsors from './event/Sponsors';
-import Team from './event/Team';
 import EventVolunteer from './event/EventVolunteer';
 import BooKSlots from './event/BooKSlots';
 import Reviews from './pages/Reviews';
@@ -34,8 +28,6 @@ import CommunityPartners from './event/CommunityPartners';
 
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
       <HelmetProvider>
@@ -93,7 +85,7 @@ function App() {
           <Route path="/community-day-for-java-2025" element={
             <>
             <Helmet>
-                  <title>Community Day for Java, 2025 - Ahmedabad - Gujarat's Biggest Java Celebration!</title>
+                  <title>Community Day for Java, 2025 - Ahmedabad - Gujarat&apos;s Biggest Java Celebration!</title>
                   <meta
                     name="description"
                     content="Join 300+ Java developers, architects, and tech enthusiasts at Gujarat’s biggest Java event! Expert talks, networking, swags, and more!"

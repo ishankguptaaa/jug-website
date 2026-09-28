@@ -1,4 +1,3 @@
-import React from 'react'
 import team from '../data/eventTeamData';
 
 const Team = () => {
