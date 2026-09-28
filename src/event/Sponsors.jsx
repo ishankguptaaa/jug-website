@@ -1,4 +1,16 @@
-import React from 'react'
+import { getSponsorsForConference, getVenuesForConference } from '../content';
+
+const CONFERENCE_SLUG = 'community-day-for-java-2025';
+const platinumSponsors = getSponsorsForConference(CONFERENCE_SLUG, 'platinum');
+const goldSponsors = getSponsorsForConference(CONFERENCE_SLUG, 'gold');
+const venueSponsors = getVenuesForConference(CONFERENCE_SLUG);
+const communitySupporters = getSponsorsForConference(CONFERENCE_SLUG, 'community-supporter');
+
+// Per-supporter presentation (kept from the original hand-written markup).
+const supporterStyles = {
+  'rajesh-c': { img: 'mb-5 sm:mb-3 rounded-xl h-[60%] sm:border border-black' },
+  'hemal-trivedi': { img: 'mb-6 sm:mb-3 rounded-2xl sm:border-[1.5px] border-[2px] border-black h-[60%]' },
+};
 
 const Sponsors = () => {
   return (
@@ -38,23 +50,18 @@ const Sponsors = () => {
             </div>
 
 
-            <div class="flex justify-center items-center sm:mt-[25px] mt-[24px] mb-11 sm:mb-4 ">
-              <div class="grid grid-cols-2 sm:grid-cols-2 sm:gap-y-4 gap-x-8 sm:gap-x-3   rounded-lg md:grid-cols-3 
+            <div className="flex justify-center items-center sm:mt-[25px] mt-[24px] mb-11 sm:mb-4 ">
+              <div className="grid grid-cols-2 sm:grid-cols-2 sm:gap-y-4 gap-x-8 sm:gap-x-3   rounded-lg md:grid-cols-3 
                       place-items-center text-center">
 
-                <a href="https://codelabtechnologies.com/" target="_blank" rel="noopener noreferrer">
-                  <div class="flex h-[112px] w-[285px] sm:w-[154px] sm:h-[76px] items-center justify-center rounded-3xl 
+                {platinumSponsors.map((sponsor) => (
+                <a key={sponsor.slug} href={sponsor.website} target="_blank" rel="noopener noreferrer">
+                  <div className="flex h-[112px] w-[285px] sm:w-[154px] sm:h-[76px] items-center justify-center rounded-3xl 
                       bg-[#FFFFFF] text-gray-400 sm:px-4 cursor-pointer">
-                    <img src='/Sponsors/Codelab.webp' alt="Codelab" className='' />
+                    <img src={sponsor.logo} alt={sponsor.logoAlt ?? sponsor.name} className='' />
                   </div>
                 </a>
-
-                <a href="https://rezoomex.com/" target="_blank" rel="noopener noreferrer">
-                  <div class="flex h-[112px] w-[285px] sm:w-[154px] sm:h-[76px] items-center justify-center rounded-3xl 
-                      bg-[#FFFFFF] text-gray-400 sm:px-4 cursor-pointer">
-                    <img src='/Sponsors/rezoomex.svg' alt="Rezoomx" className='' />
-                  </div>
-                </a>
+                ))}
 
               </div>
             </div>
@@ -99,25 +106,19 @@ const Sponsors = () => {
             </div>
 
 
-            <div class="flex justify-center items-center sm:mt-[25px] mt-[24px] mb-11 sm:mb-4  ">
-              <div class="grid grid-cols-2 sm:grid-cols-2 gap-x-8 sm:gap-y-4 sm:gap-x-4 rounded-lg md:grid-cols-3 
+            <div className="flex justify-center items-center sm:mt-[25px] mt-[24px] mb-11 sm:mb-4  ">
+              <div className="grid grid-cols-2 sm:grid-cols-2 gap-x-8 sm:gap-y-4 sm:gap-x-4 rounded-lg md:grid-cols-3 
       pl-3 sm:pl-0 place-items-center">
-         <a href="https://www.staunchsys.com/" target="_blank" rel="noopener noreferrer">
-                <div class="flex h-[112px] w-[285px] sm:w-[148px] sm:h-[84px] items-center justify-center rounded-3xl 
+                {goldSponsors.map((sponsor) => (
+                <a key={sponsor.slug} href={sponsor.website} target="_blank" rel="noopener noreferrer">
+                <div className="flex h-[112px] w-[285px] sm:w-[148px] sm:h-[84px] items-center justify-center rounded-3xl 
         bg-[#FFFFFF] text-gray-400 px-4 sm:px-2">
-                  <img src='/Sponsors/Staunchsys.png' alt="Staunchsys" />
+                  <img src={sponsor.logo} alt={sponsor.logoAlt ?? sponsor.name} />
                 </div>
                 </a>
-                
+                ))}
 
-                <a href="https://www.dataorb.ai/" target="_blank" rel="noopener noreferrer">
-                <div class="flex h-[112px] w-[285px] sm:w-[148px] sm:h-[84px] items-center justify-center rounded-3xl 
-        bg-[#FFFFFF] text-gray-400 px-4 sm:px-2">
-                  <img src='/Sponsors/dataorb.svg' alt="Dataorb" />
-                </div>
-                </a>
-
-                {/* <div class="flex h-[112px] w-[285px] sm:w-[148px] sm:h-[84px] items-center justify-center rounded-3xl 
+                {/* <div className="flex h-[112px] w-[285px] sm:w-[148px] sm:h-[84px] items-center justify-center rounded-3xl 
         bg-[#FFFFFF] text-gray-400 sm:col-span-2">
                   Coming Soon
                 </div> */}
@@ -133,15 +134,17 @@ const Sponsors = () => {
             </div>
 
 
-            <div class="flex sm:mt-[25px] mt-[24px] mb-11 sm:mb-4 pl-3 sm:pl-0 justify-center">
+            <div className="flex sm:mt-[25px] mt-[24px] mb-11 sm:mb-4 pl-3 sm:pl-0 justify-center">
 
-              <div class="flex h-[112px] items-center justify-center rounded-3xl bg-[#FFFFFF] text-gray-400 sm:w-[148px] sm:h-[84px]  w-[285px]">
-                <a href="https://ljku.edu.in/" target="_blank" rel="noopener noreferrer">
-                  <div class="flex h-[112px] w-[285px] sm:w-[148px] sm:h-[84px] items-center justify-center rounded-3xl bg-[#FFFFFF] text-gray-400 px-4 sm:px-2">
-                  <img src='/Img/LJ_Logo.svg' alt='LJ Logo' />
+              {venueSponsors.map((venue) => (
+              <div key={venue.slug} className="flex h-[112px] items-center justify-center rounded-3xl bg-[#FFFFFF] text-gray-400 sm:w-[148px] sm:h-[84px]  w-[285px]">
+                <a href={venue.website} target="_blank" rel="noopener noreferrer">
+                  <div className="flex h-[112px] w-[285px] sm:w-[148px] sm:h-[84px] items-center justify-center rounded-3xl bg-[#FFFFFF] text-gray-400 px-4 sm:px-2">
+                  <img src={venue.logo} alt={venue.logoAlt ?? venue.name} />
                   </div>
                 </a>
               </div>
+              ))}
 
             </div>
 
@@ -167,36 +170,32 @@ const Sponsors = () => {
             </div>
 
 
-            <div class="sm:flex-row flex justify-center sm:mt-[25px] mt-[24px] mb-11 sm:mb-4 pl-3 sm:pl-0 gap-7">
+            <div className="sm:flex-row flex justify-center sm:mt-[25px] mt-[24px] mb-11 sm:mb-4 pl-3 sm:pl-0 gap-7">
 
 
-              <div class="flex-row -h-[112px]  w-[285px] sm:w-[148px] sm:-h-[84px] items-center justify-items-center rounded-xl text-black">
-                <img src='/Sponsors/RajeshC.svg' alt='Community' className='mb-5 sm:mb-3 rounded-xl h-[60%] sm:border border-black' onClick={() => window.open("https://www.linkedin.com/in/rchi/", "noopener", "noreferrer")} />
-                <p className='text-xl sm:text-sm'><strong>RAJESH C</strong></p>
-                <p className='text-lg sm:text-xs text-gray-500'>Java Full Stack Developer, <br /> <strong>Bengaluru</strong></p>
+              {communitySupporters.map((supporter) => (
+              <div key={supporter.slug} className="flex-row -h-[112px]  w-[285px] sm:w-[148px] sm:-h-[84px] items-center justify-items-center rounded-xl text-black">
+                <img src={supporter.logo} alt={supporter.logoAlt ?? supporter.name} className={supporterStyles[supporter.slug]?.img ?? supporterStyles['rajesh-c'].img} onClick={() => window.open(supporter.website, "noopener", "noreferrer")} />
+                <p className='text-xl sm:text-sm'><strong>{supporter.name.toUpperCase()}</strong></p>
+                <p className='text-lg sm:text-xs text-gray-500'>{`${supporter.designation},`} <br /> <strong>{supporter.company ?? supporter.location}</strong></p>
               </div>
-
-              <div class="flex-row -h-[112px]  w-[285px] sm:w-[148px] sm:-h-[84px] items-center justify-items-center rounded-xl text-black">
-                <img src='/Sponsors/Hemal.png' alt='Community' className='mb-6 sm:mb-3 rounded-2xl sm:border-[1.5px] border-[2px] border-black h-[60%]' onClick={() => window.open("https://www.linkedin.com/in/hemalt/", "noopener", "noreferrer")} />
-                <p className='text-xl sm:text-sm'><strong>HEMAL TRIVEDI</strong></p>
-                <p className='text-lg sm:text-xs text-gray-500'>India Director, <br /><strong>SharpQuest</strong></p>
-              </div>
+              ))}
 
 
 
-               {/* <div class="flex h-[112px] items-center justify-center sm:w-[148px] sm:h-[84px] rounded-3xl bg-[#FFFFFF] text-gray-400   w-[285px]">
+               {/* <div className="flex h-[112px] items-center justify-center sm:w-[148px] sm:h-[84px] rounded-3xl bg-[#FFFFFF] text-gray-400   w-[285px]">
                 Coming Soon
               </div>
 
 
 
-              <div class="flex h-[112px] items-center justify-center rounded-3xl bg-[#FFFFFF] text-gray-400 sm:w-[148px] sm:h-[84px]   w-[285px]">
+              <div className="flex h-[112px] items-center justify-center rounded-3xl bg-[#FFFFFF] text-gray-400 sm:w-[148px] sm:h-[84px]   w-[285px]">
                 Coming Soon
               </div>
 
 
 
-              <div class="flex h-[112px] items-center justify-center rounded-3xl bg-[#FFFFFF] text-gray-400 sm:w-[148px] sm:h-[84px]  w-[285px]">
+              <div className="flex h-[112px] items-center justify-center rounded-3xl bg-[#FFFFFF] text-gray-400 sm:w-[148px] sm:h-[84px]  w-[285px]">
                 Coming Soon
               </div>  */}
 

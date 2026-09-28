@@ -1,8 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import BookYourSlotButton from '../Components/BookYourSlotButton';
-import scheduleData from '../data/eventScheduleData';
+import { getSessionsForConference, isSpeakerSession, getSpeakerBySlug, formatTimeRange12 } from '../content';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+
+const CONFERENCE_SLUG = 'community-day-for-java-2025';
+
+// Build the schedule rows once: talks render as "Session N: <speakers>" with the
+// talk title underneath; other agenda slots render their own title/description.
+let talkNumber = 0;
+const scheduleData = getSessionsForConference(CONFERENCE_SLUG).map((session) => {
+    const time = formatTimeRange12(session.startTime, session.endTime);
+    if (!isSpeakerSession(session)) {
+        return { slug: session.slug, time, title: session.title, description: session.description };
+    }
+    talkNumber += 1;
+    const names = session.speakers.map((slug) => getSpeakerBySlug(slug)?.name).filter(Boolean).join(', ');
+    return { slug: session.slug, time, title: `Session ${talkNumber}: ${names}`, description: session.title };
+});
 
 const Schedule = () => {
     const [visibleCount, setVisibleCount] = useState(0);
