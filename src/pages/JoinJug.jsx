@@ -1,4 +1,3 @@
-import React from "react";
 import { HiOutlineArrowRight } from "react-icons/hi";
 import Footer from "./Footer";
 

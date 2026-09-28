@@ -1,5 +1,3 @@
-import React from 'react'
-
 const BecomeSpeaker = () => {
   return (
     <div className="bg-[#F6E5AE] ">

@@ -1,5 +1,3 @@
-import React from 'react'
-import FooterItem from '../Components/FooterItem'
 import { Link as ScrollLink } from "react-scroll";
 import navLinksForEvent from '../data/navLinksForEvent';
 import { Link } from 'react-router-dom';

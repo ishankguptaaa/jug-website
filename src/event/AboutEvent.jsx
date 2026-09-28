@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import About from '../Components/About'
+import { useEffect } from 'react';
 import BookYourSlotButton from '../Components/BookYourSlotButton'
 import AOS from 'aos';
 import 'aos/dist/aos.css'; 

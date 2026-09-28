@@ -1,5 +1,3 @@
-import React from 'react'
-
 function FooterItem() {
   return (
     <div className='bg-[#FFFCEF]'>
