@@ -154,8 +154,8 @@ export function validateContent(content, { assetExists } = {}) {
     const art = (field, paths, sizes) => {
       const value = c[field];
       if (value === undefined) return;
-      const bad = sizes.filter((k) => typeof value?.[k] !== 'number');
-      if (bad.length) err(where('conferences', c), `"${field}" needs numeric ${bad.join(', ')}`);
+      const bad = sizes.filter((k) => !(Number.isFinite(value?.[k]) && value[k] > 0));
+      if (bad.length) err(where('conferences', c), `"${field}" needs positive numeric ${bad.join(', ')}`);
       paths.forEach((k) => {
         if (!value?.[k]) err(where('conferences', c), `"${field}.${k}" is missing`);
         else asset('conferences', c, `${field}.${k}`, value[k]);
@@ -163,6 +163,7 @@ export function validateContent(content, { assetExists } = {}) {
     };
     art('heroLogo', ['src', 'srcSm'], ['width', 'height', 'widthSm', 'heightSm']);
     art('featuredSpeaker', ['image', 'imageSm'], ['width', 'height', 'widthSm', 'heightSm']);
+    if (c.featuredSpeaker && !c.featuredSpeaker.speaker) err(where('conferences', c), '"featuredSpeaker.speaker" is missing');
     art('aboutImage', ['src'], ['width', 'height']);
     (c.goodies ?? []).forEach((g, i) => asset('conferences', c, `goodies[${i}].image`, g.image));
     if (c.cfp !== undefined) {
