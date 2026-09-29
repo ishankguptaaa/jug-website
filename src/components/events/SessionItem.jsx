@@ -8,6 +8,7 @@ import {
 } from '../../content';
 import ExternalLink from '../ui/ExternalLink';
 import { focusRing } from '../ui/focusRing';
+import { linkClass } from '../ui/linkClass';
 import Pill from '../ui/Pill';
 import { pillClass } from '../ui/pillClass';
 
@@ -85,7 +86,7 @@ export default function SessionItem({
                 {i > 0 ? (i === people.length - 1 ? ' & ' : ', ') : null}
                 <Link
                   to={`/speakers/${speaker.slug}`}
-                  className={`font-semibold underline underline-offset-4 hover:text-gray-600 ${focusRing}`}
+                  className={`${linkClass} ${focusRing}`}
                 >
                   {speaker.name}
                 </Link>
