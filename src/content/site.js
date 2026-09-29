@@ -16,7 +16,7 @@ export const site = {
   lumaCalendarUrl: 'https://luma.com/juggujarat',
   lumaIcsUrl: 'https://api.lu.ma/ics/get?entity=calendar&id=cal-9GeA8E6xpITOUpi',
   timeZone: 'Asia/Kolkata',
-  // Shown in the footer until the client computes the current IST year.
+  // Footer shows © this year – current IST year (never earlier than this).
   copyrightStartYear: 2025,
   stats: {
     members: '500',

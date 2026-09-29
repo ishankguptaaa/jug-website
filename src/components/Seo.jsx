@@ -30,7 +30,8 @@ export default function Seo({
   const imageUrl = absoluteUrl(image);
 
   // Builders return null when there's nothing valid to publish.
-  const list = [jsonLd].flat().filter(Boolean);
+  // No structured data for pages kept out of search (samples, drafts, 404).
+  const list = noindex ? [] : [jsonLd].flat().filter(Boolean);
   const structuredData = list.length > 1 ? list : list[0];
   return (
     <Helmet>

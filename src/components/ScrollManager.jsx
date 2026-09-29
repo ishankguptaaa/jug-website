@@ -137,7 +137,12 @@ export default function ScrollManager() {
       const entry = performance.getEntriesByType?.('navigation')?.[0];
       shouldRestore = entry?.type === 'reload' || entry?.type === 'back_forward';
       // Drop any stale position left under this key by an earlier document.
-      if (!shouldRestore) savePosition(positionKey, 0);
+      // The browser already placed a fresh load (top or #hash), and the
+      // prerendered page may have been scrolled before hydration: leave it.
+      if (!shouldRestore) {
+        savePosition(positionKey, 0);
+        return undefined;
+      }
     }
 
     if (shouldRestore) {

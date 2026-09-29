@@ -70,10 +70,7 @@ export default function EventDetailPage() {
         path={path}
         image={event.banner}
         noindex={event.isSample}
-        jsonLd={
-          event.isSample
-            ? undefined
-            : [
+        jsonLd={[
                 eventJsonLd(event, { path, description: event.description, places: [{ ...place, isSample: venue?.isSample }], speakers }),
                 breadcrumbJsonLd('/events', { name: event.name, path }),
               ]

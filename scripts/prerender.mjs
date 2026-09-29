@@ -6,7 +6,7 @@
 // robots.txt and checks that every internal link points at a written page.
 
 import { existsSync, statSync } from 'node:fs';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -115,5 +115,8 @@ for (const [from, page] of written) {
   }
 }
 if (broken.size) throw new Error(`Links to pages that were not prerendered:\n${[...broken].join('\n')}`);
+
+// Build-time input only; don't deploy the source/chunk map.
+await rm(path.join(dist, '.vite'), { recursive: true, force: true });
 
 console.log(`Prerendered ${written.size} pages (${indexable.length} in sitemap.xml).`);

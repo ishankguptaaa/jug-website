@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { allSample, countLabel, getSpeakerDirectory, site } from '../content';
 import Seo from '../components/Seo';
 import PageHero from '../components/ui/PageHero';
@@ -16,6 +16,11 @@ const matches = (speaker, query) =>
 
 export default function SpeakersPage() {
   const [query, setQuery] = useState('');
+  const searchRef = useRef(null);
+  // Pick up text typed into the prerendered box before hydration.
+  useEffect(() => {
+    if (searchRef.current.value) setQuery(searchRef.current.value);
+  }, []);
   const needle = query.trim().toLowerCase();
   const shown = needle ? directory.filter((speaker) => matches(speaker, needle)) : directory;
 
@@ -39,6 +44,7 @@ export default function SpeakersPage() {
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              ref={searchRef}
               autoComplete="off"
               className={`mt-3 w-full px-5 py-4 sm:px-4 sm:py-3 border border-black rounded-2xl bg-white font-raleway text-[16px] ${focusRing}`}
             />

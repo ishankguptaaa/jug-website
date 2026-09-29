@@ -130,10 +130,7 @@ export default function ConferenceDetailPage() {
         path={path}
         image={conference.banner}
         noindex={conference.isSample}
-        jsonLd={
-          conference.isSample
-            ? undefined
-            : [
+        jsonLd={[
                 eventJsonLd(conference, { path, description, places: venues, speakers }),
                 breadcrumbJsonLd('/conferences', { name: conference.name, path }),
               ]

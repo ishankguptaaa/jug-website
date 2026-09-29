@@ -92,7 +92,7 @@ export default function AboutPage() {
         description={DESCRIPTION}
         path="/about"
         noindex={noindex}
-        jsonLd={noindex ? undefined : organizationJsonLd()}
+        jsonLd={organizationJsonLd()}
       />
 
       <PageHero

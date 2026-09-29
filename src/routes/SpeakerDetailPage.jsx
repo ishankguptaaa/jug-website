@@ -42,10 +42,7 @@ export default function SpeakerDetailPage() {
         path={path}
         image={speaker.photo}
         noindex={speaker.isSample}
-        jsonLd={
-          speaker.isSample
-            ? undefined
-            : [personJsonLd(speaker, path), breadcrumbJsonLd('/speakers', { name: speaker.name, path })]
+        jsonLd={[personJsonLd(speaker, path), breadcrumbJsonLd('/speakers', { name: speaker.name, path })]
         }
       />
 
