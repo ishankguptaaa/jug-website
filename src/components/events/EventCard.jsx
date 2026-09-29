@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import {
   formatDate,
   formatTimeRange,
@@ -7,12 +6,10 @@ import {
   getStatus,
 } from '../../content';
 import Button from '../ui/Button';
+import CompactCard from '../ui/CompactCard';
 import StatusBadge from '../ui/StatusBadge';
-import { focusRing } from '../ui/focusRing';
+import { CARD_SURFACE } from '../ui/cardSurface';
 import SpeakerAvatars from './SpeakerAvatars';
-
-// Card surface shared by the full and compact variants.
-const SURFACE = 'border border-black rounded-[24px] bg-white overflow-hidden';
 
 function Banner({ event }) {
   if (event.banner) {
@@ -66,7 +63,7 @@ export default function EventCard({ event, now, headingAs: Heading = 'h3' }) {
   const showRegister = Boolean(event.registrationUrl) && status !== 'completed';
 
   return (
-    <article className={`${SURFACE} h-full flex flex-col`}>
+    <article className={`${CARD_SURFACE} h-full flex flex-col`}>
       <Banner event={event} />
       <div className="flex-1 flex flex-col p-6 sm:p-5">
         <StatusBadge status={status} className="self-start" />
@@ -101,29 +98,15 @@ export default function EventCard({ event, now, headingAs: Heading = 'h3' }) {
   );
 }
 
-/**
- * Compact card for the Past list. The whole card is a single <Link> with
- * nothing interactive inside it.
- */
-export function EventCardCompact({ event, headingAs: Heading = 'h4' }) {
-  const place = getEventPlaceLabel(event);
-
+/** Compact card for the Past list. */
+export function EventCardCompact({ event, headingAs }) {
   return (
-    <Link
+    <CompactCard
       to={`/events/${event.slug}`}
-      className={`${SURFACE} ${focusRing} group block h-full p-6 sm:p-5 transition-colors duration-300 hover:bg-[#FFEFC6] motion-reduce:transition-none`}
-    >
-      <p className="font-medium text-[14px] leading-[20px] sm:text-[12px] sm:leading-[18px]">
-        <time dateTime={event.date}>{formatDate(event.date)}</time>
-      </p>
-      <Heading className="mt-2 font-raleway font-bold text-[20px] leading-[26px] sm:text-[16px] sm:leading-[22px] break-words group-hover:underline underline-offset-4">
-        {event.name}
-      </Heading>
-      {place ? (
-        <p className="mt-2 font-raleway font-medium text-[16px] leading-[22px] sm:text-[14px] sm:leading-[20px] text-gray-700">
-          {place}
-        </p>
-      ) : null}
-    </Link>
+      date={<time dateTime={event.date}>{formatDate(event.date)}</time>}
+      title={event.name}
+      place={getEventPlaceLabel(event)}
+      headingAs={headingAs}
+    />
   );
 }

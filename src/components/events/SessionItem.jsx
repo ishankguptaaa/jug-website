@@ -36,6 +36,8 @@ const RESOURCES = [
  * @param {string}  [headingAs]  tag for the title (default 'h3')
  * @param {boolean} [showDate]   also show the session date (multi-day conferences)
  * @param {string}  [as]         wrapper tag (default 'article'; use 'li' inside a <ul>)
+ * @param {string}  [id]         anchor id (event pages use the session slug)
+ * @param {string}  [titleTo]    link the title to this path (e.g. from a speaker profile)
  * @param {string}  [className]
  */
 export default function SessionItem({
@@ -44,6 +46,8 @@ export default function SessionItem({
   headingAs: Heading = 'h3',
   showDate = false,
   as: Tag = 'article',
+  id,
+  titleTo,
   className = '',
 }) {
   if (!session) return null;
@@ -56,6 +60,7 @@ export default function SessionItem({
 
   return (
     <Tag
+      id={id}
       className={`grid grid-cols-12 gap-6 sm:gap-3 md:gap-3 p-8 sm:p-5 bg-white border border-black rounded-[24px] ${className}`}
     >
       <div className="col-span-3 sm:col-span-12 md:col-span-12 font-medium text-[16px] leading-[24px] sm:text-[13px] sm:leading-[20px]">
@@ -75,7 +80,13 @@ export default function SessionItem({
       </div>
       <div className="col-span-9 sm:col-span-12 md:col-span-12 min-w-0">
         <Heading className="font-raleway font-bold text-[24px] leading-[30px] sm:text-[18px] sm:leading-[24px] break-words">
-          {session.title}
+          {titleTo ? (
+            <Link to={titleTo} className={`underline underline-offset-4 hover:text-gray-600 ${focusRing}`}>
+              {session.title}
+            </Link>
+          ) : (
+            session.title
+          )}
         </Heading>
         {people.length > 0 ? (
           <p className="pt-2 font-raleway text-[16px] leading-[22px] sm:text-[13px] sm:leading-[20px]">

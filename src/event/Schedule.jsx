@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import BookYourSlotButton from '../components/BookYourSlotButton';
 import { focusRing } from '../components/ui/focusRing';
 import { isSpeakerSession, getSpeakerBySlug, formatTimeRange12 } from '../content';
@@ -20,26 +20,9 @@ function toRows(sessions) {
 }
 
 const Schedule = ({ sessions, tracks, registrationUrl }) => {
-    const [visibleCount, setVisibleCount] = useState(0);
     const [track, setTrack] = useState(null);
     const rows = toRows(sessions);
     const visibleRows = track ? rows.filter((row) => !row.track || row.track === track) : rows;
-
-    useEffect(() => {
-
-        const interval = setInterval(() => {
-            setVisibleCount((prevCount) => {
-                if (prevCount < rows.length) {
-                    return prevCount + 1;
-                } else {
-                    clearInterval(interval);
-                    return prevCount;
-                }
-            });
-        }, 1000); 
-
-        return () => clearInterval(interval);
-    }, [rows.length]);
 
     return (
         <div className="bg-[#FFFCEF]">
@@ -67,10 +50,11 @@ const Schedule = ({ sessions, tracks, registrationUrl }) => {
                             </div>
                         ) : null}
                         <div className="mt-[36px] px-[10px]">
-                            {visibleRows.slice(0, visibleCount).map((event) => (
+                            {visibleRows.map((event) => (
                                 <div 
                                     key={event.slug} 
-                                    className="flex items-center gap-6 sm:flex-col sm:gap-0 border-b border-black transition-opacity duration-500 opacity-100"
+                                    id={event.slug}
+                                    className="flex items-center gap-6 sm:flex-col sm:gap-0 border-b border-black"
                                     data-aos="fade-down"
                                 >
                                     <div className="w-[200px] text-left sm:text-center">

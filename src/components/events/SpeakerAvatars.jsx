@@ -1,15 +1,9 @@
+import { initialsOf } from '../../content';
+
 // Small overlapping stack of speaker photos for event cards.
 // Images are decorative (alt=""); the names are given once to assistive tech
 // via an sr-only line so they aren't announced twice.
 const MAX_VISIBLE = 4;
-
-const initialsOf = (name = '') =>
-  name
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0].toUpperCase())
-    .join('');
 
 export default function SpeakerAvatars({ speakers = [], className = '' }) {
   if (!speakers.length) return null;

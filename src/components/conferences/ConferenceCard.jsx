@@ -1,4 +1,5 @@
 import {
+  countLabel,
   formatDateRange,
   getSessionsForConference,
   getSpeakersForConference,
@@ -6,13 +7,13 @@ import {
 } from '../../content';
 import Button from '../ui/Button';
 import Card from '../ui/Card';
+import { CARD_SURFACE } from '../ui/cardSurface';
 import Pill from '../ui/Pill';
 import StatusBadge from '../ui/StatusBadge';
+import CompactCard from '../ui/CompactCard';
 import SpeakerAvatars from '../events/SpeakerAvatars';
 
 const TEXT = 'font-raleway text-[16px] leading-[26px] sm:text-[14px] sm:leading-[22px]';
-
-const countLabel = (n, word) => (n ? `${n} ${word}${n === 1 ? '' : 's'}` : null);
 
 /**
  * Conference card for the /conferences lists. `featured` is the full-width
@@ -27,14 +28,8 @@ export default function ConferenceCard({ conference: c, status, featured = false
   const highlights = (c.highlights ?? []).slice(0, 3);
   const showRegister = Boolean(c.registrationUrl) && status !== 'completed';
 
-  return (
-    <Card
-      as="article"
-      bg={featured ? 'bg-[#FFEFC6]' : 'bg-white'}
-      className={`h-full overflow-hidden ${
-        featured ? 'grid grid-cols-2 md:grid-cols-1 sm:grid-cols-1' : '!rounded-[24px] flex flex-col'
-      }`}
-    >
+  const body = (
+    <>
       {c.banner ? (
         <img
           src={c.banner}
@@ -104,6 +99,32 @@ export default function ConferenceCard({ conference: c, status, featured = false
           </Button>
         </div>
       </div>
+    </>
+  );
+
+  // Featured is the big pastel Card; list cards share the 24px event-card surface.
+  return featured ? (
+    <Card as="article" bg="bg-[#FFEFC6]" className="h-full overflow-hidden grid grid-cols-2 md:grid-cols-1 sm:grid-cols-1">
+      {body}
     </Card>
+  ) : (
+    <article className={`${CARD_SURFACE} h-full flex flex-col`}>{body}</article>
+  );
+}
+
+/** Compact card for a speaker profile's conference list. */
+export function ConferenceCardCompact({ conference, headingAs }) {
+  return (
+    <CompactCard
+      to={`/conferences/${conference.slug}`}
+      date={
+        <time dateTime={conference.startDate}>
+          {formatDateRange(conference.startDate, conference.endDate)}
+        </time>
+      }
+      title={conference.name}
+      place={conference.location}
+      headingAs={headingAs}
+    />
   );
 }

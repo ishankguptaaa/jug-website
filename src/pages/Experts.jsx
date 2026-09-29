@@ -1,5 +1,6 @@
 import 'aos/dist/aos.css'; 
-import { getFeaturedSpeakers, getSpeakerRolePrefix } from '../content';
+import { getFeaturedSpeakers } from '../content';
+import SpeakerRole from '../components/speakers/SpeakerRole';
 
 const experts = getFeaturedSpeakers();
 
@@ -36,7 +37,7 @@ const Experts = () => {
               <div key={expert.slug} className="sm:text-center"  data-aos="fade-right"   data-aos-delay={`${index * 200}`}>
                 <img src={expert.photo} alt={expert.name} className=" sm:w-[320px] " />
                 <h2 className="pt-6 sm:pt-3 font-raleway font-bold text-[24px] leading-[28px] sm:text-[14px] sm:leading-[20px]">{expert.name}</h2>
-                <p className="text-gray-600 font-raleway font-normal text-[16px] leading-[18px] sm:text-[12px] sm:leading-[18px] pt-2 sm:pt-1">{getSpeakerRolePrefix(expert)} <strong className='text-black-600'>{expert.company}</strong></p>
+                <SpeakerRole speaker={expert} className="font-normal text-[16px] leading-[18px] sm:text-[12px] sm:leading-[18px] pt-2 sm:pt-1" />
 
               </div>
             ))}

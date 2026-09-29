@@ -125,7 +125,7 @@ export const getSessionsForEvent = (eventSlug) =>
  */
 export const getSessionsForSpeaker = (speakerSlug) =>
   sessions
-    .filter((s) => (s.speakers ?? []).includes(speakerSlug))
+    .filter((s) => isSpeakerSession(s) && (s.speakers ?? []).includes(speakerSlug))
     .map((s) => ({
       ...s,
       date: getSessionDate(s),
@@ -138,6 +138,18 @@ export const getSessionsForSpeaker = (speakerSlug) =>
         (b.date ?? '').localeCompare(a.date ?? '') ||
         (a.startTime ?? '').localeCompare(b.startTime ?? ''),
     );
+
+/** Events / conferences a speaker spoke at (from getSessionsForSpeaker), newest first. */
+const getParentsForSpeaker = (speakerSlug, type) =>
+  [
+    ...new Set(
+      getSessionsForSpeaker(speakerSlug)
+        .filter((s) => s.parent.type === type)
+        .map((s) => s.parent.item),
+    ),
+  ].sort(byStartDesc);
+export const getEventsForSpeaker = (speakerSlug) => getParentsForSpeaker(speakerSlug, 'event');
+export const getConferencesForSpeaker = (speakerSlug) => getParentsForSpeaker(speakerSlug, 'conference');
 
 // ---------- events ----------
 
@@ -308,3 +320,22 @@ export const getGalleriesForEvent = (eventSlug) => galleries.filter((g) => g.eve
 
 export const getGalleriesForConference = (conferenceSlug) =>
   galleries.filter((g) => g.conference === conferenceSlug);
+
+// ---------- speaker directory ----------
+
+/**
+ * Everyone with at least one talk/workshop/panel/keynote, each with
+ * `sessionCount`; most sessions first, then by name.
+ */
+export const getSpeakerDirectory = () => {
+  const counts = new Map();
+  for (const session of sessions.filter(isSpeakerSession)) {
+    for (const slug of session.speakers ?? []) counts.set(slug, (counts.get(slug) ?? 0) + 1);
+  }
+  return compact(
+    [...counts].map(([slug, sessionCount]) => {
+      const speaker = speakersBySlug.get(slug);
+      return speaker && { ...speaker, sessionCount };
+    }),
+  ).sort((a, b) => b.sessionCount - a.sessionCount || a.name.localeCompare(b.name));
+};
