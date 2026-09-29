@@ -91,22 +91,6 @@ export const getSpeakersForSessions = (sessionList) => {
 };
 
 /** Speakers of a conference, ordered by their first session's start time. */
-/** Events / conferences a speaker spoke at, newest first. */
-const getParentsForSpeaker = (speakerSlug, key, index) =>
-  [
-    ...new Set(
-      sessions
-        .filter((s) => isSpeakerSession(s) && (s.speakers ?? []).includes(speakerSlug))
-        .map((s) => s[key])
-        .filter(Boolean),
-    ),
-  ]
-    .map((slug) => index.get(slug))
-    .sort(byStartDesc);
-export const getEventsForSpeaker = (speakerSlug) => getParentsForSpeaker(speakerSlug, 'event', eventsBySlug);
-export const getConferencesForSpeaker = (speakerSlug) =>
-  getParentsForSpeaker(speakerSlug, 'conference', conferencesBySlug);
-
 export const getSpeakersForConference = (conferenceSlug) =>
   getSpeakersForSessions(getSessionsForConference(conferenceSlug));
 
@@ -154,6 +138,18 @@ export const getSessionsForSpeaker = (speakerSlug) =>
         (b.date ?? '').localeCompare(a.date ?? '') ||
         (a.startTime ?? '').localeCompare(b.startTime ?? ''),
     );
+
+/** Events / conferences a speaker spoke at (from getSessionsForSpeaker), newest first. */
+const getParentsForSpeaker = (speakerSlug, type) =>
+  [
+    ...new Set(
+      getSessionsForSpeaker(speakerSlug)
+        .filter((s) => s.parent.type === type)
+        .map((s) => s.parent.item),
+    ),
+  ].sort(byStartDesc);
+export const getEventsForSpeaker = (speakerSlug) => getParentsForSpeaker(speakerSlug, 'event');
+export const getConferencesForSpeaker = (speakerSlug) => getParentsForSpeaker(speakerSlug, 'conference');
 
 // ---------- events ----------
 

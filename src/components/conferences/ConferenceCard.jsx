@@ -27,16 +27,9 @@ export default function ConferenceCard({ conference: c, status, featured = false
   ].filter(Boolean);
   const highlights = (c.highlights ?? []).slice(0, 3);
   const showRegister = Boolean(c.registrationUrl) && status !== 'completed';
-  // Featured is the big pastel Card; list cards share the 24px event-card surface.
-  const Box = featured ? Card : 'article';
 
-  return (
-    <Box
-      {...(featured && { as: 'article', bg: 'bg-[#FFEFC6]' })}
-      className={`h-full overflow-hidden ${
-        featured ? 'grid grid-cols-2 md:grid-cols-1 sm:grid-cols-1' : `${CARD_SURFACE} flex flex-col`
-      }`}
-    >
+  const body = (
+    <>
       {c.banner ? (
         <img
           src={c.banner}
@@ -106,7 +99,16 @@ export default function ConferenceCard({ conference: c, status, featured = false
           </Button>
         </div>
       </div>
-    </Box>
+    </>
+  );
+
+  // Featured is the big pastel Card; list cards share the 24px event-card surface.
+  return featured ? (
+    <Card as="article" bg="bg-[#FFEFC6]" className="h-full overflow-hidden grid grid-cols-2 md:grid-cols-1 sm:grid-cols-1">
+      {body}
+    </Card>
+  ) : (
+    <article className={`${CARD_SURFACE} h-full flex flex-col`}>{body}</article>
   );
 }
 

@@ -71,6 +71,7 @@ export default function SpeakerDetailPage() {
           {talks.length ? (
             <>
               <DetailSection title="Talks &" squiggle="Sessions">
+                {/* `speakers` undefined → SessionItem lists every speaker; [] → no byline (solo talk). */}
                 <ul className="flex flex-col gap-6 sm:gap-4">
                   {talks.map((talk) => (
                     <SessionItem

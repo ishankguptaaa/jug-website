@@ -19,7 +19,7 @@ export default function SpeakerSocials({ speaker, className = '' }) {
           <ExternalLink
             href={speaker.socials[key]}
             srLabel={`${speaker.name} on ${label}`}
-            className="flex items-center justify-center w-9 h-9 rounded-full border border-black bg-white hover:bg-black hover:text-white transition-colors"
+            className="relative z-10 flex items-center justify-center w-9 h-9 rounded-full border border-black bg-white hover:bg-black hover:text-white transition-colors"
           >
             <Icon aria-hidden="true" focusable="false" className="w-4 h-4" />
           </ExternalLink>

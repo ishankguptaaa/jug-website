@@ -30,7 +30,7 @@ export default function SpeakerCard({ speaker }) {
       <p className="pt-3 sm:pt-2 font-raleway font-medium text-[14px] leading-[20px] sm:text-[12px] sm:leading-[18px]">
         {countLabel(sessionCount, 'session')} at {site.name}
       </p>
-      <SpeakerSocials speaker={speaker} className="relative z-10 pt-4 sm:pt-3 sm:justify-center" />
+      <SpeakerSocials speaker={speaker} className="pt-4 sm:pt-3 sm:justify-center" />
     </article>
   );
 }
