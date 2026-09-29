@@ -26,8 +26,8 @@ const Event = ({ conference, status, speakerCount, registrationUrl }) => {
                             <img src='/Home/BannerArrow.svg' alt='' className="absolute -top-4 left-[508px] right-0 sm:left-[260px] sm:-top-1  sm:h-[52px] sm:w-[68px]" />
                             </div>
                             <div className=' flex sm:mt-4  '>
-                            <img src={featuredSpeaker.image} alt="" width="358" height="318" className="sm:hidden" data-aos="zoom-in-up"/>
-                            <img src={featuredSpeaker.imageSm} alt="" width="210" height="202" className="xl:hidden" data-aos="zoom-in-up"/>
+                            <img src={featuredSpeaker.image} alt="" width="358" height="318" className="sm:hidden" {...HERO_IMG_PRIORITY} data-aos="zoom-in-up"/>
+                            <img src={featuredSpeaker.imageSm} alt="" width="210" height="202" className="xl:hidden" {...HERO_IMG_PRIORITY} data-aos="zoom-in-up"/>
 
                              <div className=" mt-[112px] text-center  sm:mt-12 ">
                             <p className="font-archivo font-normal text-[26.25px] sm:text-[18.25px] leading-[100%]  sm:leading-[100%] ">Special Speaker</p>

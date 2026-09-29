@@ -21,10 +21,16 @@ export const prefersReducedMotion = () =>
 export function initAOS() {
   if (initialised || prefersReducedMotion()) return;
   initialised = true;
-  Promise.all([import('aos'), import('aos/dist/aos.css?inline')]).then(([{ default: AOS }, { default: css }]) => {
-    const style = document.createElement('style');
-    style.textContent = css;
-    document.head.append(style);
-    AOS.init({ duration: 1000 });
-  });
+  Promise.all([import('aos'), import('aos/dist/aos.css?inline')])
+    .then(([{ default: AOS }, { default: css }]) => {
+      const style = document.createElement('style');
+      style.textContent = css;
+      document.head.append(style);
+      // offset 0: anything already on screen is marked animated in this same
+      // task, so it never disappears.
+      AOS.init({ duration: 1000, offset: 0 });
+    })
+    .catch(() => {
+      initialised = false; // chunk failed to load: content stays visible, allow a retry
+    });
 }

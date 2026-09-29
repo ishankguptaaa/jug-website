@@ -6,7 +6,6 @@ import './index.css'
 import App from './App.jsx'
 import { preloadRoute } from './router'
 import { setInitialNow } from './lib/useNow'
-import { initAOS } from './lib/aos'
 import '@fontsource/raleway';
 import '@fontsource/raleway/600.css';
 import '@fontsource/raleway/500.css';
@@ -43,12 +42,8 @@ if (prerendered?.path === (location.pathname.replace(/\/+$/, '') || '/')) {
   setInitialNow(new Date(prerendered.now))
   preloadRoute(location.pathname)
     .then(() => hydrateRoot(container, app({ initial: prerendered.pageChrome })))
-    // Chunk failed to load: keep the prerendered HTML (and start AOS so its
-    // hidden [data-aos] sections still appear) rather than wiping it.
-    .catch((error) => {
-      console.error(error)
-      initAOS()
-    })
+    // Chunk failed to load: keep the (fully visible) prerendered HTML rather than wiping it.
+    .catch((error) => console.error(error))
 } else {
   renderClient()
 }

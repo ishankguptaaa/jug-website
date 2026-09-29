@@ -27,7 +27,8 @@ export default function Seo({
 }) {
   const resolvedTitle = fullTitle ?? (title ? `${title} | ${site.name}` : site.name);
   const canonical = path != null ? absoluteUrl(path) : undefined;
-  const imageUrl = absoluteUrl(image);
+  // Share previews use the JPEG twin of a WebP image (not every scraper reads WebP).
+  const imageUrl = absoluteUrl(image.replace(/\.webp$/, '.jpg'));
 
   // Builders return null when there's nothing valid to publish.
   // No structured data for pages kept out of search (samples, drafts, 404).

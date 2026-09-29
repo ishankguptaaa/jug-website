@@ -9,7 +9,7 @@ import Button from '../ui/Button';
 import CompactCard from '../ui/CompactCard';
 import StatusBadge from '../ui/StatusBadge';
 import { CARD_SURFACE } from '../ui/cardSurface';
-import { BANNER_SIZES, bannerSrcSet } from '../../lib/images';
+import { CARD_BANNER_SIZES, bannerSrcSet } from '../../lib/images';
 import SpeakerAvatars from './SpeakerAvatars';
 
 function Banner({ event }) {
@@ -18,7 +18,7 @@ function Banner({ event }) {
       <img
         src={event.banner}
         srcSet={bannerSrcSet(event.banner)}
-        sizes={BANNER_SIZES}
+        sizes={CARD_BANNER_SIZES}
         alt=""
         width="1200"
         height="612"

@@ -93,6 +93,19 @@ export function validateContent(content, { assetExists } = {}) {
       err(where(name, item), `"${field}" file not found in public/: ${value}`);
     }
   };
+
+  // Share previews use the .jpg twin of a WebP image (Seo.jsx).
+  const shareTwin = (name, item, field) => {
+    if (item[field]?.endsWith('.webp')) asset(name, item, `${field} (.jpg share twin)`, item[field].replace(/\.webp$/, '.jpg'));
+  };
+  // Banners: 1200w .webp + <name>-640.webp (srcset) + .jpg share twin.
+  const banner = (name, item) => {
+    if (!item.banner) return;
+    if (!item.banner.endsWith('.webp')) err(where(name, item), `banner must be a .webp (got "${item.banner}")`);
+    asset(name, item, 'banner');
+    asset(name, item, 'banner (640w srcset variant)', bannerSmall(item.banner));
+    shareTwin(name, item, 'banner');
+  };
   const oneParent = (name, item) => {
     const hasEvent = item.event !== undefined;
     const hasConf = item.conference !== undefined;
@@ -121,8 +134,7 @@ export function validateContent(content, { assetExists } = {}) {
       err(where('events', e), '"location" needs "name" and "city"');
     }
     ref('events', e, 'conference', 'conferences', e.conference);
-    asset('events', e, 'banner');
-    asset('events', e, 'banner (640w srcset variant)', e.banner && bannerSmall(e.banner));
+    banner('events', e);
   }
 
   // --- conferences ---
@@ -137,8 +149,7 @@ export function validateContent(content, { assetExists } = {}) {
     }
     if (c.startDate === c.endDate) timeOrder('conferences', c);
     status('conferences', c);
-    asset('conferences', c, 'banner');
-    asset('conferences', c, 'banner (640w srcset variant)', c.banner && bannerSmall(c.banner));
+    banner('conferences', c);
     asset('conferences', c, 'heroLogo.src', c.heroLogo?.src);
     asset('conferences', c, 'heroLogo.srcSm', c.heroLogo?.srcSm);
     asset('conferences', c, 'featuredSpeaker.image', c.featuredSpeaker?.image);
@@ -172,6 +183,7 @@ export function validateContent(content, { assetExists } = {}) {
   for (const s of speakers ?? []) {
     required('speakers', s, ['name']);
     asset('speakers', s, 'photo');
+    shareTwin('speakers', s, 'photo');
   }
 
   // --- sessions ---
@@ -236,6 +248,7 @@ export function validateContent(content, { assetExists } = {}) {
     date('galleries', g, 'date');
     oneParent('galleries', g);
     asset('galleries', g, 'cover');
+    shareTwin('galleries', g, 'cover');
     (g.photos ?? []).forEach((p, i) => {
       if (!p.src) err(where('galleries', g), `photos[${i}] missing "src"`);
       if (!p.alt) err(where('galleries', g), `photos[${i}] missing "alt"`);
