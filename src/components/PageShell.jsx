@@ -2,6 +2,7 @@ import Seo from './Seo';
 import Button from './ui/Button';
 import EmptyState from './ui/EmptyState';
 import Container from './ui/Container';
+import Pill from './ui/Pill';
 
 /**
  * Hero + message layout shared by the "Coming soon" placeholders and the 404
@@ -24,9 +25,9 @@ export default function PageShell({ seo, eyebrow, title, intro, card }) {
               className="mx-auto w-[140px] h-auto sm:w-[90px]"
             />
             {eyebrow ? (
-              <p className="mt-6 inline-block px-4 py-[6px] rounded-full bg-[#FFFCEF] border border-[#E8C52A] font-medium text-[12px] tracking-[1%] sm:text-[10px] sm:px-2 sm:py-[4px]">
+              <Pill as="p" tone="bg-[#FFFCEF] border-[#E8C52A]" className="mt-6">
                 {eyebrow}
-              </p>
+              </Pill>
             ) : null}
             <h1 className="mt-6 font-raleway font-medium text-[56px] leading-[65px] sm:text-[24px] sm:leading-[32px] md:text-[44px] md:leading-[52px]">
               {title}

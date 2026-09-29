@@ -1,7 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { site } from '../content';
-
-const absolute = (url) => (!url ? undefined : /^https?:\/\//.test(url) ? url : `${site.url}${url}`);
+import { absoluteUrl } from '../lib/url';
 
 /**
  * Per-page <head> tags: title, description, canonical, Open Graph, Twitter,
@@ -27,8 +26,8 @@ export default function Seo({
   noindex = false,
 }) {
   const resolvedTitle = fullTitle ?? (title ? `${title} | ${site.name}` : site.name);
-  const canonical = path != null ? absolute(path) : undefined;
-  const imageUrl = absolute(image);
+  const canonical = path != null ? absoluteUrl(path) : undefined;
+  const imageUrl = absoluteUrl(image);
 
   return (
     <Helmet>

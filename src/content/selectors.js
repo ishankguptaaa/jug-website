@@ -12,6 +12,7 @@ import { sponsors } from './sponsors.js';
 import { galleries } from './galleries.js';
 import { site } from './site.js';
 import { getStatus, getStartDateTime } from './status.js';
+import { groupByYear } from './format.js';
 
 // ---------- helpers ----------
 
@@ -151,6 +152,10 @@ export const getUpcomingEvents = (now = new Date()) =>
 export const getPastEvents = (now = new Date()) =>
   events.filter((e) => getStatus(e, now) === 'completed').sort(byStartDesc);
 
+/** Past events grouped by year, newest year first: [{ year, events }]. */
+export const getPastEventsByYear = (now = new Date()) =>
+  groupByYear(getPastEvents(now), (e) => e.date).map(({ year, items }) => ({ year, events: items }));
+
 /** Meetups that belong to a conference (via event.conference). */
 export const getEventsForConference = (conferenceSlug) =>
   events.filter((e) => e.conference === conferenceSlug).sort(byStartAsc);
@@ -236,6 +241,22 @@ export const getEventPlace = (eventOrSlug) => {
 };
 
 /**
+ * Display label for where an event happens: "Name, City" / "Online" / ''.
+ * Accepts an event record or its slug. City is omitted when it's already
+ * part of the name (or equal to it); an online event with no physical
+ * address (the common case) is just "Online".
+ */
+export const getEventPlaceLabel = (eventOrSlug) => {
+  const place = getEventPlace(eventOrSlug);
+  if (!place) return '';
+  if (place.online && !place.address) return 'Online';
+  if (!place.name) return '';
+  return place.city && place.name !== place.city && !place.name.includes(place.city)
+    ? `${place.name}, ${place.city}`
+    : place.name;
+};
+
+/**
  * Everything hosted at a venue, newest first:
  * [{ type: 'event'|'conference', item }]
  */
@@ -250,17 +271,11 @@ export const getVenueHistory = (venueSlug) =>
 // ---------- galleries ----------
 
 /** Galleries grouped by year, newest year first: [{ year, galleries }]. */
-export const getGalleriesByYear = () => {
-  const groups = new Map();
-  for (const gallery of [...galleries].sort((a, b) => b.date.localeCompare(a.date))) {
-    const year = Number(gallery.date.slice(0, 4));
-    if (!groups.has(year)) groups.set(year, []);
-    groups.get(year).push(gallery);
-  }
-  return [...groups.entries()]
-    .sort(([a], [b]) => b - a)
-    .map(([year, list]) => ({ year, galleries: list }));
-};
+export const getGalleriesByYear = () =>
+  groupByYear(
+    [...galleries].sort((a, b) => (b.date ?? '').localeCompare(a.date ?? '')),
+    (g) => g.date,
+  ).map(({ year, items }) => ({ year, galleries: items }));
 
 export const getGalleriesForEvent = (eventSlug) => galleries.filter((g) => g.event === eventSlug);
 

@@ -3,6 +3,7 @@ import { FiX } from 'react-icons/fi';
 import { Link, useLocation } from 'react-router-dom';
 import { getCurrentConference, getStatus, site } from '../content';
 import { useNow } from '../lib/useNow';
+import { DEFAULT_PAGE_CHROME } from '../layouts/pageChrome';
 import { NAV_ITEMS, isNavItemActive } from './navItems';
 import Button from './ui/Button';
 import StatusBadge from './ui/StatusBadge';
@@ -48,10 +49,13 @@ function NavItems({ pathname, activeNav, conferenceStatus, onNavigate, itemClass
 }
 
 /**
- * Site header. `tone` (background class matching the page hero) and
- * `activeNav` are declared by each page via usePageChrome (layouts/pageChrome.js).
+ * Site header. `tone` (background class matching the page hero), `activeNav`
+ * and `cta` (right-hand button) are declared by each page via usePageChrome
+ * (layouts/pageChrome.js), which is the single place that normalises `cta`
+ * to a valid `{ label, href }` — Header just renders it.
  */
-const Header = ({ tone = 'bg-[#E1EEFB]', activeNav = null }) => {
+const Header = ({ tone = 'bg-[#E1EEFB]', activeNav = null, cta = DEFAULT_PAGE_CHROME.headerCta }) => {
+  const { label: ctaLabel, href: ctaHref } = cta;
   const [isOpen, setIsOpen] = useState(false);
   const { pathname, key } = useLocation();
   const conferenceStatus = useConferenceStatus();
@@ -119,8 +123,8 @@ const Header = ({ tone = 'bg-[#E1EEFB]', activeNav = null }) => {
             </ul>
           </nav>
 
-          <Button href={site.joinUrl} shape="header" className="shrink-0 whitespace-nowrap lg:px-4">
-            Join Community
+          <Button href={ctaHref} shape="header" className="shrink-0 whitespace-nowrap lg:px-4">
+            {ctaLabel}
           </Button>
         </div>
 
@@ -165,11 +169,11 @@ const Header = ({ tone = 'bg-[#E1EEFB]', activeNav = null }) => {
               <NavItems pathname={pathname} activeNav={activeNav} conferenceStatus={conferenceStatus} onNavigate={close} />
             </ul>
             <ExternalLink
-              href={site.joinUrl}
+              href={ctaHref}
               onClick={close}
               className="block text-center bg-black text-white px-5 py-2 rounded-lg transition hover:bg-gray-800 w-full mt-3"
             >
-              Join Community
+              {ctaLabel}
             </ExternalLink>
           </nav>
         </div>

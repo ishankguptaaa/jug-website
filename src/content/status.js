@@ -52,13 +52,16 @@ export function getEndDateTime(entity) {
 
 /**
  * @param {object} entity event or conference record
- * @param {Date} [now=new Date()]
- * @returns {'upcoming'|'live'|'completed'}
+ * @param {Date} [now] current instant; pass `null`/`undefined` when it isn't
+ *   known yet (e.g. before the client mounts, see `useNow`) — the result is
+ *   then only the manual override, never a guessed/real-clock status.
+ * @returns {'upcoming'|'live'|'completed'|null}
  */
-export function getStatus(entity, now = new Date()) {
-  if (entity?.statusOverride && STATUSES.includes(entity.statusOverride)) {
-    return entity.statusOverride;
-  }
+export function getStatus(entity, now) {
+  const override =
+    entity?.statusOverride && STATUSES.includes(entity.statusOverride) ? entity.statusOverride : null;
+  if (!now) return override;
+  if (override) return override;
   const start = getStartDateTime(entity);
   const end = getEndDateTime(entity);
   // No usable dates: treat as upcoming (validate.js reports missing dates).
