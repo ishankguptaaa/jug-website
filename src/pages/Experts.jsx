@@ -1,10 +1,11 @@
-import { getFeaturedSpeakers } from '../content';
+import { getFeaturedSpeakers, getSpeakerDirectory } from '../content';
 import Button from '../components/ui/Button';
 import HomeSection from '../components/home/HomeSection';
 import SpeakerCard from '../components/speakers/SpeakerCard';
 
 const Experts = () => {
-  const speakers = getFeaturedSpeakers();
+  const counts = new Map(getSpeakerDirectory().map((s) => [s.slug, s.sessionCount]));
+  const speakers = getFeaturedSpeakers().map((s) => ({ ...s, sessionCount: counts.get(s.slug) ?? 0 }));
   if (!speakers.length) return null;
 
   return (

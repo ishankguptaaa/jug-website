@@ -8,17 +8,16 @@ import {
 } from '../../content';
 import Button from '../ui/Button';
 import StatusBadge from '../ui/StatusBadge';
-import Thumb from '../ui/Thumb';
 import PartnerLogos from '../partners/PartnerLogos';
 import HomeSection from './HomeSection';
 
 const SUBHEADING = 'font-raleway font-bold text-[24px] leading-[30px] sm:text-[18px] sm:leading-[24px]';
 
-/** Homepage block for the live / upcoming conference. `previousPhotos` come from earlier editions. */
-export default function ConferenceHighlights({ conference: c, status, previousPhotos }) {
+/** Homepage block for the live / upcoming conference. */
+export default function ConferenceHighlights({ conference: c, status }) {
   const stats = [
     { value: getSpeakersForConference(c.slug).length, label: 'Speakers' },
-    { value: getSessionsForConference(c.slug).filter(isSpeakerSession).length, label: 'Sessions' },
+    { value: getSessionsForConference(c.slug).filter((s) => isSpeakerSession(s) && s.type !== 'workshop').length, label: 'Sessions' },
     { value: getWorkshopsForConference(c.slug).length, label: 'Workshops' },
     { value: c.tracks?.length, label: 'Tracks' },
     { value: c.stats?.attendees, label: 'Expected attendees' },
@@ -59,19 +58,6 @@ export default function ConferenceHighlights({ conference: c, status, previousPh
         <div className="mt-12 sm:mt-8">
           <h3 className={SUBHEADING}>Sponsors</h3>
           <PartnerLogos partners={sponsors} className="mt-6 sm:mt-4" />
-        </div>
-      ) : null}
-
-      {previousPhotos.length ? (
-        <div className="mt-12 sm:mt-8">
-          <h3 className={SUBHEADING}>From the previous edition</h3>
-          <ul className="mt-6 sm:mt-4 grid grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-6 sm:gap-3 md:gap-4">
-            {previousPhotos.map((photo) => (
-              <li key={photo.src}>
-                <Thumb photo={photo} />
-              </li>
-            ))}
-          </ul>
         </div>
       ) : null}
 

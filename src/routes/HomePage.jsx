@@ -6,7 +6,6 @@ import {
   getCurrentConference,
   getEventPlaceLabel,
   getGalleriesByYear,
-  getGalleriesForConference,
   getPastEvents,
   getStatus,
   getUpcomingEvents,
@@ -63,10 +62,6 @@ function ScheduleSections({ now, conference, conferenceStatus }) {
   const { live, upcoming, completed } = getConferencesByStatus(now);
   const otherOpen = [...live, ...upcoming].filter((c) => c.slug !== conference?.slug);
   const conferences = (otherOpen.length ? otherOpen : completed).slice(0, 3);
-  const previousPhotos = completed
-    .flatMap((c) => getGalleriesForConference(c.slug))
-    .flatMap((g) => g.photos)
-    .slice(0, 4);
 
   return (
     <>
@@ -89,7 +84,7 @@ function ScheduleSections({ now, conference, conferenceStatus }) {
       ) : null}
 
       {conference ? (
-        <ConferenceHighlights conference={conference} status={conferenceStatus} previousPhotos={previousPhotos} />
+        <ConferenceHighlights conference={conference} status={conferenceStatus} />
       ) : null}
 
       {conferences.length ? (

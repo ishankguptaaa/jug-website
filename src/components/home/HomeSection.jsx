@@ -5,7 +5,7 @@ import SectionHeading from '../ui/SectionHeading';
 export default function HomeSection({ id, bg, title, squiggle, action, children }) {
   return (
     <section id={id} aria-labelledby={`${id}-heading`} className={bg}>
-      <Container className="pt-[128px] pb-[100px] sm:pt-[50px] sm:pb-[50px]">
+      <Container className="overflow-hidden pt-[128px] pb-[100px] sm:pt-[50px] sm:pb-[50px]">
         <div className="flex justify-between items-center gap-4 sm:flex-col">
           <SectionHeading id={`${id}-heading`} squiggle={squiggle} className="sm:text-center">
             {title}
