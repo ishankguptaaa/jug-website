@@ -12,7 +12,7 @@ import { absoluteUrl } from '../lib/url';
  * @param {string}  [path]       root-relative canonical path, e.g. '/events'
  * @param {string}  [image]      root-relative or absolute image URL
  * @param {string}  [type]       og:type (default 'website')
- * @param {object}  [jsonLd]     structured data object
+ * @param {object|object[]} [jsonLd] structured data (one script tag)
  * @param {boolean} [noindex]    add robots noindex (placeholders, 404)
  */
 export default function Seo({
@@ -20,7 +20,7 @@ export default function Seo({
   fullTitle,
   description = site.description,
   path,
-  image = site.ogImage ?? site.logo,
+  image = site.ogImage,
   type = 'website',
   jsonLd,
   noindex = false,
@@ -41,12 +41,12 @@ export default function Seo({
       <meta property="og:title" content={resolvedTitle} />
       <meta property="og:description" content={description} />
       {canonical ? <meta property="og:url" content={canonical} /> : null}
-      {imageUrl ? <meta property="og:image" content={imageUrl} /> : null}
+      <meta property="og:image" content={imageUrl} />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={resolvedTitle} />
       <meta name="twitter:description" content={description} />
-      {imageUrl ? <meta name="twitter:image" content={imageUrl} /> : null}
+      <meta name="twitter:image" content={imageUrl} />
 
       {jsonLd ? <script type="application/ld+json">{JSON.stringify(jsonLd)}</script> : null}
     </Helmet>

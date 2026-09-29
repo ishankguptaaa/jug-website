@@ -26,6 +26,7 @@ import {
 } from '../content';
 import { usePageChrome } from '../layouts/pageChrome';
 import { useNow } from '../lib/useNow';
+import { breadcrumbJsonLd, eventJsonLd } from '../lib/jsonLd';
 import Event from '../event/Event';
 import EventSubNav from '../event/EventSubNav';
 import AboutEvent from '../event/AboutEvent';
@@ -87,6 +88,9 @@ export default function ConferenceDetailPage() {
   const communityPartners = getPartnersForConference(slug, 'community');
   const multiDay = conference.startDate !== conference.endDate;
   const hasSponsors = sponsors.length > 0 || venues.length > 0;
+  const path = `/conferences/${conference.slug}`;
+  const description = conference.description?.[0] ?? conference.tagline;
+  const places = venues.filter((v) => !v.isSample);
 
   const subNavItems = [
     { label: 'About', hash: 'about-event' },
@@ -124,10 +128,18 @@ export default function ConferenceDetailPage() {
     <>
       <Seo
         title={conference.name}
-        description={conference.description?.[0] ?? conference.tagline}
-        path={`/conferences/${conference.slug}`}
+        description={description}
+        path={path}
         image={conference.banner}
         noindex={conference.isSample}
+        jsonLd={
+          conference.isSample
+            ? undefined
+            : [
+                eventJsonLd(conference, { path, description, places, speakers }),
+                breadcrumbJsonLd([{ name: 'Conferences', path: '/conferences' }, { name: conference.name, path }]),
+              ]
+        }
       />
       <ToastContainer position="bottom-center" autoClose={2000} hideProgressBar closeOnClick />
       <EventSubNav label={`${conference.name} sections`} items={subNavItems} />

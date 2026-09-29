@@ -18,6 +18,7 @@ import {
   getSpeakerBySlug,
   site,
 } from '../content';
+import { breadcrumbJsonLd, personJsonLd } from '../lib/jsonLd';
 import NotFoundPage from './NotFoundPage';
 
 const sessionPath = ({ slug, parent }) =>
@@ -31,15 +32,21 @@ export default function SpeakerDetailPage() {
   const talks = getSessionsForSpeaker(speaker.slug);
   const events = getEventsForSpeaker(speaker.slug);
   const conferences = getConferencesForSpeaker(speaker.slug);
+  const path = `/speakers/${speaker.slug}`;
 
   return (
     <>
       <Seo
         title={speaker.name}
         description={speaker.bio || `Talks and sessions by ${speaker.name} at ${site.name}.`}
-        path={`/speakers/${speaker.slug}`}
+        path={path}
         image={speaker.photo}
         noindex={speaker.isSample}
+        jsonLd={
+          speaker.isSample
+            ? undefined
+            : [personJsonLd(speaker, path), breadcrumbJsonLd([{ name: 'Speakers', path: '/speakers' }, { name: speaker.name, path }])]
+        }
       />
 
       <DetailHero>
