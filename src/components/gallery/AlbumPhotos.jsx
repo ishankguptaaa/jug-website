@@ -80,7 +80,12 @@ export default function AlbumPhotos({ photos }) {
       >
         <div className="w-full flex items-center justify-between gap-4">
           <p aria-live="polite" className="font-medium text-[16px] sm:text-[14px]">
-            {photo ? `${index + 1} / ${photos.length}` : null}
+            {photo ? (
+              <>
+                <span aria-hidden="true">{`${index + 1} / ${photos.length}`}</span>
+                <span className="sr-only">{`${index + 1} / ${photos.length}: ${photo.alt ?? ''}`}</span>
+              </>
+            ) : null}
           </p>
           <button type="button" onClick={close} aria-label="Close photo viewer" className={CONTROL}>
             <FaXmark aria-hidden="true" />
