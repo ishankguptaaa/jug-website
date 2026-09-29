@@ -14,9 +14,10 @@ const AboutCommunity = () => {
             >
               About Community
             </h2>
-            <p className="mb-[49px] sm:mb-[36px] font-raleway text-[18px] leading-[30px] sm:text-[14px] sm:leading-[24px]">
-              {site.description}
-            </p>
+            <div className="mb-[49px] sm:mb-[36px] space-y-5 sm:space-y-4 font-raleway text-[18px] leading-[30px] sm:text-[14px] sm:leading-[24px]">
+              <p>{site.about}</p>
+              <p>{site.mission}</p>
+            </div>
             <div className="flex flex-wrap gap-4 sm:gap-3">
               <Button to="/about" shape="card">
                 More about us
