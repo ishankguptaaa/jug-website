@@ -34,8 +34,9 @@ export default function ConferenceCard({ conference: c, status, featured = false
       {c.banner ? (
         <img
           src={c.banner}
-          srcSet={bannerSrcSet(c.banner)}
-          sizes={CARD_BANNER_SIZES}
+          // The featured card's banner is near full width: always the 1200w file.
+          srcSet={featured ? undefined : bannerSrcSet(c.banner)}
+          sizes={featured ? undefined : CARD_BANNER_SIZES}
           alt=""
           width="1200"
           height="600"

@@ -62,7 +62,7 @@ const AboutEvent = ({ conference, mapUrl, registrationUrl }) => {
                             data-aos="fade-left" 
                         >
                             {conference.aboutImage ? (
-                            <img src={conference.aboutImage} alt="" width="1133" height="1150" loading="lazy" decoding="async" className='sm:w-[320px]'/>
+                            <img src={conference.aboutImage.src} alt="" width={conference.aboutImage.width} height={conference.aboutImage.height} loading="lazy" decoding="async" className='sm:w-[320px]'/>
                             ) : null}
                         </div>
                         

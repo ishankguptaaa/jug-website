@@ -4,7 +4,7 @@
 
 import { SESSION_TYPES, SPEAKER_SESSION_TYPES } from './sessions.js';
 import { STATUSES } from './status.js';
-import { bannerSmall } from '../lib/images.js';
+import { bannerSmall, shareImage } from '../lib/images.js';
 
 const KEBAB_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
@@ -96,7 +96,7 @@ export function validateContent(content, { assetExists } = {}) {
 
   // Share previews use the .jpg twin of a WebP image (Seo.jsx).
   const shareTwin = (name, item, field) => {
-    if (item[field]?.endsWith('.webp')) asset(name, item, `${field} (.jpg share twin)`, item[field].replace(/\.webp$/, '.jpg'));
+    if (item[field]?.endsWith('.webp')) asset(name, item, `${field} (.jpg share twin)`, shareImage(item[field]));
   };
   // Banners: 1200w .webp + <name>-640.webp (srcset) + .jpg share twin.
   const banner = (name, item) => {
@@ -154,7 +154,7 @@ export function validateContent(content, { assetExists } = {}) {
     asset('conferences', c, 'heroLogo.srcSm', c.heroLogo?.srcSm);
     asset('conferences', c, 'featuredSpeaker.image', c.featuredSpeaker?.image);
     asset('conferences', c, 'featuredSpeaker.imageSm', c.featuredSpeaker?.imageSm);
-    asset('conferences', c, 'aboutImage');
+    asset('conferences', c, 'aboutImage.src', c.aboutImage?.src);
     (c.goodies ?? []).forEach((g, i) => asset('conferences', c, `goodies[${i}].image`, g.image));
     if (c.cfp !== undefined) {
       if (!c.cfp?.url) err(where('conferences', c), '"cfp" needs a "url"');

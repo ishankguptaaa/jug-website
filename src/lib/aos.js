@@ -30,7 +30,6 @@ export function initAOS() {
       // task, so it never disappears.
       AOS.init({ duration: 1000, offset: 0 });
     })
-    .catch(() => {
-      initialised = false; // chunk failed to load: content stays visible, allow a retry
-    });
+    // Chunk failed to load: AOS stays off and content stays visible.
+    .catch(() => {});
 }

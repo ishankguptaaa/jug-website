@@ -17,7 +17,7 @@ const Event = ({ conference, status, speakerCount, registrationUrl }) => {
                     <div className=" col-span-6  sm:order-2">
                             {heroLogo ? (
                             <div className='pl-[120px]    sm:pl-0 sm:hidden  '>
-                            <img src={heroLogo.src} alt='' width="492" height="249" />
+                            <img src={heroLogo.src} alt='' width={heroLogo.width} height={heroLogo.height} />
                             </div>
                             ) : null}
                             {speaker ? (
@@ -26,8 +26,9 @@ const Event = ({ conference, status, speakerCount, registrationUrl }) => {
                             <img src='/Home/BannerArrow.svg' alt='' className="absolute -top-4 left-[508px] right-0 sm:left-[260px] sm:-top-1  sm:h-[52px] sm:w-[68px]" />
                             </div>
                             <div className=' flex sm:mt-4  '>
-                            <img src={featuredSpeaker.image} alt="" width="358" height="318" className="sm:hidden" {...HERO_IMG_PRIORITY} data-aos="zoom-in-up"/>
-                            <img src={featuredSpeaker.imageSm} alt="" width="210" height="202" className="xl:hidden" {...HERO_IMG_PRIORITY} data-aos="zoom-in-up"/>
+                            {/* Priority only on the desktop cut-out; the small one is hidden there. */}
+                            <img src={featuredSpeaker.image} alt="" width={featuredSpeaker.width} height={featuredSpeaker.height} className="sm:hidden" {...HERO_IMG_PRIORITY} data-aos="zoom-in-up"/>
+                            <img src={featuredSpeaker.imageSm} alt="" width={featuredSpeaker.widthSm} height={featuredSpeaker.heightSm} className="xl:hidden" data-aos="zoom-in-up"/>
 
                              <div className=" mt-[112px] text-center  sm:mt-12 ">
                             <p className="font-archivo font-normal text-[26.25px] sm:text-[18.25px] leading-[100%]  sm:leading-[100%] ">Special Speaker</p>
@@ -53,7 +54,7 @@ const Event = ({ conference, status, speakerCount, registrationUrl }) => {
                         <div className="  col-span-6  sm:grid-cols-1  sm:order-1" data-aos="fade-left">
                         {heroLogo ? (
                         <div className=' sm:pl-0 sm:mt-0 flex items-center justify-center ' >
-                                                    <img src={heroLogo.srcSm} alt='' width="206" height="104" className="xl:hidden" />
+                                                    <img src={heroLogo.srcSm} alt='' width={heroLogo.widthSm} height={heroLogo.heightSm} className="xl:hidden" />
                                                     </div>
                         ) : null}
 

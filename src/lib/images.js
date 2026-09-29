@@ -5,4 +5,7 @@ export const CARD_BANNER_SIZES = '(min-width: 1024px) 640px, (min-width: 768px) 
 
 export const bannerSmall = (src) => src.replace(/\.webp$/, '-640.webp');
 
+/** Share previews use a .jpg twin of WebP images (not every scraper reads WebP). */
+export const shareImage = (src) => src.replace(/\.webp$/, '.jpg');
+
 export const bannerSrcSet = (src) => `${bannerSmall(src)} 640w, ${src} 1200w`;
