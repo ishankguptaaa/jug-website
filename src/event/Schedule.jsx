@@ -1,31 +1,35 @@
 import { useEffect, useState } from 'react';
 import BookYourSlotButton from '../components/BookYourSlotButton';
-import { getSessionsForConference, isSpeakerSession, getSpeakerBySlug, formatTimeRange12, CDJ_2025_SLUG } from '../content';
+import { focusRing } from '../components/ui/focusRing';
+import { isSpeakerSession, getSpeakerBySlug, formatTimeRange12 } from '../content';
 import 'aos/dist/aos.css';
 
-const CONFERENCE_SLUG = CDJ_2025_SLUG;
+// Talks render as "Session N: <speakers>" with the talk title underneath;
+// other agenda slots render their own title/description.
+function toRows(sessions) {
+    let talkNumber = 0;
+    return sessions.map((session) => {
+        const time = formatTimeRange12(session.startTime, session.endTime);
+        if (!isSpeakerSession(session)) {
+            return { slug: session.slug, track: session.track, time, title: session.title, description: session.description };
+        }
+        talkNumber += 1;
+        const names = session.speakers.map((slug) => getSpeakerBySlug(slug)?.name).filter(Boolean).join(', ');
+        return { slug: session.slug, track: session.track, time, title: `Session ${talkNumber}: ${names}`, description: session.title };
+    });
+}
 
-// Build the schedule rows once: talks render as "Session N: <speakers>" with the
-// talk title underneath; other agenda slots render their own title/description.
-let talkNumber = 0;
-const scheduleData = getSessionsForConference(CONFERENCE_SLUG).map((session) => {
-    const time = formatTimeRange12(session.startTime, session.endTime);
-    if (!isSpeakerSession(session)) {
-        return { slug: session.slug, time, title: session.title, description: session.description };
-    }
-    talkNumber += 1;
-    const names = session.speakers.map((slug) => getSpeakerBySlug(slug)?.name).filter(Boolean).join(', ');
-    return { slug: session.slug, time, title: `Session ${talkNumber}: ${names}`, description: session.title };
-});
-
-const Schedule = () => {
+const Schedule = ({ sessions, tracks, registrationUrl }) => {
     const [visibleCount, setVisibleCount] = useState(0);
+    const [track, setTrack] = useState(null);
+    const rows = toRows(sessions);
+    const visibleRows = track ? rows.filter((row) => !row.track || row.track === track) : rows;
 
     useEffect(() => {
 
         const interval = setInterval(() => {
             setVisibleCount((prevCount) => {
-                if (prevCount < scheduleData.length) {
+                if (prevCount < rows.length) {
                     return prevCount + 1;
                 } else {
                     clearInterval(interval);
@@ -35,7 +39,7 @@ const Schedule = () => {
         }, 1000); 
 
         return () => clearInterval(interval);
-    }, []);
+    }, [rows.length]);
 
     return (
         <div className="bg-[#FFFCEF]">
@@ -47,10 +51,25 @@ const Schedule = () => {
                                 Explore the Event Schedule!
                             </h2>
                         </div>
+                        {tracks.length > 1 ? (
+                            <div role="group" aria-label="Filter sessions by track" className="mt-[36px] flex flex-wrap justify-center gap-3">
+                                {[{ slug: null, name: 'All tracks' }, ...tracks].map((option) => (
+                                    <button
+                                        key={option.name}
+                                        type="button"
+                                        aria-pressed={track === option.slug}
+                                        onClick={() => setTrack(option.slug)}
+                                        className={`rounded-full border border-black px-4 py-2 font-raleway font-medium text-[14px] transition-colors ${track === option.slug ? 'bg-black text-white' : 'bg-white hover:bg-[#EDD7FF]'} ${focusRing}`}
+                                    >
+                                        {option.name}
+                                    </button>
+                                ))}
+                            </div>
+                        ) : null}
                         <div className="mt-[36px] px-[10px]">
-                            {scheduleData.slice(0, visibleCount).map((event, index) => (
+                            {visibleRows.slice(0, visibleCount).map((event) => (
                                 <div 
-                                    key={index} 
+                                    key={event.slug} 
                                     className="flex items-center gap-6 sm:flex-col sm:gap-0 border-b border-black transition-opacity duration-500 opacity-100"
                                     data-aos="fade-down"
                                 >
@@ -73,7 +92,7 @@ const Schedule = () => {
                         </div>
 
                         <div className='mt-[41px]'>
-                            <BookYourSlotButton />
+                            <BookYourSlotButton href={registrationUrl} />
                         </div>
                     </div>
                 </div>

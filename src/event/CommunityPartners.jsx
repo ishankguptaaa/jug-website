@@ -1,14 +1,8 @@
 import 'aos/dist/aos.css'; 
 import BookYourSlotButton from '../components/BookYourSlotButton'
-import { getPartnersForConference, CDJ_2025_SLUG } from '../content';
+import ExternalLink from '../components/ui/ExternalLink';
 
-const partners = getPartnersForConference(CDJ_2025_SLUG, 'community');
-
-const CommunityPartners = () => {
-
-  
-
-
+const CommunityPartners = ({ partners, registrationUrl }) => {
   return (
     <div className="bg-[#F5FFEF] ">
       <div className="container mx-auto xl:max-w-screen-xl  ">
@@ -22,7 +16,9 @@ const CommunityPartners = () => {
             <div className="col-span-12 flex flex-wrap justify-center gap-x-14 text-center ">
               {partners.map((partner) => (
                 <div key={partner.slug} className="flex flex-col items-center justify-center max-w-xs sm:mt-5 md:mt-5 h-[162.79px] w-[204.08px] bg-[#ffffff] rounded-[19.06px]">
-                  <img src={partner.logo} alt={partner.name} data-aos="zoom-in-up" className='cursor-pointer' onClick={() => window.open(partner.website, "noopener", "noreferrer")}/>
+                  <ExternalLink href={partner.website}>
+                    <img src={partner.logo} alt={partner.name} loading="lazy" decoding="async" data-aos="zoom-in-up" />
+                  </ExternalLink>
                   {/* <p className='font-raleway font-medium mt-5 sm:mb-10 text-[20px] leading-[30px] tracking-[0%] text-black'>
                     {partner.name}
                   </p> */}
@@ -33,7 +29,7 @@ const CommunityPartners = () => {
             
 
           <div className='mt-[68px] flex flex-col items-center justify-center '>
-            <BookYourSlotButton/>
+            <BookYourSlotButton href={registrationUrl}/>
           </div>
          
         </div>

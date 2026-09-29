@@ -30,8 +30,12 @@ const EventVolunteer = () => {
         <div className="grid xl:grid-cols-6 sm:grid-cols-2 md:grid-cols-4 gap-y-11 gap-x-6 sm:gap-x-5 sm:gap-12 pt-[48px] sm:pt-[32px]">
           {volunteer.map((expert, index) => (
             <div key={expert.id} className="justify-items-center text-center"  data-aos="fade-right"   data-aos-delay={`${index * 200}`}>
-               <img src={expert.image} alt={expert.name} className=" sm:w-[320px] cursor-pointer" onClick={()=>window.open(expert.linkedinlink, "noopener", "noreferrer")}/>
-                <h2 className="pt-6 font-raleway font-bold text-[18px] leading-[22px] sm:text-[12px] sm:leading-[18px] sm:pt-3 cursor-pointer" onClick={()=>window.open(expert.linkedinlink, "noopener", "noreferrer")}>{expert.name}</h2>
+               <img src={expert.image} alt="" width="186" height="193" loading="lazy" decoding="async" className="h-auto sm:w-[320px]" />
+                <h3 className="pt-6 font-raleway font-bold text-[18px] leading-[22px] sm:text-[12px] sm:leading-[18px] sm:pt-3">
+                  {expert.linkedinlink ? (
+                    <ExternalLink href={expert.linkedinlink} className="hover:underline underline-offset-4">{expert.name}</ExternalLink>
+                  ) : expert.name}
+                </h3>
                 <p className="text-black font-raleway font-normal text-[14px] leading-[21px] pt-2 sm:text-[12px] sm:leading-[18px] sm:pt-1">{expert.profession} </p>
                 <p className='text-black font-raleway font-bold text-[12px] leading-[20px] pt-2 sm:pt-1'>{expert.organsitions}</p>
 

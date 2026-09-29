@@ -11,7 +11,7 @@ import { venues } from './venues.js';
 import { sponsors } from './sponsors.js';
 import { galleries } from './galleries.js';
 import { site } from './site.js';
-import { getStatus, getStartDateTime } from './status.js';
+import { getStatus, getStartDateTime, istToDate } from './status.js';
 import { groupByYear } from './format.js';
 
 // ---------- helpers ----------
@@ -181,6 +181,33 @@ export const getCurrentConference = (now = new Date()) => {
   const upcoming = conferences.filter((c) => getStatus(c, now) === 'upcoming').sort(byStartAsc);
   if (upcoming.length) return upcoming[0];
   return getPastConferences(now)[0];
+};
+
+/** Conferences split by status at `now`: live/upcoming soonest first, completed newest first. */
+export const getConferencesByStatus = (now = new Date()) => ({
+  live: conferences.filter((c) => getStatus(c, now) === 'live').sort(byStartAsc),
+  upcoming: conferences.filter((c) => getStatus(c, now) === 'upcoming').sort(byStartAsc),
+  completed: getPastConferences(now),
+});
+
+/** A conference's announcements, newest first. */
+export const getAnnouncementsForConference = (conferenceSlug) =>
+  [...(conferencesBySlug.get(conferenceSlug)?.announcements ?? [])].sort((a, b) =>
+    (b.date ?? '').localeCompare(a.date ?? ''),
+  );
+
+/**
+ * Live-mode agenda position at `now` (IST): the session running now and the
+ * next one to start. Either may be undefined (before start / after the last slot).
+ */
+export const getCurrentAndNextSession = (conferenceSlug, now = new Date()) => {
+  const at = (s, time) => istToDate(getSessionDate(s), time)?.getTime();
+  const t = now.getTime();
+  const agenda = getSessionsForConference(conferenceSlug);
+  return {
+    current: agenda.find((s) => at(s, s.startTime) <= t && t < at(s, s.endTime)),
+    next: agenda.find((s) => at(s, s.startTime) > t),
+  };
 };
 
 // ---------- sponsors & partners ----------

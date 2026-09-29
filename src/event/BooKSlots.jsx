@@ -1,8 +1,7 @@
 import { GoArrowUpRight } from "react-icons/go";
+import ExternalLink from "../components/ui/ExternalLink";
 
-
-
-function BooKSlots() {
+function BooKSlots({ name, registrationUrl }) {
   return (
     <div className="bg-[#FFFCEF]">
       <div className="container mx-auto 2xl:max-w-screen-2xl ">
@@ -19,7 +18,7 @@ function BooKSlots() {
                   {/* </div> */}
                   <div className="  mt-4 ">
                     <p className="font-raleway font-medium text-[24px] leading-[28px] sm:text-[16px] sm:leading-[24px] tracking-[1%]">
-                      Join top Java experts, developers, and tech leaders for a day of learning, networking, and innovation at Community Day for Java, 2025!
+                      Join top Java experts, developers, and tech leaders for a day of learning, networking, and innovation at {name}!
                     </p>
 
                   </div>
@@ -27,19 +26,14 @@ function BooKSlots() {
 
                 {/* Right Section (4 Columns) */}
                 <div className="flex justify-center col-span-3 sm:mt-7 sm:flex sm:items-center sm:justify-center sm:col-span-12">
-                  <div
+                  <ExternalLink
+                    href={registrationUrl}
+                    srLabel={`Book your ticket for ${name}`}
                     className="bg-white rounded-full py-[81px] px-[81px] sm:py-[20px] sm:px-[20px] border border-black flex items-center justify-center transition-all duration-300 hover:bg-black group"
-                    onClick={() =>
-                      window.open(
-                        "https://konfhub.com/community-day-for-java-2025",
-                        "_blank",
-                        "noopener,noreferrer"
-                      )
-                    }
                   >
                     {/* Arrow icon with hover effects */}
-                    <GoArrowUpRight className="text-gray-800 text-[60px] sm:text-[20px] transition-transform duration-300 group-hover:-translate-y-2 group-hover:translate-x-2 group-hover:text-white" />
-                  </div>
+                    <GoArrowUpRight aria-hidden="true" className="text-gray-800 text-[60px] sm:text-[20px] transition-transform duration-300 group-hover:-translate-y-2 group-hover:translate-x-2 group-hover:text-white" />
+                  </ExternalLink>
                 </div>
 
               </div>

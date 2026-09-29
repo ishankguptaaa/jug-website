@@ -1,11 +1,7 @@
 import 'aos/dist/aos.css'; 
 import BookYourSlotButton from '../components/BookYourSlotButton'
 
-const Goodies = () => {
-
-  
-
-
+const Goodies = ({ goodies, registrationUrl }) => {
   return (
     <div className="bg-[#FFFFFF] ">
       <div className="container mx-auto xl:max-w-screen-xl  ">
@@ -17,32 +13,20 @@ const Goodies = () => {
           </div>
           <div className="grid grid-cols-12 justify-center mt-11 sm:mt-6">
             <div className="col-span-12 flex flex-wrap justify-center gap-x-14 text-center ">
-              <div className="flex flex-col items-center max-w-xs">
-                <img src="/Goodies/Food.png" alt="not found" data-aos="zoom-in-up"/>
+              {goodies.map((goodie) => (
+              <div key={goodie.text} className="flex flex-col items-center max-w-xs">
+                <img src={goodie.image} alt="" width="182" height="188" loading="lazy" decoding="async" data-aos="zoom-in-up"/>
                 <p className='font-raleway font-medium text-[20px] leading-[30px] tracking-[0%] text-black'>
-                  Delicious Food & Breakfast Included – Fuel up while networking!
+                  {goodie.text}
                 </p>
               </div>
-
-              <div className="flex flex-col items-center max-w-xs ">
-                <img src="/Goodies/Bag.png" alt="not found" data-aos="zoom-in-up"/>
-                <p className='font-raleway font-medium text-[20px] leading-[30px] tracking-[0%] text-black'>
-                  Exclusive Swags & Goodies – Walk away with special event memorabilia!
-                </p>
-              </div>
-
-              <div className="flex flex-col items-center max-w-xs">
-                <img src="/Goodies/Speakers.png" alt="not found" data-aos="zoom-in-up"/>
-                <p className='font-raleway font-medium text-[20px] leading-[30px] tracking-[0%] text-black'>
-                  Technical Talks from Industry Experts – Get insights from top minds in Java.
-                </p>
-              </div>
+              ))}
             </div>
             
           </div>
 
           <div className='mt-[68px] flex flex-col items-center justify-center '>
-            <BookYourSlotButton/>
+            <BookYourSlotButton href={registrationUrl}/>
           </div>
          
         </div>

@@ -136,6 +136,12 @@ export function validateContent(content, { assetExists } = {}) {
     if (c.startDate === c.endDate) timeOrder('conferences', c);
     status('conferences', c);
     asset('conferences', c, 'banner');
+    asset('conferences', c, 'heroLogo.src', c.heroLogo?.src);
+    asset('conferences', c, 'heroLogo.srcSm', c.heroLogo?.srcSm);
+    asset('conferences', c, 'featuredSpeaker.image', c.featuredSpeaker?.image);
+    asset('conferences', c, 'featuredSpeaker.imageSm', c.featuredSpeaker?.imageSm);
+    asset('conferences', c, 'aboutImage');
+    (c.goodies ?? []).forEach((g, i) => asset('conferences', c, `goodies[${i}].image`, g.image));
     if (c.cfp !== undefined) {
       if (!c.cfp?.url) err(where('conferences', c), '"cfp" needs a "url"');
       if (c.cfp?.closesOn !== undefined && !isValidDate(c.cfp.closesOn)) {
@@ -143,6 +149,7 @@ export function validateContent(content, { assetExists } = {}) {
       }
     }
     for (const v of c.venues ?? []) ref('conferences', c, 'venues[]', 'venues', v);
+    ref('conferences', c, 'featuredSpeaker.speaker', 'speakers', c.featuredSpeaker?.speaker);
     for (const p of c.partners ?? []) ref('conferences', c, 'partners[]', 'sponsors', p);
     for (const s of c.sponsors ?? []) {
       ref('conferences', c, 'sponsors[].sponsor', 'sponsors', s.sponsor);
