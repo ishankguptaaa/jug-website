@@ -36,9 +36,7 @@ function HostedList({ title, base, items }) {
 }
 
 function VenueHistory({ venueSlug }) {
-  const history = getVenueHistory(venueSlug);
-  const events = history.filter((h) => h.type === 'event').map((h) => h.item);
-  const conferences = history.filter((h) => h.type === 'conference').map((h) => h.item);
+  const { events, conferences } = getVenueHistory(venueSlug);
   if (!events.length && !conferences.length) return null;
 
   return (
@@ -116,27 +114,40 @@ export default function PartnersPage() {
               {supporters.length ? (
                 <Group title="Community Supporters">
                   <ul className="pt-6 sm:pt-4 flex flex-wrap justify-center gap-6 sm:gap-3 font-raleway">
-                    {supporters.map((s) => (
-                      <li key={s.slug} className="w-[285px] sm:w-[148px]">
-                        <ExternalLink href={s.website} className="group block rounded-3xl">
-                          <img
-                            src={s.logo}
-                            alt=""
-                            width="285"
-                            height="296"
-                            loading="lazy"
-                            decoding="async"
-                            className="block w-full h-auto aspect-[285/296] object-cover rounded-3xl"
-                          />
+                    {supporters.map((s) => {
+                      const card = (
+                        <>
+                          {s.logo ? (
+                            <img
+                              src={s.logo}
+                              alt=""
+                              width="285"
+                              height="296"
+                              loading="lazy"
+                              decoding="async"
+                              className="block w-full h-auto aspect-[285/296] object-cover rounded-3xl"
+                            />
+                          ) : null}
                           <span className="block pt-3 font-bold text-[20px] leading-[28px] sm:text-[14px] sm:leading-[20px] group-hover:underline underline-offset-4">
                             {s.name}
                           </span>
-                        </ExternalLink>
-                        <p className="text-[16px] leading-[24px] sm:text-[12px] sm:leading-[18px]">
-                          {[s.designation, s.company ?? s.location].filter(Boolean).join(', ')}
-                        </p>
-                      </li>
-                    ))}
+                        </>
+                      );
+                      return (
+                        <li key={s.slug} className="w-[285px] sm:w-[148px]">
+                          {s.website ? (
+                            <ExternalLink href={s.website} className="group block rounded-3xl">
+                              {card}
+                            </ExternalLink>
+                          ) : (
+                            <div>{card}</div>
+                          )}
+                          <p className="text-[16px] leading-[24px] sm:text-[12px] sm:leading-[18px]">
+                            {[s.designation, s.company ?? s.location].filter(Boolean).join(', ')}
+                          </p>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </Group>
               ) : null}

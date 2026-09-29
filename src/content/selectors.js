@@ -283,17 +283,11 @@ export const getEventPlaceLabel = (eventOrSlug) => {
     : place.name;
 };
 
-/**
- * Everything hosted at a venue, newest first:
- * [{ type: 'event'|'conference', item }]
- */
-export const getVenueHistory = (venueSlug) =>
-  [
-    ...events.filter((e) => e.venue === venueSlug).map((item) => ({ type: 'event', item })),
-    ...conferences
-      .filter((c) => (c.venues ?? []).includes(venueSlug))
-      .map((item) => ({ type: 'conference', item })),
-  ].sort((a, b) => byStartDesc(a.item, b.item));
+/** Everything hosted at a venue, each list newest first: { events, conferences } */
+export const getVenueHistory = (venueSlug) => ({
+  events: events.filter((e) => e.venue === venueSlug).sort(byStartDesc),
+  conferences: conferences.filter((c) => (c.venues ?? []).includes(venueSlug)).sort(byStartDesc),
+});
 
 // ---------- galleries ----------
 
