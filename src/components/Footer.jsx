@@ -18,10 +18,7 @@ const SOCIAL_ICONS = [
 function Footer({ activeNav = null }) {
   const { pathname } = useLocation();
   const socials = SOCIAL_ICONS.filter(({ key }) => site.socials?.[key]);
-  // Current IST year, computed after mount (SSR/prerender + first client render
-  // use site.copyrightStartYear, so hydration always matches).
-  const now = useNow();
-  const year = now ? Math.max(getYearInIST(now), site.copyrightStartYear) : site.copyrightStartYear;
+  const year = Math.max(getYearInIST(useNow()), site.copyrightStartYear);
 
   return (
     <footer className="bg-[#FFFCEF]">

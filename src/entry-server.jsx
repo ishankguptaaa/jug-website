@@ -5,6 +5,8 @@ import App from './App';
 import { preloadRoute } from './router';
 import { setInitialNow } from './lib/useNow';
 
+export { routes } from './router';
+
 const renderApp = (url, pageChrome, helmetContext = {}) =>
   renderToString(
     <HelmetProvider context={helmetContext}>

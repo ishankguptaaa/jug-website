@@ -56,7 +56,7 @@ function Section({ bg, title, squiggle, children }) {
 
 export default function ConferenceDetailPage() {
   const { slug } = useParams();
-  // Hooks before the early return; `now` is null until mounted (SSR-safe).
+  // Hooks before the early return.
   const now = useNow(60 * 1000);
   const conference = getConferenceBySlug(slug);
   usePageChrome(
@@ -69,8 +69,7 @@ export default function ConferenceDetailPage() {
   if (!conference) return <NotFoundPage />;
 
   const status = getStatus(conference, now);
-  // Live UI needs the real clock, so it only appears after mount.
-  const isLive = Boolean(now) && status === 'live';
+  const isLive = status === 'live';
   // In-page Register/CFP CTAs only while they can still be acted on (as on
   // EventDetailPage); the header CTA always shows (user decision).
   const isOpen = status === 'upcoming' || status === 'live';

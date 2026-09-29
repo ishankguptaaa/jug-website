@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ isSsrBuild }) => ({
   plugins: [react()
   ],
   // base: "/",
@@ -22,9 +22,14 @@ export default defineConfig({
     ]
   },
 
+  // The SSR build is only read by scripts/prerender.mjs; don't copy public/.
+  build: {
+    copyPublicDir: !isSsrBuild,
+  },
+
   // Prerender (SSR build): bundle CommonJS packages whose named exports
   // Node's ESM loader can't see.
   ssr: {
     noExternal: ['react-helmet-async'],
   },
-})
+}))

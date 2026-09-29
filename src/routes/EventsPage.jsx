@@ -1,4 +1,4 @@
-import { getPastEventsByYear, getUpcomingEvents, site } from '../content';
+import { allSample, events, getPastEventsByYear, getUpcomingEvents, site } from '../content';
 import Seo from '../components/Seo';
 import Button from '../components/ui/Button';
 import PageHero from '../components/ui/PageHero';
@@ -6,22 +6,19 @@ import Container from '../components/ui/Container';
 import EmptyState from '../components/ui/EmptyState';
 import SectionHeading from '../components/ui/SectionHeading';
 import EventCard, { EventCardCompact } from '../components/events/EventCard';
-import ListSkeleton from '../components/events/ListSkeleton';
 import { GRID } from '../components/events/eventsGrid';
 import { useNow } from '../lib/useNow';
 
 const DESCRIPTION = `Upcoming and past ${site.name} meetups in Gujarat — dates, venues, speakers, talks and registration links.`;
 
 export default function EventsPage() {
-  // null during prerender and the first client render (SSR-safe); lists are
-  // time-dependent, so they render once the client knows the current time.
   const now = useNow();
-  const upcoming = now ? getUpcomingEvents(now) : null;
-  const pastByYear = now ? getPastEventsByYear(now) : null;
+  const upcoming = getUpcomingEvents(now);
+  const pastByYear = getPastEventsByYear(now);
 
   return (
     <>
-      <Seo title="Events" description={DESCRIPTION} path="/events" />
+      <Seo title="Events" description={DESCRIPTION} path="/events" noindex={allSample(events)} />
 
       <PageHero
         title="Meetups & Events"
@@ -37,9 +34,7 @@ export default function EventsPage() {
               Upcoming
             </SectionHeading>
             <div className="pt-[48px] sm:pt-[24px]">
-              {upcoming === null ? (
-                <ListSkeleton variant="full" />
-              ) : upcoming.length ? (
+              {upcoming.length ? (
                 <ul className={GRID}>
                   {upcoming.map((event) => (
                     <li key={event.slug} className="h-full">
@@ -60,33 +55,27 @@ export default function EventsPage() {
         </Container>
       </section>
 
-      {pastByYear === null || pastByYear.length ? (
+      {pastByYear.length ? (
         <section aria-labelledby="past-heading" className="bg-[#FFFCEF]">
           <Container>
             <div className="pt-[50px] pb-[100px] sm:pt-[25px] sm:pb-[50px]">
               <SectionHeading id="past-heading" squiggle="Meetups" className="sm:text-center">
                 Past
               </SectionHeading>
-              {pastByYear === null ? (
-                <div className="pt-[48px] sm:pt-[24px]">
-                  <ListSkeleton variant="compact" />
+              {pastByYear.map(({ year, events: yearEvents }) => (
+                <div key={year} className="pt-[48px] sm:pt-[24px]">
+                  <h3 className="font-raleway font-bold text-[32px] leading-[40px] sm:text-[20px] sm:leading-[28px] sm:text-center">
+                    {year}
+                  </h3>
+                  <ul className={`mt-6 sm:mt-4 ${GRID}`}>
+                    {yearEvents.map((event) => (
+                      <li key={event.slug} className="h-full">
+                        <EventCardCompact event={event} />
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              ) : (
-                pastByYear.map(({ year, events }) => (
-                  <div key={year} className="pt-[48px] sm:pt-[24px]">
-                    <h3 className="font-raleway font-bold text-[32px] leading-[40px] sm:text-[20px] sm:leading-[28px] sm:text-center">
-                      {year}
-                    </h3>
-                    <ul className={`mt-6 sm:mt-4 ${GRID}`}>
-                      {events.map((event) => (
-                        <li key={event.slug} className="h-full">
-                          <EventCardCompact event={event} />
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))
-              )}
+              ))}
             </div>
           </Container>
         </section>

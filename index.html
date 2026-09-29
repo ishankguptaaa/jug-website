@@ -12,9 +12,11 @@
     <link rel="icon" href="/jug-logo.ico" type="image/x-icon" />
 
     <!--
-      Neutral site-wide defaults (values mirror src/content/site.js).
-      data-rh="true" lets react-helmet-async (components/Seo.jsx) replace these
-      per page instead of adding duplicates. og:* use `property`, twitter:* use `name`.
+      Neutral site-wide defaults (values mirror src/content/site.js), used by the
+      dev server and any page served without prerendering. scripts/prerender.mjs
+      strips <title> and every data-rh="true" tag from the built template and
+      injects each page's own from components/Seo.jsx. og:* use `property`,
+      twitter:* use `name`.
     -->
     <title>Gujarat JUG - Official Community Page</title>
     <meta data-rh="true" name="description" content="Gujarat Java User Group (JUG) is a thriving community of Java developers, tech enthusiasts, and industry professionals. Join us to learn, network, and grow!" />
@@ -27,6 +29,7 @@
     <meta data-rh="true" name="twitter:title" content="Gujarat JUG - Official Community Page" />
     <meta data-rh="true" name="twitter:description" content="Gujarat Java User Group (JUG) is a thriving community of Java developers, tech enthusiasts, and industry professionals. Join us to learn, network, and grow!" />
     <meta data-rh="true" name="twitter:image" content="https://www.gujaratjug.org/Img/AboutCommunity.png" />
+    <noscript><style>[data-aos]{opacity:1!important;transform:none!important;transition:none!important}</style></noscript>
   </head>
   <body>
     <div id="root"></div>

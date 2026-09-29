@@ -20,7 +20,7 @@ export const organizationJsonLd = () => ({
   url: site.url,
   logo: absoluteUrl(site.logo),
   description: site.description,
-  sameAs: [site.socials.linkedin, site.socials.x, site.socials.youtube],
+  sameAs: [site.socials.linkedin, site.socials.x, site.socials.youtube].filter(Boolean),
 });
 
 /**
@@ -71,7 +71,11 @@ export const personJsonLd = (speaker, path) => ({
   sameAs: speaker.socials ? Object.values(speaker.socials) : undefined,
 });
 
-const navCrumb = (to) => ({ name: NAV_ITEMS.find((n) => n.to === to).label, path: to });
+const navCrumb = (to) => {
+  const item = NAV_ITEMS.find((n) => n.to === to);
+  if (!item) throw new Error(`breadcrumbJsonLd: "${to}" is not a NAV_ITEMS path`);
+  return { name: item.label, path: to };
+};
 
 /** Home › section (label from the main nav) › current page. */
 export const breadcrumbJsonLd = (sectionPath, current) => ({

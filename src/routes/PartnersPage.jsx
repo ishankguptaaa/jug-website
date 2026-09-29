@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { formatDateRange, getVenueHistory, site, sponsors, venues } from '../content';
+import { allSample, formatDateRange, getVenueHistory, site, sponsors, venues } from '../content';
 import Seo from '../components/Seo';
 import PageHero from '../components/ui/PageHero';
 import Container from '../components/ui/Container';
@@ -76,7 +76,7 @@ export default function PartnersPage() {
 
   return (
     <>
-      <Seo title="Partners" description={DESCRIPTION} path="/partners" />
+      <Seo title="Partners" description={DESCRIPTION} path="/partners" noindex={allSample([...venues, ...sponsors])} />
 
       <PageHero
         title="Our Partners"

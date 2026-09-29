@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { countLabel, getSpeakerDirectory, site } from '../content';
+import { allSample, countLabel, getSpeakerDirectory, site } from '../content';
 import Seo from '../components/Seo';
 import PageHero from '../components/ui/PageHero';
 import Container from '../components/ui/Container';
@@ -21,7 +21,7 @@ export default function SpeakersPage() {
 
   return (
     <>
-      <Seo title="Speakers" description={DESCRIPTION} path="/speakers" />
+      <Seo title="Speakers" description={DESCRIPTION} path="/speakers" noindex={allSample(directory)} />
 
       <PageHero
         title="Speakers"

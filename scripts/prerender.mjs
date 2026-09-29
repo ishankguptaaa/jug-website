@@ -11,7 +11,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { CDJ_2025_SLUG, conferences, events, galleries, site, speakers } from '../src/content/index.js';
-import { render } from '../dist-ssr/entry-server.js';
+import { render, routes as routeObjects } from '../dist-ssr/entry-server.js';
 
 const dist = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'dist');
 const now = new Date();
@@ -19,8 +19,14 @@ const today = now.toISOString().slice(0, 10);
 // Content dates as lastmod, but never in the future (upcoming events).
 const pastDate = (date) => (date && date <= today ? date : undefined);
 
+// Static pages come from src/router.jsx: page routes without `:param` or `*`
+// (the legacy CDJ redirect has no page to render).
+const staticPaths = routeObjects[0].children
+  .filter((r) => r.preload && !/[:*]/.test(r.path ?? ''))
+  .map((r) => (r.index ? '/' : `/${r.path}`));
+
 const routes = [
-  ...['/', '/events', '/conferences', '/speakers', '/gallery', '/partners', '/about'].map((p) => ({ path: p })),
+  ...staticPaths.map((p) => ({ path: p })),
   ...events.map((e) => ({ path: `/events/${e.slug}`, lastmod: pastDate(e.date) })),
   ...conferences.map((c) => ({ path: `/conferences/${c.slug}`, lastmod: pastDate(c.endDate) })),
   ...speakers.map((s) => ({ path: `/speakers/${s.slug}` })),
@@ -43,8 +49,8 @@ for (const route of routes) {
   const { html, head, pageChrome } = await render(route.path, now);
   const data = JSON.stringify({ path: route.path, now: now.toISOString(), pageChrome }).replace(/</g, '\\u003c');
   const page = template
-    .replace('</head>', `${head}</head>`)
-    .replace(ROOT, `<div id="root">${html}</div><script id="prerender-data" type="application/json">${data}</script>`);
+    .replace('</head>', () => `${head}</head>`)
+    .replace(ROOT, () => `<div id="root">${html}</div><script id="prerender-data" type="application/json">${data}</script>`);
   const file = path.join(dist, route.path === '/' ? 'index.html' : `${route.path}.html`);
   await mkdir(path.dirname(file), { recursive: true });
   await writeFile(file, page);

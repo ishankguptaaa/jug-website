@@ -145,14 +145,12 @@ function GallerySection() {
 // Section ids double as legacy anchors: /#about, /#speakers, /#sessions,
 // /#volunteer, /#reviews (scrolled to by ScrollManager).
 export default function HomePage() {
-  // null during prerender and the first client render (SSR-safe), so the
-  // classic hero shows until the client knows the current time.
   const now = useNow();
-  const byStatus = now ? getConferencesByStatus(now) : { live: [], upcoming: [], completed: [] };
+  const byStatus = getConferencesByStatus(now);
   // Live first, then the soonest upcoming — same order as getCurrentConference.
   const [conference, ...otherOpen] = [...byStatus.live, ...byStatus.upcoming];
   const currentStatus = conference ? getStatus(conference, now) : null;
-  const nextMeetup = now ? getUpcomingEvents(now)[0] : undefined;
+  const nextMeetup = getUpcomingEvents(now)[0];
 
   let feature = null;
   if (conference) feature = conferenceFeature(conference, currentStatus);
@@ -167,13 +165,13 @@ export default function HomePage() {
       <Seo fullTitle={`${site.name} - Official Community Page`} description={site.description} path="/" jsonLd={organizationJsonLd()} />
       <Home feature={feature} />
       <AboutCommunity />
-      {now ? <ScheduleSections
-          now={now}
-          conference={conference}
-          conferenceStatus={currentStatus}
-          otherOpen={otherOpen}
-          completed={byStatus.completed}
-        /> : null}
+      <ScheduleSections
+        now={now}
+        conference={conference}
+        conferenceStatus={currentStatus}
+        otherOpen={otherOpen}
+        completed={byStatus.completed}
+      />
       <Experts />
       <Sessions />
       <GallerySection />

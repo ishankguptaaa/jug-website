@@ -52,15 +52,12 @@ export function getEndDateTime(entity) {
 
 /**
  * @param {object} entity event or conference record
- * @param {Date} [now] current instant; pass `null`/`undefined` when it isn't
- *   known — the result is then only the manual override, never a
- *   guessed/real-clock status.
+ * @param {Date} now current instant
  * @returns {'upcoming'|'live'|'completed'|null}
  */
 export function getStatus(entity, now) {
   const override =
     entity?.statusOverride && STATUSES.includes(entity.statusOverride) ? entity.statusOverride : null;
-  if (!now) return override;
   if (override) return override;
   const start = getStartDateTime(entity);
   const end = getEndDateTime(entity);

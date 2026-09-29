@@ -31,11 +31,20 @@ const container = document.getElementById('root')
 // Written by scripts/prerender.mjs next to the prerendered page.
 const prerendered = JSON.parse(document.getElementById('prerender-data')?.textContent ?? 'null')
 
+// Client-only render (unprerendered URL, or hydration couldn't start). Preload
+// first so the markup isn't wiped for a blank Suspense fallback.
+const renderClient = () =>
+  preloadRoute(location.pathname)
+    .catch(() => {})
+    .then(() => createRoot(container).render(app({})))
+
 // Hydrate only HTML prerendered for this URL (404.html can be served for any
 // path); load the page chunk first so hydration doesn't suspend on it.
 if (prerendered?.path === (location.pathname.replace(/\/+$/, '') || '/')) {
   setInitialNow(new Date(prerendered.now))
-  preloadRoute(location.pathname).then(() => hydrateRoot(container, app({ initial: prerendered.pageChrome })))
+  preloadRoute(location.pathname)
+    .then(() => hydrateRoot(container, app({ initial: prerendered.pageChrome })))
+    .catch(renderClient)
 } else {
-  createRoot(container).render(app({}))
+  renderClient()
 }

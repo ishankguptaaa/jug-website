@@ -42,14 +42,12 @@ function isLuma(url) {
 
 export default function EventDetailPage() {
   const { slug } = useParams();
-  // Hooks before the early return; `now` is null until mounted (SSR-safe).
+  // Hooks before the early return.
   const now = useNow();
   const event = getEventBySlug(slug);
   if (!event) return <NotFoundPage />;
 
   const path = `/events/${event.slug}`;
-  // Before mount (SSR-safe: `now` is null), getStatus falls back to a manual
-  // override, so the Register CTA only appears once the real status is known.
   const status = getStatus(event, now);
   const canRegister = (status === 'upcoming' || status === 'live') && Boolean(event.registrationUrl);
   const place = getEventPlace(event);

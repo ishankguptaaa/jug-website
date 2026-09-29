@@ -1,4 +1,4 @@
-import { getConferencesByStatus, site } from '../content';
+import { allSample, conferences, getConferencesByStatus, site } from '../content';
 import Seo from '../components/Seo';
 import Button from '../components/ui/Button';
 import PageHero from '../components/ui/PageHero';
@@ -6,7 +6,6 @@ import Container from '../components/ui/Container';
 import EmptyState from '../components/ui/EmptyState';
 import SectionHeading from '../components/ui/SectionHeading';
 import ConferenceCard from '../components/conferences/ConferenceCard';
-import ListSkeleton from '../components/events/ListSkeleton';
 import { GRID } from '../components/events/eventsGrid';
 import { useNow } from '../lib/useNow';
 
@@ -31,14 +30,11 @@ function ConferenceSection({ id, title, squiggle, status, conferences, featured 
 }
 
 export default function ConferencesPage() {
-  // null during prerender and the first client render (SSR-safe); the lists
-  // are time-dependent, so they render once the client knows the current time.
-  const now = useNow();
-  const byStatus = now ? getConferencesByStatus(now) : null;
+  const byStatus = getConferencesByStatus(useNow());
 
   return (
     <>
-      <Seo title="Conferences" description={DESCRIPTION} path="/conferences" />
+      <Seo title="Conferences" description={DESCRIPTION} path="/conferences" noindex={allSample(conferences)} />
 
       <PageHero
         title="Conferences"
@@ -49,45 +45,37 @@ export default function ConferencesPage() {
 
       <div className="bg-[#FFFCEF]">
         <Container className="py-[50px] sm:py-[25px]">
-          {byStatus === null ? (
+          <ConferenceSection
+            id="live-heading"
+            title="Currently"
+            squiggle="hosting"
+            status="live"
+            conferences={byStatus.live}
+            featured
+          />
+          {byStatus.live.length || byStatus.upcoming.length ? null : (
             <div className="py-[50px] sm:py-[25px]">
-              <ListSkeleton variant="full" />
+              <EmptyState
+                title="No upcoming conferences right now"
+                message="Follow us on Luma to hear about the next one as soon as it's announced."
+                action={<Button href={site.lumaCalendarUrl}>Follow us on Luma</Button>}
+              />
             </div>
-          ) : (
-            <>
-              <ConferenceSection
-                id="live-heading"
-                title="Currently"
-                squiggle="hosting"
-                status="live"
-                conferences={byStatus.live}
-                featured
-              />
-              {byStatus.live.length || byStatus.upcoming.length ? null : (
-                <div className="py-[50px] sm:py-[25px]">
-                  <EmptyState
-                    title="No upcoming conferences right now"
-                    message="Follow us on Luma to hear about the next one as soon as it's announced."
-                    action={<Button href={site.lumaCalendarUrl}>Follow us on Luma</Button>}
-                  />
-                </div>
-              )}
-              <ConferenceSection
-                id="upcoming-heading"
-                title="Upcoming"
-                squiggle="Conferences"
-                status="upcoming"
-                conferences={byStatus.upcoming}
-              />
-              <ConferenceSection
-                id="completed-heading"
-                title="Completed"
-                squiggle="Conferences"
-                status="completed"
-                conferences={byStatus.completed}
-              />
-            </>
           )}
+          <ConferenceSection
+            id="upcoming-heading"
+            title="Upcoming"
+            squiggle="Conferences"
+            status="upcoming"
+            conferences={byStatus.upcoming}
+          />
+          <ConferenceSection
+            id="completed-heading"
+            title="Completed"
+            squiggle="Conferences"
+            status="completed"
+            conferences={byStatus.completed}
+          />
         </Container>
       </div>
     </>
