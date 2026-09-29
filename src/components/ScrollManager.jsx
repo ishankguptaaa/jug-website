@@ -1,6 +1,7 @@
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLocation, useNavigationType } from 'react-router-dom';
 import { prefersReducedMotion } from '../lib/aos';
+import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
 const POLL_MS = 50;
 const MAX_WAIT_MS = 4000;
@@ -67,8 +68,11 @@ function retryUntil(attempt, { stopOnUserInput = true } = {}) {
  *   the layout (stops as soon as the user scrolls/types).
  * - Back/forward (client POP) and reload / browser back-forward into the app
  *   → restore the position saved for that history entry + path. A fresh
- *   document load never restores (hash → element, else top). Native restoration is disabled because react-router commits routes
- *   in a transition, so the browser would restore against the old page's DOM.
+ *   document load never restores: a hash scrolls to its element as above;
+ *   without one the browser's position is kept (the prerendered page may
+ *   already have been scrolled before hydration). Native restoration is
+ *   disabled because react-router commits routes in a transition, so the
+ *   browser would restore against the old page's DOM.
  */
 export default function ScrollManager() {
   const location = useLocation();
@@ -97,7 +101,7 @@ export default function ScrollManager() {
 
   // Track which history entry scroll positions belong to. Layout effect so the
   // key flips at commit, before any scroll event caused by the new page.
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     currentPositionKey.current = positionKey;
   }, [positionKey]);
 
@@ -135,8 +139,14 @@ export default function ScrollManager() {
     if (isInitialLoad) {
       const entry = performance.getEntriesByType?.('navigation')?.[0];
       shouldRestore = entry?.type === 'reload' || entry?.type === 'back_forward';
-      // Drop any stale position left under this key by an earlier document.
-      if (!shouldRestore) savePosition(positionKey, 0);
+      if (!shouldRestore) {
+        // Replace any stale position from an earlier document with where the
+        // browser put us. Without a hash, leave it: the prerendered page may
+        // have been scrolled before hydration. With a hash, fall through so the
+        // target is found once rendered and re-aligned (stops on user input).
+        savePosition(positionKey, window.scrollY);
+        if (!hash) return undefined;
+      }
     }
 
     if (shouldRestore) {

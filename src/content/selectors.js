@@ -54,6 +54,9 @@ export const getVenueBySlug = (slug) => venuesBySlug.get(slug);
 export const getSponsorBySlug = (slug) => sponsorsBySlug.get(slug);
 export const getGalleryBySlug = (slug) => galleriesBySlug.get(slug);
 
+/** True when every record is a sample/placeholder (so a page listing only them is noindex). */
+export const allSample = (list) => list.every((record) => record.isSample);
+
 // ---------- speakers ----------
 
 /** All speakers in file order. Pass `{ includeSamples: false }` to hide samples. */
@@ -331,7 +334,7 @@ export const getSpeakerDirectory = () => {
       const speaker = speakersBySlug.get(slug);
       return speaker && { ...speaker, sessionCount };
     }),
-  ).sort((a, b) => b.sessionCount - a.sessionCount || a.name.localeCompare(b.name));
+  ).sort((a, b) => b.sessionCount - a.sessionCount || a.name.localeCompare(b.name, 'en'));
 };
 
 // ---------- about ----------
@@ -342,8 +345,7 @@ export const isCfpOpen = (conference, now) => {
   if (!['upcoming', 'live'].includes(getStatus(conference, now))) return false;
   const closes = conference.cfp.closesOn && istToDate(conference.cfp.closesOn, '23:59');
   if (!closes) return true;
-  // Unknown time (prerender / first render): don't advertise a CFP that may have closed.
-  return Boolean(now) && now <= closes;
+  return now <= closes;
 };
 
 /** CFP link of the soonest conference whose CFP is open at `now`; `undefined` if none. */

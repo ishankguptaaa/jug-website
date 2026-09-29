@@ -21,7 +21,6 @@ const activeLink = 'underline decoration-2 underline-offset-8';
 /** LIVE / UPCOMING for the highlighted conference; nothing when it's completed. */
 function useConferenceStatus() {
   const now = useNow();
-  if (!now) return null;
   const conference = getCurrentConference(now);
   if (!conference) return null;
   const status = getStatus(conference, now);

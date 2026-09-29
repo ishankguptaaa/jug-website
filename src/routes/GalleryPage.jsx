@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { formatDate, getGalleriesByYear, site } from '../content';
+import { allSample, formatDate, galleries, getGalleriesByYear, site } from '../content';
 import Seo from '../components/Seo';
 import PageHero from '../components/ui/PageHero';
 import Container from '../components/ui/Container';
@@ -45,7 +45,7 @@ export default function GalleryPage() {
 
   return (
     <>
-      <Seo title="Gallery" description={DESCRIPTION} path="/gallery" />
+      <Seo title="Gallery" description={DESCRIPTION} path="/gallery" noindex={allSample(galleries)} />
 
       <PageHero
         title="Community Gallery"

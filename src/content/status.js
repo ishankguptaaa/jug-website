@@ -9,10 +9,11 @@ const IST_OFFSET_MINUTES = 5 * 60 + 30;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const TIME_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
 
+/** 'YYYY-MM-DD' calendar date in Asia/Kolkata for an absolute Date. */
+export const dateInIST = (now) => new Date(now.getTime() + IST_OFFSET_MINUTES * 60 * 1000).toISOString().slice(0, 10);
+
 /** Calendar year in Asia/Kolkata for an absolute Date. */
-export function getYearInIST(now) {
-  return new Date(now.getTime() + IST_OFFSET_MINUTES * 60 * 1000).getUTCFullYear();
-}
+export const getYearInIST = (now) => Number(dateInIST(now).slice(0, 4));
 
 /**
  * Convert an IST wall-clock date + time into an absolute Date.
@@ -52,15 +53,12 @@ export function getEndDateTime(entity) {
 
 /**
  * @param {object} entity event or conference record
- * @param {Date} [now] current instant; pass `null`/`undefined` when it isn't
- *   known yet (e.g. before the client mounts, see `useNow`) — the result is
- *   then only the manual override, never a guessed/real-clock status.
+ * @param {Date} now current instant
  * @returns {'upcoming'|'live'|'completed'|null}
  */
 export function getStatus(entity, now) {
   const override =
     entity?.statusOverride && STATUSES.includes(entity.statusOverride) ? entity.statusOverride : null;
-  if (!now) return override;
   if (override) return override;
   const start = getStartDateTime(entity);
   const end = getEndDateTime(entity);
