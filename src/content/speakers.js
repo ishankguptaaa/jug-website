@@ -67,30 +67,4 @@ export const speakers = [
     designation: 'Software Developer',
     company: 'Red Hat',
   },
-
-  // ---- Sample speakers (placeholders — replace with real people) ----
-  {
-    slug: 'sample-speaker-asha',
-    name: 'Asha Sample',
-    designation: 'Sample Backend Engineer',
-    company: 'Example Corp',
-    bio: 'Placeholder speaker used to preview the new event pages. Not a real person.',
-    isSample: true,
-  },
-  {
-    slug: 'sample-speaker-rahul',
-    name: 'Rahul Placeholder',
-    designation: 'Sample Java Architect',
-    company: 'Example Labs',
-    bio: 'Placeholder speaker used to preview the new event pages. Not a real person.',
-    isSample: true,
-  },
-  {
-    slug: 'sample-speaker-meera',
-    name: 'Meera Demo',
-    designation: 'Sample Developer Advocate',
-    company: 'Demo Systems',
-    bio: 'Placeholder speaker used to preview the new event pages. Not a real person.',
-    isSample: true,
-  },
 ];
