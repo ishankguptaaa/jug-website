@@ -30,7 +30,8 @@ export default function Seo({
   const imageUrl = absoluteUrl(image);
 
   // Builders return null when there's nothing valid to publish.
-  const structuredData = Array.isArray(jsonLd) ? jsonLd.filter(Boolean) : jsonLd;
+  const list = [jsonLd].flat().filter(Boolean);
+  const structuredData = list.length > 1 ? list : list[0];
   return (
     <Helmet>
       <title>{resolvedTitle}</title>

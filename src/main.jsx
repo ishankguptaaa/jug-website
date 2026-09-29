@@ -44,7 +44,8 @@ if (prerendered?.path === (location.pathname.replace(/\/+$/, '') || '/')) {
   setInitialNow(new Date(prerendered.now))
   preloadRoute(location.pathname)
     .then(() => hydrateRoot(container, app({ initial: prerendered.pageChrome })))
-    .catch(renderClient)
+    // Chunk failed to load: keep the readable prerendered HTML rather than wiping it.
+    .catch((error) => console.error(error))
 } else {
   renderClient()
 }

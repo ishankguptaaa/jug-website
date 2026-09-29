@@ -15,7 +15,8 @@ import { render, routes as routeObjects } from '../dist-ssr/entry-server.js';
 
 const dist = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'dist');
 const now = new Date();
-const today = now.toISOString().slice(0, 10);
+// Content dates are IST calendar dates.
+const today = new Date(now.getTime() + 330 * 60 * 1000).toISOString().slice(0, 10);
 // Content dates as lastmod, but never in the future (upcoming events).
 const pastDate = (date) => (date && date <= today ? date : undefined);
 
@@ -37,7 +38,7 @@ const routes = [
 // The template's default <title> and Helmet-managed (data-rh) tags are
 // replaced by each page's own. Read before dist/index.html is overwritten.
 const template = (await readFile(path.join(dist, 'index.html'), 'utf8'))
-  .replace(/<title>[\s\S]*?<\/title>\s*/, '')
+  .replace(/<title>[^<]*<\/title>\s*/, '')
   .replace(/<(meta|link)\b[^>]*\bdata-rh="true"[^>]*>\s*/g, '');
 const ROOT = '<div id="root"></div>';
 if (!template.includes(ROOT) || !template.includes('</head>')) throw new Error(`dist/index.html has no ${ROOT}`);
@@ -51,6 +52,11 @@ for (const route of routes) {
   const page = template
     .replace('</head>', () => `${head}</head>`)
     .replace(ROOT, () => `<div id="root">${html}</div><script id="prerender-data" type="application/json">${data}</script>`);
+  // Guard the assembled page, not just the strings that went into it.
+  const visible = page.replace(/<!--[\s\S]*?-->/g, '');
+  if ((visible.match(/<title[\s>]/g) ?? []).length !== 1 || !visible.includes('<script type="module"')) {
+    throw new Error(`${route.path}: assembled page lost its <title> or module script (check index.html comments)`);
+  }
   const file = path.join(dist, route.path === '/' ? 'index.html' : `${route.path}.html`);
   await mkdir(path.dirname(file), { recursive: true });
   await writeFile(file, page);
@@ -75,10 +81,16 @@ await writeFile(path.join(dist, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitem
 // (unknown URLs 404 on Vercel; the legacy CDJ URL is a vercel.json redirect).
 const broken = new Set();
 for (const [from, page] of written) {
-  for (const [, href] of page.matchAll(/href="(\/[^"#?]*)/g)) {
+  for (const [, href] of page.replace(/<!--[\s\S]*?-->/g, '').matchAll(/href="(\/[^"#?]*)/g)) {
     const target = href.replace(/(.)\/$/, '$1');
-    const ok =
-      written.has(target) || target === `/${CDJ_2025_SLUG}` || existsSync(path.join(dist, decodeURIComponent(target)));
+    let file;
+    try {
+      file = path.join(dist, decodeURIComponent(target));
+    } catch {
+      broken.add(`${from} → ${href} (malformed URL)`);
+      continue;
+    }
+    const ok = written.has(target) || target === `/${CDJ_2025_SLUG}` || existsSync(file);
     if (!ok) broken.add(`${from} → ${href}`);
   }
 }
