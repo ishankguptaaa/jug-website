@@ -31,7 +31,7 @@ export const sponsors = [
   {
     slug: 'staunchsys',
     name: 'Staunchsys',
-    logo: '/Sponsors/Staunchsys.png',
+    logo: '/Sponsors/Staunchsys.webp',
     website: 'https://www.staunchsys.com/',
     kind: 'sponsor',
   },
@@ -58,7 +58,7 @@ export const sponsors = [
   {
     slug: 'hemal-trivedi',
     name: 'Hemal Trivedi',
-    logo: '/Sponsors/Hemal.png',
+    logo: '/Sponsors/Hemal.webp',
     logoAlt: 'Community',
     website: 'https://www.linkedin.com/in/hemalt/',
     kind: 'supporter',
@@ -121,7 +121,7 @@ export const sponsors = [
   {
     slug: 'gdg-gandhinagar',
     name: 'Google Developer Group Ghandhinagar',
-    logo: '/Img/GDG_Gandhinagar.png',
+    logo: '/Img/GDG_Gandhinagar.webp',
     website: 'https://gdg.community.dev/gdg-gandhinagar/',
     kind: 'community',
   },

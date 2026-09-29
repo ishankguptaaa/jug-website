@@ -4,6 +4,7 @@
 
 import { SESSION_TYPES, SPEAKER_SESSION_TYPES } from './sessions.js';
 import { STATUSES } from './status.js';
+import { bannerSmall } from '../lib/images.js';
 
 const KEBAB_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
@@ -121,6 +122,7 @@ export function validateContent(content, { assetExists } = {}) {
     }
     ref('events', e, 'conference', 'conferences', e.conference);
     asset('events', e, 'banner');
+    asset('events', e, 'banner (640w srcset variant)', e.banner && bannerSmall(e.banner));
   }
 
   // --- conferences ---
@@ -136,6 +138,7 @@ export function validateContent(content, { assetExists } = {}) {
     if (c.startDate === c.endDate) timeOrder('conferences', c);
     status('conferences', c);
     asset('conferences', c, 'banner');
+    asset('conferences', c, 'banner (640w srcset variant)', c.banner && bannerSmall(c.banner));
     asset('conferences', c, 'heroLogo.src', c.heroLogo?.src);
     asset('conferences', c, 'heroLogo.srcSm', c.heroLogo?.srcSm);
     asset('conferences', c, 'featuredSpeaker.image', c.featuredSpeaker?.image);

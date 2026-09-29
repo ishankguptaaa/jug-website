@@ -8,6 +8,7 @@ import {
 import Button from '../ui/Button';
 import Card from '../ui/Card';
 import { CARD_SURFACE } from '../ui/cardSurface';
+import { BANNER_SIZES, bannerSrcSet } from '../../lib/images';
 import Pill from '../ui/Pill';
 import StatusBadge from '../ui/StatusBadge';
 import CompactCard from '../ui/CompactCard';
@@ -33,6 +34,8 @@ export default function ConferenceCard({ conference: c, status, featured = false
       {c.banner ? (
         <img
           src={c.banner}
+          srcSet={bannerSrcSet(c.banner)}
+          sizes={BANNER_SIZES}
           alt=""
           width="1200"
           height="600"
