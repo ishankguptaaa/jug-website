@@ -148,11 +148,11 @@ export default function AboutPage() {
                   <Card bg={item.bg} className="h-full p-8 sm:p-6 flex flex-col items-start">
                     <h3 className={CARD_TITLE}>{item.title}</h3>
                     <p className={`${CARD_TEXT} flex-1`}>{item.text}</p>
-                  {item.to ? (
-                    <Button to={item.to} shape="card" className="mt-6">
-                      {item.cta}
-                    </Button>
-                  ) : null}
+                    {item.to ? (
+                      <Button to={item.to} shape="card" className="mt-6">
+                        {item.cta}
+                      </Button>
+                    ) : null}
                   </Card>
                 </li>
               ))}
