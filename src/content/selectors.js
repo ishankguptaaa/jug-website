@@ -308,3 +308,33 @@ export const getGalleriesForEvent = (eventSlug) => galleries.filter((g) => g.eve
 
 export const getGalleriesForConference = (conferenceSlug) =>
   galleries.filter((g) => g.conference === conferenceSlug);
+
+// ---------- speaker directory ----------
+
+/**
+ * Everyone with at least one talk/workshop/panel/keynote, each with
+ * `sessionCount`; most sessions first, then by name.
+ */
+export const getSpeakerDirectory = () => {
+  const counts = new Map();
+  for (const session of sessions.filter(isSpeakerSession)) {
+    for (const slug of session.speakers ?? []) counts.set(slug, (counts.get(slug) ?? 0) + 1);
+  }
+  return compact(
+    [...counts].map(([slug, sessionCount]) => {
+      const speaker = speakersBySlug.get(slug);
+      return speaker && { ...speaker, sessionCount };
+    }),
+  ).sort((a, b) => b.sessionCount - a.sessionCount || a.name.localeCompare(b.name));
+};
+
+/** Events and conferences a speaker has sessions at, each newest first: { events, conferences }. */
+export const getParticipationForSpeaker = (speakerSlug) => {
+  const own = sessions.filter((s) => (s.speakers ?? []).includes(speakerSlug));
+  const unique = (slugs, bySlug) =>
+    compact([...new Set(slugs)].map((slug) => bySlug.get(slug))).sort(byStartDesc);
+  return {
+    events: unique(own.map((s) => s.event), eventsBySlug),
+    conferences: unique(own.map((s) => s.conference), conferencesBySlug),
+  };
+};

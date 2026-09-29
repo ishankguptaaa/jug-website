@@ -1,15 +1,7 @@
 import { Link } from 'react-router-dom';
-import { FaGithub, FaGlobe, FaLinkedin, FaXTwitter } from 'react-icons/fa6';
-import { getSpeakerRolePrefix } from '../../content';
-import ExternalLink from '../ui/ExternalLink';
 import { focusRing } from '../ui/focusRing';
-
-const SOCIALS = [
-  { key: 'linkedin', label: 'LinkedIn', Icon: FaLinkedin },
-  { key: 'x', label: 'X', Icon: FaXTwitter },
-  { key: 'github', label: 'GitHub', Icon: FaGithub },
-  { key: 'website', label: 'website', Icon: FaGlobe },
-];
+import SpeakerRole from '../speakers/SpeakerRole';
+import SpeakerSocials from '../speakers/SpeakerSocials';
 
 /**
  * Speaker card: photo, name (→ /speakers/:slug), role + company, optional
@@ -29,8 +21,6 @@ export default function SpeakerChip({
   as: Tag = 'article',
 }) {
   if (!speaker) return null;
-  const role = getSpeakerRolePrefix(speaker);
-  const socials = SOCIALS.filter(({ key }) => speaker.socials?.[key]);
 
   return (
     <Tag
@@ -56,33 +46,16 @@ export default function SpeakerChip({
             {speaker.name}
           </Link>
         </Heading>
-        {role || speaker.company ? (
-          <p className="pt-2 sm:pt-1 text-gray-600 font-raleway text-[16px] leading-[20px] sm:text-[12px] sm:leading-[18px]">
-            {role}
-            {role && speaker.company ? ' ' : null}
-            {speaker.company ? <strong className="text-black">{speaker.company}</strong> : null}
-          </p>
-        ) : null}
+        <SpeakerRole
+          speaker={speaker}
+          className="pt-2 sm:pt-1 text-[16px] leading-[20px] sm:text-[12px] sm:leading-[18px]"
+        />
         {showBio && speaker.bio ? (
           <p className="pt-3 font-raleway text-[15px] leading-[22px] sm:text-[13px] sm:leading-[20px]">
             {speaker.bio}
           </p>
         ) : null}
-        {socials.length > 0 ? (
-          <ul className="flex flex-wrap gap-3 pt-4" aria-label={`Social links for ${speaker.name}`}>
-            {socials.map(({ key, label, Icon }) => (
-              <li key={key}>
-                <ExternalLink
-                  href={speaker.socials[key]}
-                  srLabel={`${speaker.name} on ${label}`}
-                  className="flex items-center justify-center w-9 h-9 rounded-full border border-black bg-white hover:bg-black hover:text-white transition-colors"
-                >
-                  <Icon aria-hidden="true" focusable="false" className="w-4 h-4" />
-                </ExternalLink>
-              </li>
-            ))}
-          </ul>
-        ) : null}
+        <SpeakerSocials speaker={speaker} className="pt-4" />
       </div>
     </Tag>
   );

@@ -209,7 +209,7 @@ export default function EventDetailPage() {
             <DetailSection title="Talks &" squiggle="Sessions">
               <ul className="flex flex-col gap-6 sm:gap-4">
                 {sessions.map((session) => (
-                  <SessionItem key={session.slug} as="li" session={session} />
+                  <SessionItem key={session.slug} as="li" id={session.slug} session={session} />
                 ))}
               </ul>
             </DetailSection>

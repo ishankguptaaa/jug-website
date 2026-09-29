@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import BookYourSlotButton from '../components/BookYourSlotButton';
 import { focusRing } from '../components/ui/focusRing';
 import { isSpeakerSession, getSpeakerBySlug, formatTimeRange12 } from '../content';
@@ -22,10 +23,18 @@ function toRows(sessions) {
 const Schedule = ({ sessions, tracks, registrationUrl }) => {
     const [visibleCount, setVisibleCount] = useState(0);
     const [track, setTrack] = useState(null);
+    const { hash } = useLocation();
     const rows = toRows(sessions);
     const visibleRows = track ? rows.filter((row) => !row.track || row.track === track) : rows;
+    // A link to one session's row (e.g. from a speaker profile) needs every
+    // row rendered before ScrollManager gives up looking for the anchor.
+    const linkedToRow = rows.some((row) => `#${row.slug}` === hash);
 
     useEffect(() => {
+        if (linkedToRow) {
+            setVisibleCount(rows.length);
+            return undefined;
+        }
 
         const interval = setInterval(() => {
             setVisibleCount((prevCount) => {
@@ -39,7 +48,7 @@ const Schedule = ({ sessions, tracks, registrationUrl }) => {
         }, 1000); 
 
         return () => clearInterval(interval);
-    }, [rows.length]);
+    }, [rows.length, linkedToRow]);
 
     return (
         <div className="bg-[#FFFCEF]">
@@ -70,6 +79,7 @@ const Schedule = ({ sessions, tracks, registrationUrl }) => {
                             {visibleRows.slice(0, visibleCount).map((event) => (
                                 <div 
                                     key={event.slug} 
+                                    id={event.slug}
                                     className="flex items-center gap-6 sm:flex-col sm:gap-0 border-b border-black transition-opacity duration-500 opacity-100"
                                     data-aos="fade-down"
                                 >

@@ -102,22 +102,18 @@ export default function EventCard({ event, now, headingAs: Heading = 'h3' }) {
 }
 
 /**
- * Compact card for the Past list. The whole card is a single <Link> with
- * nothing interactive inside it.
+ * Compact card: date line, title, optional place. The whole card is a single
+ * <Link> with nothing interactive inside it. `date` is a node (usually <time>).
  */
-export function EventCardCompact({ event, headingAs: Heading = 'h4' }) {
-  const place = getEventPlaceLabel(event);
-
+export function CompactCard({ to, date, title, place, headingAs: Heading = 'h4' }) {
   return (
     <Link
-      to={`/events/${event.slug}`}
+      to={to}
       className={`${SURFACE} ${focusRing} group block h-full p-6 sm:p-5 transition-colors duration-300 hover:bg-[#FFEFC6] motion-reduce:transition-none`}
     >
-      <p className="font-medium text-[14px] leading-[20px] sm:text-[12px] sm:leading-[18px]">
-        <time dateTime={event.date}>{formatDate(event.date)}</time>
-      </p>
+      <p className="font-medium text-[14px] leading-[20px] sm:text-[12px] sm:leading-[18px]">{date}</p>
       <Heading className="mt-2 font-raleway font-bold text-[20px] leading-[26px] sm:text-[16px] sm:leading-[22px] break-words group-hover:underline underline-offset-4">
-        {event.name}
+        {title}
       </Heading>
       {place ? (
         <p className="mt-2 font-raleway font-medium text-[16px] leading-[22px] sm:text-[14px] sm:leading-[20px] text-gray-700">
@@ -125,5 +121,18 @@ export function EventCardCompact({ event, headingAs: Heading = 'h4' }) {
         </p>
       ) : null}
     </Link>
+  );
+}
+
+/** Compact card for the Past list. */
+export function EventCardCompact({ event, headingAs }) {
+  return (
+    <CompactCard
+      to={`/events/${event.slug}`}
+      date={<time dateTime={event.date}>{formatDate(event.date)}</time>}
+      title={event.name}
+      place={getEventPlaceLabel(event)}
+      headingAs={headingAs}
+    />
   );
 }
