@@ -53,8 +53,8 @@ export function getEndDateTime(entity) {
 /**
  * @param {object} entity event or conference record
  * @param {Date} [now] current instant; pass `null`/`undefined` when it isn't
- *   known yet (e.g. before the client mounts, see `useNow`) — the result is
- *   then only the manual override, never a guessed/real-clock status.
+ *   known — the result is then only the manual override, never a
+ *   guessed/real-clock status.
  * @returns {'upcoming'|'live'|'completed'|null}
  */
 export function getStatus(entity, now) {

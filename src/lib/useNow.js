@@ -1,15 +1,21 @@
 import { useEffect, useState } from 'react';
 
-/**
- * Current time, set on the client after mount (null during prerender/SSR and
- * the first client render) so time-dependent UI never causes a hydration
- * mismatch. Refreshes every `intervalMs` (default 5 min).
- */
+// Prerender time: the first value of useNow() on the server and while the
+// client hydrates prerendered HTML (set by the entries, cleared by SiteLayout
+// once the page has hydrated), so time-dependent UI matches the static HTML.
+let initialNow;
+
+export const setInitialNow = (date) => {
+  initialNow = date;
+};
+
+/** Current time; re-read after mount and then every `intervalMs` (default 5 min). */
 export function useNow(intervalMs = 5 * 60 * 1000) {
-  const [now, setNow] = useState(null);
+  const [now, setNow] = useState(() => initialNow ?? new Date());
   useEffect(() => {
-    setNow(new Date());
-    const id = setInterval(() => setNow(new Date()), intervalMs);
+    const tick = () => setNow(new Date());
+    tick();
+    const id = setInterval(tick, intervalMs);
     return () => clearInterval(id);
   }, [intervalMs]);
   return now;

@@ -1,10 +1,11 @@
-import { Suspense, useEffect, useMemo, useState } from 'react';
+import { Suspense, useContext, useEffect, useMemo, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ScrollManager from '../components/ScrollManager';
 import { initAOS } from '../lib/aos';
-import { DEFAULT_PAGE_CHROME } from './pageChrome';
+import { setInitialNow } from '../lib/useNow';
+import { DEFAULT_PAGE_CHROME, PageChromeContext } from './pageChrome';
 
 function skipToMain(e) {
   const main = document.getElementById('main');
@@ -14,15 +15,26 @@ function skipToMain(e) {
   main.scrollIntoView();
 }
 
+/**
+ * Rendered after the page inside <Suspense>. React hydrates Suspense content
+ * in a later pass than the shell, so this effect (not one in SiteLayout) is
+ * the first point where the prerendered page is hydrated: only now may AOS
+ * add its classes, and new useNow() states start from the real clock.
+ */
+function PageMounted() {
+  useEffect(() => {
+    setInitialNow(undefined);
+    initAOS();
+  }, []);
+  return null;
+}
+
 /** Shared shell: skip link, header, lazy page outlet, footer. */
 export default function SiteLayout() {
   // Pages override header tone / active nav item via usePageChrome().
-  const [pageChrome, setPageChrome] = useState(DEFAULT_PAGE_CHROME);
+  const { initial } = useContext(PageChromeContext);
+  const [pageChrome, setPageChrome] = useState(initial ?? DEFAULT_PAGE_CHROME);
   const outletContext = useMemo(() => ({ setPageChrome }), []);
-
-  useEffect(() => {
-    initAOS();
-  }, []);
 
   return (
     <>
@@ -38,6 +50,7 @@ export default function SiteLayout() {
       <main id="main" tabIndex={-1} className="focus:outline-none">
         <Suspense fallback={<div className="min-h-[100vh]" aria-busy="true" />}>
           <Outlet context={outletContext} />
+          <PageMounted />
         </Suspense>
       </main>
       <Footer activeNav={pageChrome.activeNav} />

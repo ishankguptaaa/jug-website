@@ -1,6 +1,7 @@
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLocation, useNavigationType } from 'react-router-dom';
 import { prefersReducedMotion } from '../lib/aos';
+import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
 const POLL_MS = 50;
 const MAX_WAIT_MS = 4000;
@@ -97,7 +98,7 @@ export default function ScrollManager() {
 
   // Track which history entry scroll positions belong to. Layout effect so the
   // key flips at commit, before any scroll event caused by the new page.
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     currentPositionKey.current = positionKey;
   }, [positionKey]);
 
