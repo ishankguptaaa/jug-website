@@ -1,7 +1,6 @@
 import Card from '../ui/Card';
 import ExternalLink from '../ui/ExternalLink';
-
-const linkClass = 'font-semibold underline underline-offset-4 hover:text-gray-600';
+import { linkClass } from '../ui/linkClass';
 
 /**
  * Where something happens + thanks to the venue partner.
@@ -15,6 +14,7 @@ const linkClass = 'font-semibold underline underline-offset-4 hover:text-gray-60
  * @param {string} [headingAs]  tag for the place name (default 'h3')
  * @param {string} [bg]         Card background class (default white)
  * @param {string} [className]
+ * @param {node}   [children]   extra content at the end of the text column
  */
 export default function VenueCard({
   place,
@@ -24,6 +24,7 @@ export default function VenueCard({
   headingAs: Heading = 'h3',
   bg = 'bg-white',
   className = '',
+  children,
 }) {
   const name = venue?.name ?? place?.name;
   if (!name && !place?.online) return null;
@@ -56,7 +57,7 @@ export default function VenueCard({
           />
         </div>
       ) : null}
-      <div className="min-w-0 font-raleway">
+      <div className="flex-1 min-w-0 font-raleway">
         <Heading className="font-bold text-[32px] leading-[40px] sm:text-[20px] sm:leading-[26px] break-words">
           {online ? name ?? 'Online' : name}
         </Heading>
@@ -100,6 +101,7 @@ export default function VenueCard({
             ) : null}
           </ul>
         ) : null}
+        {children}
       </div>
     </Card>
   );
