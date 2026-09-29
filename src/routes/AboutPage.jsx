@@ -12,7 +12,7 @@ import { useNow } from '../lib/useNow';
 const DESCRIPTION = `About ${site.name}: our story, mission, the people behind the community and how to get involved.`;
 
 const SECTION = 'pt-[100px] sm:pt-[50px]';
-const GRID = 'pt-[48px] sm:pt-[24px] grid grid-cols-3 sm:grid-cols-1 md:grid-cols-1 gap-8 sm:gap-6';
+const GRID = 'pt-[48px] sm:pt-[24px] grid sm:grid-cols-1 md:grid-cols-1 gap-8 sm:gap-6';
 const CARD_TITLE = 'font-raleway font-bold text-[24px] leading-[32px] sm:text-[20px] sm:leading-[28px]';
 const CARD_TEXT = 'mt-3 font-raleway text-[18px] leading-[28px] sm:text-[14px] sm:leading-[24px]';
 
@@ -43,10 +43,13 @@ const WHAT_WE_DO = [
 export default function AboutPage() {
   const now = useNow();
   const events = getAllEvents();
-  const firstMeetup = events.at(-1).date;
+  // Optional: the sample events may be removed before real ones are added.
+  const firstMeetup = events.at(-1)?.date;
   const openCfpUrl = getOpenCfpUrl(now);
   const stats = [
-    { label: 'First meetup', value: <time dateTime={firstMeetup}>{formatDate(firstMeetup)}</time> },
+    ...(firstMeetup
+      ? [{ label: 'First meetup', value: <time dateTime={firstMeetup}>{formatDate(firstMeetup)}</time> }]
+      : []),
     { label: 'Events', value: events.length },
     { label: 'Speakers', value: getSpeakerDirectory().length },
     { label: 'Conferences', value: getAllConferences().length },
@@ -140,7 +143,7 @@ export default function AboutPage() {
             <SectionHeading id="what-heading" squiggle="Do" className="sm:text-center">
               What We
             </SectionHeading>
-            <ul className={GRID}>
+            <ul className={`${GRID} grid-cols-3`}>
               {WHAT_WE_DO.map((item) => (
                 <li key={item.title}>
                   <Card bg={item.bg} className="h-full p-8 sm:p-6 flex flex-col items-start">
@@ -169,7 +172,7 @@ export default function AboutPage() {
             <SectionHeading id="participate-heading" squiggle="Involved" className="sm:text-center">
               Get
             </SectionHeading>
-            <ul className={GRID}>
+            <ul className={`${GRID} grid-cols-2`}>
               {participate.map((item) => (
                 <li key={item.title}>
                   <Card className="h-full p-8 sm:p-6 flex flex-col items-start">
