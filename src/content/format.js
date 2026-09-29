@@ -60,6 +60,15 @@ export const formatTimeRange = (startTime, endTime) =>
     ? `${formatTimeAmPm(startTime)}${endTime ? ` – ${formatTimeAmPm(endTime)}` : ''} IST`
     : '';
 
+/** 'Ada Lovelace' -> 'AL'. */
+export const initialsOf = (name = '') =>
+  name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((word) => word[0].toUpperCase())
+    .join('');
+
 /** Year of a 'YYYY-MM-DD' string, as a number. */
 export const yearOf = (date) => Number(String(date).slice(0, 4));
 

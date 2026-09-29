@@ -327,14 +327,3 @@ export const getSpeakerDirectory = () => {
     }),
   ).sort((a, b) => b.sessionCount - a.sessionCount || a.name.localeCompare(b.name));
 };
-
-/** Events and conferences a speaker has sessions at, each newest first: { events, conferences }. */
-export const getParticipationForSpeaker = (speakerSlug) => {
-  const own = sessions.filter((s) => (s.speakers ?? []).includes(speakerSlug));
-  const unique = (slugs, bySlug) =>
-    compact([...new Set(slugs)].map((slug) => bySlug.get(slug))).sort(byStartDesc);
-  return {
-    events: unique(own.map((s) => s.event), eventsBySlug),
-    conferences: unique(own.map((s) => s.conference), conferencesBySlug),
-  };
-};

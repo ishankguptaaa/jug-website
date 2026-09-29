@@ -8,6 +8,7 @@ import Button from '../ui/Button';
 import Card from '../ui/Card';
 import Pill from '../ui/Pill';
 import StatusBadge from '../ui/StatusBadge';
+import { CompactCard } from '../events/EventCard';
 import SpeakerAvatars from '../events/SpeakerAvatars';
 
 const TEXT = 'font-raleway text-[16px] leading-[26px] sm:text-[14px] sm:leading-[22px]';
@@ -105,5 +106,22 @@ export default function ConferenceCard({ conference: c, status, featured = false
         </div>
       </div>
     </Card>
+  );
+}
+
+/** Compact card for a speaker profile's conference list. */
+export function ConferenceCardCompact({ conference, headingAs }) {
+  return (
+    <CompactCard
+      to={`/conferences/${conference.slug}`}
+      date={
+        <time dateTime={conference.startDate}>
+          {formatDateRange(conference.startDate, conference.endDate)}
+        </time>
+      }
+      title={conference.name}
+      place={conference.location}
+      headingAs={headingAs}
+    />
   );
 }

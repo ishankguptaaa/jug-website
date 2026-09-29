@@ -3,7 +3,8 @@ import Seo from '../components/Seo';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
 import Container from '../components/ui/Container';
-import SectionHeading from '../components/ui/SectionHeading';
+import DetailSection from '../components/ui/DetailSection';
+import { HERO_IMG_PRIORITY } from '../components/ui/heroImg';
 import StatusBadge from '../components/ui/StatusBadge';
 import Pill from '../components/ui/Pill';
 import SpeakerChip from '../components/events/SpeakerChip';
@@ -29,10 +30,6 @@ import { useNow } from '../lib/useNow';
 import { absoluteUrl } from '../lib/url';
 import NotFoundPage from './NotFoundPage';
 
-// React 18 doesn't know `fetchPriority` (warns) but passes the lowercase DOM
-// attribute through; spread so the lint rule doesn't flag it.
-const HERO_IMG_PRIORITY = { fetchpriority: 'high' };
-
 /** True for lu.ma / luma.com (incl. subdomains) event links. */
 function isLuma(url) {
   if (!url) return false;
@@ -42,18 +39,6 @@ function isLuma(url) {
   } catch {
     return false;
   }
-}
-
-/** One content block on the warm background, with an h2. */
-function DetailSection({ title, squiggle, children }) {
-  return (
-    <section className="pt-[100px] sm:pt-[50px] md:pt-[72px]">
-      <SectionHeading className="md:text-[44px] md:leading-[52px]" squiggle={squiggle}>
-        {title}
-      </SectionHeading>
-      <div className="pt-[48px] sm:pt-[20px]">{children}</div>
-    </section>
-  );
 }
 
 function eventJsonLd(event, place, path) {

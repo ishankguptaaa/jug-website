@@ -8,12 +8,13 @@ import SpeakerCard from '../components/speakers/SpeakerCard';
 
 const DESCRIPTION = `Everyone who has spoken at a ${site.name} meetup or conference — their talks, slides and recordings.`;
 
+const directory = getSpeakerDirectory();
+
 const matches = (speaker, query) =>
   [speaker.name, speaker.company].some((text) => text?.toLowerCase().includes(query));
 
 export default function SpeakersPage() {
   const [query, setQuery] = useState('');
-  const directory = getSpeakerDirectory();
   const needle = query.trim().toLowerCase();
   const shown = needle ? directory.filter((speaker) => matches(speaker, needle)) : directory;
 

@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useState } from 'react';
 import BookYourSlotButton from '../components/BookYourSlotButton';
 import { focusRing } from '../components/ui/focusRing';
 import { isSpeakerSession, getSpeakerBySlug, formatTimeRange12 } from '../content';
@@ -21,34 +20,9 @@ function toRows(sessions) {
 }
 
 const Schedule = ({ sessions, tracks, registrationUrl }) => {
-    const [visibleCount, setVisibleCount] = useState(0);
     const [track, setTrack] = useState(null);
-    const { hash } = useLocation();
     const rows = toRows(sessions);
     const visibleRows = track ? rows.filter((row) => !row.track || row.track === track) : rows;
-    // A link to one session's row (e.g. from a speaker profile) needs every
-    // row rendered before ScrollManager gives up looking for the anchor.
-    const linkedToRow = rows.some((row) => `#${row.slug}` === hash);
-
-    useEffect(() => {
-        if (linkedToRow) {
-            setVisibleCount(rows.length);
-            return undefined;
-        }
-
-        const interval = setInterval(() => {
-            setVisibleCount((prevCount) => {
-                if (prevCount < rows.length) {
-                    return prevCount + 1;
-                } else {
-                    clearInterval(interval);
-                    return prevCount;
-                }
-            });
-        }, 1000); 
-
-        return () => clearInterval(interval);
-    }, [rows.length, linkedToRow]);
 
     return (
         <div className="bg-[#FFFCEF]">
@@ -76,7 +50,7 @@ const Schedule = ({ sessions, tracks, registrationUrl }) => {
                             </div>
                         ) : null}
                         <div className="mt-[36px] px-[10px]">
-                            {visibleRows.slice(0, visibleCount).map((event) => (
+                            {visibleRows.map((event) => (
                                 <div 
                                     key={event.slug} 
                                     id={event.slug}

@@ -2,32 +2,20 @@ import { useParams } from 'react-router-dom';
 import Seo from '../components/Seo';
 import Container from '../components/ui/Container';
 import EmptyState from '../components/ui/EmptyState';
-import SectionHeading from '../components/ui/SectionHeading';
-import { CompactCard, EventCardCompact } from '../components/events/EventCard';
+import DetailSection from '../components/ui/DetailSection';
+import { ConferenceCardCompact } from '../components/conferences/ConferenceCard';
+import { EventCardCompact } from '../components/events/EventCard';
 import SessionItem from '../components/events/SessionItem';
 import { GRID } from '../components/events/eventsGrid';
 import SpeakerPhoto from '../components/speakers/SpeakerPhoto';
 import SpeakerRole from '../components/speakers/SpeakerRole';
 import SpeakerSocials from '../components/speakers/SpeakerSocials';
 import {
-  formatDateRange,
-  getParticipationForSpeaker,
   getSessionsForSpeaker,
   getSpeakerBySlug,
   site,
 } from '../content';
 import NotFoundPage from './NotFoundPage';
-
-function DetailSection({ title, squiggle, children }) {
-  return (
-    <section className="pt-[100px] sm:pt-[50px] md:pt-[72px]">
-      <SectionHeading className="md:text-[44px] md:leading-[52px]" squiggle={squiggle}>
-        {title}
-      </SectionHeading>
-      <div className="pt-[48px] sm:pt-[20px]">{children}</div>
-    </section>
-  );
-}
 
 const sessionPath = ({ slug, parent }) =>
   `/${parent.type === 'event' ? 'events' : 'conferences'}/${parent.item.slug}#${slug}`;
@@ -38,13 +26,17 @@ export default function SpeakerDetailPage() {
   if (!speaker) return <NotFoundPage />;
 
   const talks = getSessionsForSpeaker(speaker.slug);
-  const { events, conferences } = getParticipationForSpeaker(speaker.slug);
+  const parents = (type) => [
+    ...new Set(talks.filter((t) => t.parent.type === type).map((t) => t.parent.item)),
+  ];
+  const events = parents('event').sort((a, b) => b.date.localeCompare(a.date));
+  const conferences = parents('conference').sort((a, b) => b.startDate.localeCompare(a.startDate));
 
   return (
     <>
       <Seo
         title={speaker.name}
-        description={speaker.bio ?? `Talks and sessions by ${speaker.name} at ${site.name}.`}
+        description={speaker.bio || `Talks and sessions by ${speaker.name} at ${site.name}.`}
         path={`/speakers/${speaker.slug}`}
         image={speaker.photo}
         noindex={speaker.isSample}
@@ -87,6 +79,10 @@ export default function SpeakerDetailPage() {
                       as="li"
                       session={talk}
                       showDate
+                      speakers={talk.speakers
+                        .filter((slug) => slug !== speaker.slug)
+                        .map(getSpeakerBySlug)
+                        .filter(Boolean)}
                       titleTo={sessionPath(talk)}
                     />
                   ))}
@@ -110,17 +106,7 @@ export default function SpeakerDetailPage() {
                   <ul className={GRID}>
                     {conferences.map((conference) => (
                       <li key={conference.slug}>
-                        <CompactCard
-                          to={`/conferences/${conference.slug}`}
-                          date={
-                            <time dateTime={conference.startDate}>
-                              {formatDateRange(conference.startDate, conference.endDate)}
-                            </time>
-                          }
-                          title={conference.name}
-                          place={conference.location}
-                          headingAs="h3"
-                        />
+                        <ConferenceCardCompact conference={conference} headingAs="h3" />
                       </li>
                     ))}
                   </ul>

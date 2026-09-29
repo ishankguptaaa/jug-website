@@ -14,7 +14,7 @@ export default function SpeakerCard({ speaker }) {
   const { sessionCount } = speaker;
   return (
     <article className="relative h-full sm:text-center">
-      <SpeakerPhoto speaker={speaker} />
+      <SpeakerPhoto speaker={speaker} decorative />
       <h2 className="pt-6 sm:pt-3 font-raleway font-bold text-[24px] leading-[28px] sm:text-[14px] sm:leading-[20px] break-words">
         <Link
           to={`/speakers/${speaker.slug}`}
