@@ -1,5 +1,6 @@
 import { site } from '../content';
 import { absoluteUrl } from './url';
+import { NAV_ITEMS } from '../components/navItems';
 
 const CONTEXT = 'https://schema.org';
 
@@ -8,7 +9,7 @@ const isoIst = (date, time) => (time ? `${date}T${time}:00+05:30` : date);
 const placeJsonLd = ({ name, address, city }) => ({
   '@type': 'Place',
   name,
-  address: address || city ? { '@type': 'PostalAddress', streetAddress: address, addressLocality: city } : undefined,
+  address: address || city ? { '@type': 'PostalAddress', streetAddress: address, addressLocality: city, addressCountry: 'IN' } : undefined,
 });
 
 export const organizationJsonLd = () => ({
@@ -23,13 +24,20 @@ export const organizationJsonLd = () => ({
 });
 
 /**
- * schema.org Event for an event or conference record.
+ * schema.org Event for an event or conference record, or null when there is
+ * no location to publish (`location` is required by schema.org / Google).
  * @param {object} entity  event (`date`) or conference (`startDate`/`endDate`)
  * @param {object} opts    { path, description, places: [{ name, address, city, online }], speakers }
  */
 export const eventJsonLd = (entity, { path, description, places, speakers }) => {
   const url = absoluteUrl(path);
   const online = places.length > 0 && places.every((p) => p.online);
+  const location = places.length
+    ? places.map((p) => (p.online ? { '@type': 'VirtualLocation', url: entity.externalUrl ?? url } : placeJsonLd(p)))
+    : entity.location
+      ? [{ '@type': 'Place', name: entity.location }]
+      : [];
+  if (!location.length) return null;
   const performers = speakers.filter((s) => !s.isSample);
   return {
     '@context': CONTEXT,
@@ -37,17 +45,17 @@ export const eventJsonLd = (entity, { path, description, places, speakers }) => 
     name: entity.name,
     description,
     startDate: isoIst(entity.date ?? entity.startDate, entity.startTime),
-    endDate: isoIst(entity.date ?? entity.endDate, entity.endTime),
+    // Without an end time, end of day (matches getEndDateTime) so end isn't before start.
+    endDate: isoIst(entity.date ?? entity.endDate, entity.endTime ?? (entity.startTime && '23:59')),
     eventStatus: `${CONTEXT}/EventScheduled`,
     eventAttendanceMode: `${CONTEXT}/${online ? 'Online' : 'Offline'}EventAttendanceMode`,
-    location: places.map((p) => (p.online ? { '@type': 'VirtualLocation', url: entity.externalUrl ?? url } : placeJsonLd(p))),
+    location,
     image: entity.banner ? [absoluteUrl(entity.banner)] : undefined,
     url,
     organizer: { '@type': 'Organization', name: site.fullName, url: site.url },
     performer: performers.length
       ? performers.map((s) => ({ '@type': 'Person', name: s.name, url: absoluteUrl(`/speakers/${s.slug}`) }))
       : undefined,
-    offers: entity.registrationUrl ? { '@type': 'Offer', url: entity.registrationUrl } : undefined,
   };
 };
 
@@ -63,11 +71,13 @@ export const personJsonLd = (speaker, path) => ({
   sameAs: speaker.socials ? Object.values(speaker.socials) : undefined,
 });
 
-/** @param {{ name: string, path: string }[]} trail  crumbs after Home, in order */
-export const breadcrumbJsonLd = (trail) => ({
+const navCrumb = (to) => ({ name: NAV_ITEMS.find((n) => n.to === to).label, path: to });
+
+/** Home › section (label from the main nav) › current page. */
+export const breadcrumbJsonLd = (sectionPath, current) => ({
   '@context': CONTEXT,
   '@type': 'BreadcrumbList',
-  itemListElement: [{ name: 'Home', path: '/' }, ...trail].map(({ name, path }, i) => ({
+  itemListElement: [navCrumb('/'), navCrumb(sectionPath), current].map(({ name, path }, i) => ({
     '@type': 'ListItem',
     position: i + 1,
     name,

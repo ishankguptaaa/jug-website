@@ -29,6 +29,8 @@ export default function Seo({
   const canonical = path != null ? absoluteUrl(path) : undefined;
   const imageUrl = absoluteUrl(image);
 
+  // Builders return null when there's nothing valid to publish.
+  const structuredData = Array.isArray(jsonLd) ? jsonLd.filter(Boolean) : jsonLd;
   return (
     <Helmet>
       <title>{resolvedTitle}</title>
@@ -48,7 +50,10 @@ export default function Seo({
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={imageUrl} />
 
-      {jsonLd ? <script type="application/ld+json">{JSON.stringify(jsonLd)}</script> : null}
+      {structuredData ? (
+        // Escape `<` so content can never close the script tag early.
+        <script type="application/ld+json">{JSON.stringify(structuredData).replace(/</g, '\\u003c')}</script>
+      ) : null}
     </Helmet>
   );
 }

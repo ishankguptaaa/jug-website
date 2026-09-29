@@ -137,7 +137,7 @@ export default function ConferenceDetailPage() {
             ? undefined
             : [
                 eventJsonLd(conference, { path, description, places, speakers }),
-                breadcrumbJsonLd([{ name: 'Conferences', path: '/conferences' }, { name: conference.name, path }]),
+                breadcrumbJsonLd('/conferences', { name: conference.name, path }),
               ]
         }
       />

@@ -31,7 +31,7 @@ export default function GalleryDetailPage() {
         jsonLd={
           gallery.isSample
             ? undefined
-            : breadcrumbJsonLd([{ name: 'Gallery', path: '/gallery' }, { name: gallery.title, path }])
+            : breadcrumbJsonLd('/gallery', { name: gallery.title, path })
         }
       />
 

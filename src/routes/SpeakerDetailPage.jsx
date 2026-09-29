@@ -45,7 +45,7 @@ export default function SpeakerDetailPage() {
         jsonLd={
           speaker.isSample
             ? undefined
-            : [personJsonLd(speaker, path), breadcrumbJsonLd([{ name: 'Speakers', path: '/speakers' }, { name: speaker.name, path }])]
+            : [personJsonLd(speaker, path), breadcrumbJsonLd('/speakers', { name: speaker.name, path })]
         }
       />
 
