@@ -341,7 +341,9 @@ export const isCfpOpen = (conference, now) => {
   if (!conference?.cfp?.url) return false;
   if (!['upcoming', 'live'].includes(getStatus(conference, now))) return false;
   const closes = conference.cfp.closesOn && istToDate(conference.cfp.closesOn, '23:59');
-  return !(closes && now > closes);
+  if (!closes) return true;
+  // Unknown time (prerender / first render): don't advertise a CFP that may have closed.
+  return Boolean(now) && now <= closes;
 };
 
 /** CFP link of the soonest conference whose CFP is open at `now`; `undefined` if none. */

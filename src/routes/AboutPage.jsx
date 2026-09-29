@@ -1,4 +1,4 @@
-import { formatDate, getAllConferences, getAllEvents, getOpenCfpUrl, getSpeakerDirectory, site } from '../content';
+import { formatMonthYear, getAllConferences, getAllEvents, getOpenCfpUrl, getSpeakerDirectory, site } from '../content';
 import Seo from '../components/Seo';
 import PageHero from '../components/ui/PageHero';
 import Container from '../components/ui/Container';
@@ -46,7 +46,7 @@ export default function AboutPage() {
   const openCfpUrl = getOpenCfpUrl(now);
   const stats = [
     ...(firstMeetup
-      ? [{ label: 'First meetup', value: <time dateTime={firstMeetup}>{formatDate(firstMeetup)}</time> }]
+      ? [{ label: 'First meetup', value: <time dateTime={firstMeetup}>{formatMonthYear(firstMeetup)}</time> }]
       : []),
     { label: 'Events', value: events.length },
     { label: 'Speakers', value: getSpeakerDirectory().length },
@@ -84,8 +84,8 @@ export default function AboutPage() {
 
   return (
     <>
-      {/* Stats come from sample events until real ones land; keep the page out of search until then. */}
-      <Seo title="About" description={DESCRIPTION} path="/about" noindex={events.some((e) => e.isSample)} />
+      {/* Keep the page out of search while its copy or stats are still sample data. */}
+      <Seo title="About" description={DESCRIPTION} path="/about" noindex={site.aboutCopyIsSample || events.some((e) => e.isSample)} />
 
       <PageHero
         title={`About ${site.name}`}

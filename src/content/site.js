@@ -31,6 +31,9 @@ export const site = {
     'Gujarat Java User Group (Gujarat JUG) is a thriving community of Java developers, architects, students, and technology enthusiasts passionate about learning, sharing, and growing together.',
   mission:
     'Our mission is to empower Java professionals, promote best practices, and create a platform where developers can connect, collaborate, and innovate.',
+  // TODO: set to false once the milestones / whatWeDo / nonCommercial / participate copy below is real.
+  aboutCopyIsSample: true,
+
   // TODO: replace with the real milestones (sample text; no dates until confirmed).
   milestones: [
     { title: 'A community is born', body: 'A few Java enthusiasts start meeting to share what they learn.' },
