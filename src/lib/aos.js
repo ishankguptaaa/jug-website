@@ -3,7 +3,6 @@
 // routes, so pages must not call AOS.init themselves (each call would add
 // another set of scroll/resize listeners and observers).
 // Only call from useEffect / event handlers — AOS touches window/document.
-import AOS from 'aos';
 
 let initialised = false;
 
@@ -12,9 +11,20 @@ export const prefersReducedMotion = () =>
   typeof window.matchMedia === 'function' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/** Idempotent AOS.init; disabled for reduced-motion users (index.css also un-hides [data-aos] for them). */
+/**
+ * Idempotent AOS start. aos.css hides every [data-aos] element, so the library
+ * and its stylesheet load together and the stylesheet is added in the same task
+ * as AOS.init: prerendered sections never flash hidden, sections in view stay
+ * visible, the rest animate in on scroll. Without JS or with reduced motion
+ * nothing is ever hidden.
+ */
 export function initAOS() {
-  if (initialised) return;
+  if (initialised || prefersReducedMotion()) return;
   initialised = true;
-  AOS.init({ duration: 1000, disable: prefersReducedMotion });
+  Promise.all([import('aos'), import('aos/dist/aos.css?inline')]).then(([{ default: AOS }, { default: css }]) => {
+    const style = document.createElement('style');
+    style.textContent = css;
+    document.head.append(style);
+    AOS.init({ duration: 1000 });
+  });
 }

@@ -1,4 +1,3 @@
-import 'aos/dist/aos.css'; 
 import ExternalLink from '../components/ui/ExternalLink';
 
 const SubmitCFP = ({ url }) => {

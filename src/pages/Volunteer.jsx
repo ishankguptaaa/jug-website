@@ -1,4 +1,3 @@
-import 'aos/dist/aos.css'; 
 import volunteer from '../data/volunteerData';
 import { site } from '../content';
 import Button from '../components/ui/Button';
