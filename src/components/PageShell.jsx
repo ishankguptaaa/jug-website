@@ -3,6 +3,7 @@ import Button from './ui/Button';
 import EmptyState from './ui/EmptyState';
 import Container from './ui/Container';
 import Pill from './ui/Pill';
+import PageHero from './ui/PageHero';
 
 /**
  * Hero + message layout shared by the "Coming soon" placeholders and the 404
@@ -14,9 +15,9 @@ export default function PageShell({ seo, eyebrow, title, intro, card }) {
   return (
     <>
       <Seo {...seo} />
-      <section className="bg-[#E1EEFB]">
-        <Container size="xl" className="sm:max-w-[345px]">
-          <div className="pt-12 pb-[80px] sm:pt-6 sm:pb-[40px] text-center">
+      <PageHero
+        top={
+          <>
             <img
               src="/Img/duke-logo-svg.svg"
               alt=""
@@ -29,17 +30,11 @@ export default function PageShell({ seo, eyebrow, title, intro, card }) {
                 {eyebrow}
               </Pill>
             ) : null}
-            <h1 className="mt-6 font-raleway font-medium text-[56px] leading-[65px] sm:text-[24px] sm:leading-[32px] md:text-[44px] md:leading-[52px]">
-              {title}
-            </h1>
-            {intro ? (
-              <p className="mt-6 mx-auto max-w-[760px] font-raleway text-[18px] leading-[30px] sm:text-[14px] sm:leading-[24px]">
-                {intro}
-              </p>
-            ) : null}
-          </div>
-        </Container>
-      </section>
+          </>
+        }
+        title={title}
+        intro={intro}
+      />
       <section className="bg-[#FFFCEF]">
         <Container>
           <div className="pt-[100px] pb-[100px] sm:pt-[50px] sm:pb-[50px]">

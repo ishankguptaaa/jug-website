@@ -24,7 +24,7 @@ export default function EventsPage() {
       <Seo title="Events" description={DESCRIPTION} path="/events" />
 
       <PageHero
-        title="Meetups &amp; Events"
+        title="Meetups & Events"
         intro={`Hands-on sessions and talks by the ${site.name} community. Join the next one, or catch up on the talks you missed.`}
       >
         <Button href={site.lumaCalendarUrl}>Follow us on Luma</Button>
