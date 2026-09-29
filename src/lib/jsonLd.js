@@ -36,7 +36,7 @@ export const eventJsonLd = (entity, { path, description, places: allPlaces, spea
   const location = places.length
     ? places.map((p) => (p.online ? { '@type': 'VirtualLocation', url: entity.externalUrl ?? url } : placeJsonLd(p)))
     : entity.location
-      ? [{ '@type': 'Place', name: entity.location.name ?? entity.location }]
+      ? [typeof entity.location === 'string' ? { '@type': 'Place', name: entity.location } : placeJsonLd(entity.location)]
       : [];
   if (!location.length) return null;
   const performers = speakers.filter((s) => !s.isSample);

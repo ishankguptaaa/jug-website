@@ -28,8 +28,7 @@ export default function GalleryDetailPage() {
         path={path}
         image={gallery.cover}
         noindex={gallery.isSample}
-        jsonLd={breadcrumbJsonLd('/gallery', { name: gallery.title, path })
-        }
+        jsonLd={breadcrumbJsonLd('/gallery', { name: gallery.title, path })}
       />
 
       <PageHero

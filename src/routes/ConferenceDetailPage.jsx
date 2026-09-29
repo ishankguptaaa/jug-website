@@ -131,10 +131,9 @@ export default function ConferenceDetailPage() {
         image={conference.banner}
         noindex={conference.isSample}
         jsonLd={[
-                eventJsonLd(conference, { path, description, places: venues, speakers }),
-                breadcrumbJsonLd('/conferences', { name: conference.name, path }),
-              ]
-        }
+          eventJsonLd(conference, { path, description, places: venues, speakers }),
+          breadcrumbJsonLd('/conferences', { name: conference.name, path }),
+        ]}
       />
       <ToastContainer position="bottom-center" autoClose={2000} hideProgressBar closeOnClick />
       <EventSubNav label={`${conference.name} sections`} items={subNavItems} />
