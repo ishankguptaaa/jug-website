@@ -4,6 +4,7 @@
 
 import { SESSION_TYPES, SPEAKER_SESSION_TYPES } from './sessions.js';
 import { STATUSES } from './status.js';
+import { bannerSmall, shareImage } from '../lib/images.js';
 
 const KEBAB_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
@@ -92,6 +93,19 @@ export function validateContent(content, { assetExists } = {}) {
       err(where(name, item), `"${field}" file not found in public/: ${value}`);
     }
   };
+
+  // Share previews use the .jpg twin of a WebP image (Seo.jsx).
+  const shareTwin = (name, item, field) => {
+    if (item[field]?.endsWith('.webp')) asset(name, item, `${field} (.jpg share twin)`, shareImage(item[field]));
+  };
+  // Banners: 1200w .webp + <name>-640.webp (srcset) + .jpg share twin.
+  const banner = (name, item) => {
+    if (!item.banner) return;
+    if (!item.banner.endsWith('.webp')) err(where(name, item), `banner must be a .webp (got "${item.banner}")`);
+    asset(name, item, 'banner');
+    asset(name, item, 'banner (640w srcset variant)', bannerSmall(item.banner));
+    shareTwin(name, item, 'banner');
+  };
   const oneParent = (name, item) => {
     const hasEvent = item.event !== undefined;
     const hasConf = item.conference !== undefined;
@@ -120,7 +134,7 @@ export function validateContent(content, { assetExists } = {}) {
       err(where('events', e), '"location" needs "name" and "city"');
     }
     ref('events', e, 'conference', 'conferences', e.conference);
-    asset('events', e, 'banner');
+    banner('events', e);
   }
 
   // --- conferences ---
@@ -135,12 +149,22 @@ export function validateContent(content, { assetExists } = {}) {
     }
     if (c.startDate === c.endDate) timeOrder('conferences', c);
     status('conferences', c);
-    asset('conferences', c, 'banner');
-    asset('conferences', c, 'heroLogo.src', c.heroLogo?.src);
-    asset('conferences', c, 'heroLogo.srcSm', c.heroLogo?.srcSm);
-    asset('conferences', c, 'featuredSpeaker.image', c.featuredSpeaker?.image);
-    asset('conferences', c, 'featuredSpeaker.imageSm', c.featuredSpeaker?.imageSm);
-    asset('conferences', c, 'aboutImage');
+    banner('conferences', c);
+    // Hero/about art: path(s) + numeric intrinsic sizes (reserve layout, no CLS).
+    const art = (field, paths, sizes) => {
+      const value = c[field];
+      if (value === undefined) return;
+      const bad = sizes.filter((k) => !(Number.isFinite(value?.[k]) && value[k] > 0));
+      if (bad.length) err(where('conferences', c), `"${field}" needs positive numeric ${bad.join(', ')}`);
+      paths.forEach((k) => {
+        if (!value?.[k]) err(where('conferences', c), `"${field}.${k}" is missing`);
+        else asset('conferences', c, `${field}.${k}`, value[k]);
+      });
+    };
+    art('heroLogo', ['src', 'srcSm'], ['width', 'height', 'widthSm', 'heightSm']);
+    art('featuredSpeaker', ['image', 'imageSm'], ['width', 'height', 'widthSm', 'heightSm']);
+    if (c.featuredSpeaker && !c.featuredSpeaker.speaker) err(where('conferences', c), '"featuredSpeaker.speaker" is missing');
+    art('aboutImage', ['src'], ['width', 'height']);
     (c.goodies ?? []).forEach((g, i) => asset('conferences', c, `goodies[${i}].image`, g.image));
     if (c.cfp !== undefined) {
       if (!c.cfp?.url) err(where('conferences', c), '"cfp" needs a "url"');
@@ -169,6 +193,7 @@ export function validateContent(content, { assetExists } = {}) {
   for (const s of speakers ?? []) {
     required('speakers', s, ['name']);
     asset('speakers', s, 'photo');
+    shareTwin('speakers', s, 'photo');
   }
 
   // --- sessions ---
@@ -233,6 +258,7 @@ export function validateContent(content, { assetExists } = {}) {
     date('galleries', g, 'date');
     oneParent('galleries', g);
     asset('galleries', g, 'cover');
+    shareTwin('galleries', g, 'cover');
     (g.photos ?? []).forEach((p, i) => {
       if (!p.src) err(where('galleries', g), `photos[${i}] missing "src"`);
       if (!p.alt) err(where('galleries', g), `photos[${i}] missing "alt"`);

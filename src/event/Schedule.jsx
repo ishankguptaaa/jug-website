@@ -2,7 +2,6 @@ import { useState } from 'react';
 import BookYourSlotButton from '../components/BookYourSlotButton';
 import { focusRing } from '../components/ui/focusRing';
 import { isSpeakerSession, getSpeakerBySlug, formatTimeRange12 } from '../content';
-import 'aos/dist/aos.css';
 
 // Talks render as "Session N: <speakers>" with the talk title underneath;
 // other agenda slots render their own title/description.

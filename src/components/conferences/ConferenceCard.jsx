@@ -8,9 +8,11 @@ import {
 import Button from '../ui/Button';
 import Card from '../ui/Card';
 import { CARD_SURFACE } from '../ui/cardSurface';
+import { CARD_BANNER_SIZES, bannerSrcSet, FEATURED_BANNER_SIZES } from '../../lib/images';
 import Pill from '../ui/Pill';
 import StatusBadge from '../ui/StatusBadge';
 import CompactCard from '../ui/CompactCard';
+import { HERO_IMG_PRIORITY } from '../ui/heroImg';
 import SpeakerAvatars from '../events/SpeakerAvatars';
 
 const TEXT = 'font-raleway text-[16px] leading-[26px] sm:text-[14px] sm:leading-[22px]';
@@ -18,8 +20,9 @@ const TEXT = 'font-raleway text-[16px] leading-[26px] sm:text-[14px] sm:leading-
 /**
  * Conference card for the /conferences lists. `featured` is the full-width
  * "Currently hosting" layout: pastel box, banner beside the details, bigger title.
+ * `priority` marks the first featured card (right under the page hero) for eager loading.
  */
-export default function ConferenceCard({ conference: c, status, featured = false }) {
+export default function ConferenceCard({ conference: c, status, featured = false, priority = false }) {
   const speakers = getSpeakersForConference(c.slug);
   const counts = [
     countLabel(getSessionsForConference(c.slug).filter(isSpeakerSession).length, 'session'),
@@ -33,10 +36,12 @@ export default function ConferenceCard({ conference: c, status, featured = false
       {c.banner ? (
         <img
           src={c.banner}
+          srcSet={bannerSrcSet(c.banner)}
+          sizes={featured ? FEATURED_BANNER_SIZES : CARD_BANNER_SIZES}
           alt=""
           width="1200"
           height="600"
-          loading="lazy"
+          {...(priority ? HERO_IMG_PRIORITY : { loading: 'lazy' })}
           decoding="async"
           className={`block w-full aspect-[2/1] object-cover border-black ${
             featured

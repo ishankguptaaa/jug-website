@@ -58,7 +58,7 @@ const Sponsors = ({ sponsors, venueSponsors }) => {
                 <ExternalLink key={sponsor.slug} href={sponsor.website}>
                   <div className="flex h-[112px] w-[285px] sm:w-[154px] sm:h-[76px] items-center justify-center rounded-3xl 
                       bg-[#FFFFFF] text-gray-400 sm:px-4 cursor-pointer">
-                    <img src={sponsor.logo} alt={sponsor.logoAlt ?? sponsor.name} className='' />
+                    <img src={sponsor.logo} alt={sponsor.logoAlt ?? sponsor.name} loading="lazy" decoding="async" className='' />
                   </div>
                 </ExternalLink>
                 ))}
@@ -114,7 +114,7 @@ const Sponsors = ({ sponsors, venueSponsors }) => {
                 <ExternalLink key={sponsor.slug} href={sponsor.website}>
                 <div className="flex h-[112px] w-[285px] sm:w-[148px] sm:h-[84px] items-center justify-center rounded-3xl 
         bg-[#FFFFFF] text-gray-400 px-4 sm:px-2">
-                  <img src={sponsor.logo} alt={sponsor.logoAlt ?? sponsor.name} />
+                  <img src={sponsor.logo} alt={sponsor.logoAlt ?? sponsor.name} loading="lazy" decoding="async" />
                 </div>
                 </ExternalLink>
                 ))}
@@ -141,7 +141,7 @@ const Sponsors = ({ sponsors, venueSponsors }) => {
               {silverSponsors.map((sponsor) => (
               <ExternalLink key={sponsor.slug} href={sponsor.website}>
                 <div className="flex h-[112px] w-[285px] sm:w-[148px] sm:h-[84px] items-center justify-center rounded-3xl bg-[#FFFFFF] px-4 sm:px-2">
-                  <img src={sponsor.logo} alt={sponsor.logoAlt ?? sponsor.name} />
+                  <img src={sponsor.logo} alt={sponsor.logoAlt ?? sponsor.name} loading="lazy" decoding="async" />
                 </div>
               </ExternalLink>
               ))}
@@ -163,7 +163,7 @@ const Sponsors = ({ sponsors, venueSponsors }) => {
               <div key={venue.slug} className="flex h-[112px] items-center justify-center rounded-3xl bg-[#FFFFFF] text-gray-400 sm:w-[148px] sm:h-[84px]  w-[285px]">
                 <ExternalLink href={venue.website}>
                   <div className="flex h-[112px] w-[285px] sm:w-[148px] sm:h-[84px] items-center justify-center rounded-3xl bg-[#FFFFFF] text-gray-400 px-4 sm:px-2">
-                  <img src={venue.logo} alt={venue.logoAlt ?? venue.name} />
+                  <img src={venue.logo} alt={venue.logoAlt ?? venue.name} loading="lazy" decoding="async" />
                   </div>
                 </ExternalLink>
               </div>
@@ -203,7 +203,7 @@ const Sponsors = ({ sponsors, venueSponsors }) => {
               {communitySupporters.map((supporter) => (
               <div key={supporter.slug} className="flex-row -h-[112px]  w-[285px] sm:w-[148px] sm:-h-[84px] items-center justify-items-center rounded-xl text-black">
                 <ExternalLink href={supporter.website}>
-                  <img src={supporter.logo} alt={supporter.logoAlt ?? supporter.name} className={supporterStyles[supporter.slug]?.img ?? supporterStyles['rajesh-c'].img} />
+                  <img src={supporter.logo} alt={supporter.logoAlt ?? supporter.name} loading="lazy" decoding="async" className={supporterStyles[supporter.slug]?.img ?? supporterStyles['rajesh-c'].img} />
                 </ExternalLink>
                 <p className='text-xl sm:text-sm'><strong>{supporter.name.toUpperCase()}</strong></p>
                 <p className='text-lg sm:text-xs text-gray-500'>{supporter.designation ? <>{supporter.designation},<br /></> : null} <strong>{supporter.company ?? supporter.location}</strong></p>

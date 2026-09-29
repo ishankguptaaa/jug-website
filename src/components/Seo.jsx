@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { site } from '../content';
+import { shareImage } from '../lib/images';
 import { absoluteUrl } from '../lib/url';
 
 /**
@@ -27,7 +28,7 @@ export default function Seo({
 }) {
   const resolvedTitle = fullTitle ?? (title ? `${title} | ${site.name}` : site.name);
   const canonical = path != null ? absoluteUrl(path) : undefined;
-  const imageUrl = absoluteUrl(image);
+  const imageUrl = absoluteUrl(shareImage(image));
 
   // Builders return null when there's nothing valid to publish.
   // No structured data for pages kept out of search (samples, drafts, 404).

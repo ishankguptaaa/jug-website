@@ -1,4 +1,3 @@
-import 'aos/dist/aos.css';
 import { Typewriter } from 'react-simple-typewriter';
 import { site } from '../content';
 import Button from '../components/ui/Button';
@@ -57,7 +56,7 @@ const Home = ({ feature }) => {
                 <img
                   key={n}
                   className="sm:h-10 sm:w-10 w-[50px] h-[50px] rounded-full border border-black"
-                  src={`/AvatarIcon/Av${n}.jpeg`}
+                  src={`/AvatarIcon/Av${n}.webp`}
                   alt=""
                   width="50"
                   height="50"
@@ -78,15 +77,19 @@ const Home = ({ feature }) => {
           <div className="flex flex-col items-center justify-center mt-7 relative">
             <div className="flex justify-center relative">
               <img
-                src="/Img/SkeletonIcon.png"
+                src="/Img/SkeletonIcon.webp"
                 alt=""
+                width="264"
+                height="264"
                 className="absolute right-[550px] bottom-0 top-16 sm:hidden"
                 data-aos="fade-right"
               />
               <img src="/Img/duke-logo-svg.svg" alt="" className="mx-4" data-aos="zoom-in-up" />
               <img
-                src="/Img/ItWork.png"
+                src="/Img/ItWork.webp"
                 alt=""
+                width="204"
+                height="204"
                 className="absolute left-[550px] bottom-0 top-16 sm:hidden"
                 data-aos="fade-left"
               />

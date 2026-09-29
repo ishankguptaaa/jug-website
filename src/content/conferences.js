@@ -10,9 +10,9 @@
 //   location                    human-readable, e.g. 'LJ University, Ahmedabad'
 //   venues[]                    venue slugs (venues.js)
 //   banner, registrationUrl, externalUrl?
-//   heroLogo?                   { src, srcSm } wordmark art shown in the page hero
-//   featuredSpeaker?            { speaker: <speaker slug>, image, imageSm } hero cut-out
-//   aboutImage?                 illustration next to the About text
+//   heroLogo?                   { src, width, height, srcSm, widthSm, heightSm } hero wordmark art
+//   featuredSpeaker?            { speaker: <speaker slug>, image, width, height, imageSm, widthSm, heightSm } hero cut-out
+//   aboutImage?                 { src, width, height } illustration next to the About text
 //   goodies[]?                  [{ image, text }] "More Than Just Talks" perks
 //   sponsorship?                { deckEmbedUrl, phone } sponsorship pitch section
 //   cfp?                        { url, closesOn? ('YYYY-MM-DD') } call for papers
@@ -47,20 +47,31 @@ export const conferences = [
     endTime: '14:55',
     location: 'LJ University, Ahmedabad',
     venues: ['lj-university'],
-    banner: '/Home/community-banner.png',
+    banner: '/Home/community-banner.webp',
     registrationUrl: 'https://konfhub.com/community-day-for-java-2025',
-    heroLogo: { src: '/Home/CommunityDayJava.svg', srcSm: '/Home/CommunityDayJavaSm.svg' },
+    heroLogo: {
+      src: '/Home/CommunityDayJava.svg',
+      width: 492,
+      height: 249,
+      srcSm: '/Home/CommunityDayJavaSm.svg',
+      widthSm: 206,
+      heightSm: 104,
+    },
     featuredSpeaker: {
       speaker: 'venkat-subramaniam',
-      image: '/Home/VenkatXl.png',
-      imageSm: '/Home/VenkatSm.png',
+      image: '/Home/VenkatXl.webp',
+      width: 358,
+      height: 318,
+      imageSm: '/Home/VenkatSm.webp',
+      widthSm: 210,
+      heightSm: 202,
     },
-    aboutImage: '/Img/AboutEvent.png',
+    aboutImage: { src: '/Img/AboutEvent.webp', width: 1133, height: 1150 },
     goodies: [
-      { image: '/Goodies/Food.png', text: 'Delicious Food & Breakfast Included – Fuel up while networking!' },
-      { image: '/Goodies/Bag.png', text: 'Exclusive Swags & Goodies – Walk away with special event memorabilia!' },
+      { image: '/Goodies/Food.webp', text: 'Delicious Food & Breakfast Included – Fuel up while networking!' },
+      { image: '/Goodies/Bag.webp', text: 'Exclusive Swags & Goodies – Walk away with special event memorabilia!' },
       {
-        image: '/Goodies/Speakers.png',
+        image: '/Goodies/Speakers.webp',
         text: 'Technical Talks from Industry Experts – Get insights from top minds in Java.',
       },
     ],

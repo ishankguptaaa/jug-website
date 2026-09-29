@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import SpeakerRole from '../components/speakers/SpeakerRole';
 import ExternalLink from '../components/ui/ExternalLink';
 import { focusRing } from '../components/ui/focusRing';
-import 'aos/dist/aos.css'; 
 
 const Speaker = ({ speakers, cfpUrl }) => {
   return (

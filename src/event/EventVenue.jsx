@@ -1,6 +1,5 @@
 import BookYourSlotButton from '../components/BookYourSlotButton'
 import { formatDateRange } from '../content'
-import 'aos/dist/aos.css'; 
 
 const EventVenue = ({ conference, venue, registrationUrl }) => {
     return (

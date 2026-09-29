@@ -13,7 +13,6 @@
   "dependencies": {
     "@fontsource/archivo-black": "^5.2.5",
     "@fontsource/raleway": "^5.2.5",
-    "@fontsource/roboto": "^5.2.5",
     "@fortawesome/fontawesome-free": "^6.7.2",
     "@tailwindcss/vite": "^4.0.1",
     "aos": "^2.3.4",

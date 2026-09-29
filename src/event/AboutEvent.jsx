@@ -1,7 +1,6 @@
 import BookYourSlotButton from '../components/BookYourSlotButton'
 import ExternalLink from '../components/ui/ExternalLink'
 import { formatDateRange, formatTimeRange } from '../content'
-import 'aos/dist/aos.css'; 
 
 
 const AboutEvent = ({ conference, mapUrl, registrationUrl }) => {
@@ -63,7 +62,7 @@ const AboutEvent = ({ conference, mapUrl, registrationUrl }) => {
                             data-aos="fade-left" 
                         >
                             {conference.aboutImage ? (
-                            <img src={conference.aboutImage} alt="" className='sm:w-[320px]'/>
+                            <img src={conference.aboutImage.src} alt="" width={conference.aboutImage.width} height={conference.aboutImage.height} loading="lazy" decoding="async" className='sm:w-[320px]'/>
                             ) : null}
                         </div>
                         
