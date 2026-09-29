@@ -8,6 +8,7 @@ import Button from '../components/ui/Button';
 import EmptyState from '../components/ui/EmptyState';
 import Volunteer from '../pages/Volunteer';
 import { useNow } from '../lib/useNow';
+import { organizationJsonLd } from '../lib/jsonLd';
 
 const DESCRIPTION = `About ${site.name}: our story, mission, the people behind the community and how to get involved.`;
 
@@ -41,6 +42,8 @@ const WHAT_WE_DO = [
 export default function AboutPage() {
   const now = useNow();
   const events = getAllEvents();
+  // Keep the page out of search while its copy or stats are still sample data.
+  const noindex = site.aboutCopyIsSample || events.some((e) => e.isSample);
   // Optional: the sample events may be removed before real ones are added.
   const firstMeetup = events.at(-1)?.date;
   const openCfpUrl = getOpenCfpUrl(now);
@@ -84,8 +87,13 @@ export default function AboutPage() {
 
   return (
     <>
-      {/* Keep the page out of search while its copy or stats are still sample data. */}
-      <Seo title="About" description={DESCRIPTION} path="/about" noindex={site.aboutCopyIsSample || events.some((e) => e.isSample)} />
+      <Seo
+        title="About"
+        description={DESCRIPTION}
+        path="/about"
+        noindex={noindex}
+        jsonLd={noindex ? undefined : organizationJsonLd()}
+      />
 
       <PageHero
         title={`About ${site.name}`}

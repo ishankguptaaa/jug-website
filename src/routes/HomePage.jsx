@@ -12,6 +12,7 @@ import {
 } from '../content';
 import { usePageChrome } from '../layouts/pageChrome';
 import { useNow } from '../lib/useNow';
+import { organizationJsonLd } from '../lib/jsonLd';
 import Button from '../components/ui/Button';
 import { ThumbGrid } from '../components/ui/Thumb';
 import ConferenceCard from '../components/conferences/ConferenceCard';
@@ -163,7 +164,7 @@ export default function HomePage() {
 
   return (
     <>
-      <Seo fullTitle={`${site.name} - Official Community Page`} description={site.description} path="/" />
+      <Seo fullTitle={`${site.name} - Official Community Page`} description={site.description} path="/" jsonLd={organizationJsonLd()} />
       <Home feature={feature} />
       <AboutCommunity />
       {now ? <ScheduleSections

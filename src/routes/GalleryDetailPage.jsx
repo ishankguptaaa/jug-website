@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { formatDate, getConferenceBySlug, getEventBySlug, getGalleryBySlug, site } from '../content';
+import { breadcrumbJsonLd } from '../lib/jsonLd';
 import Seo from '../components/Seo';
 import Button from '../components/ui/Button';
 import PageHero from '../components/ui/PageHero';
@@ -17,14 +18,21 @@ export default function GalleryDetailPage() {
   const parent = gallery.event ? getEventBySlug(gallery.event) : getConferenceBySlug(gallery.conference);
   const parentPath = gallery.event ? `/events/${parent.slug}` : `/conferences/${parent.slug}`;
 
+  const path = `/gallery/${gallery.slug}`;
+
   return (
     <>
       <Seo
         title={gallery.title}
         description={`Photos from ${parent.name} by the ${site.name} community.`}
-        path={`/gallery/${gallery.slug}`}
+        path={path}
         image={gallery.cover}
         noindex={gallery.isSample}
+        jsonLd={
+          gallery.isSample
+            ? undefined
+            : breadcrumbJsonLd('/gallery', { name: gallery.title, path })
+        }
       />
 
       <PageHero

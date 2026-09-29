@@ -24,11 +24,9 @@ import {
   getSpeakersForEvent,
   getStatus,
   getVenueForEvent,
-  istToDate,
-  site,
 } from '../content';
 import { useNow } from '../lib/useNow';
-import { absoluteUrl } from '../lib/url';
+import { breadcrumbJsonLd, eventJsonLd } from '../lib/jsonLd';
 import NotFoundPage from './NotFoundPage';
 
 /** True for lu.ma / luma.com (incl. subdomains) event links. */
@@ -40,31 +38,6 @@ function isLuma(url) {
   } catch {
     return false;
   }
-}
-
-function eventJsonLd(event, place, path) {
-  const iso = (time) => (time ? (istToDate(event.date, time)?.toISOString() ?? event.date) : event.date);
-  const url = absoluteUrl(path);
-  const address = [place?.address, place?.city].filter(Boolean).join(', ') || undefined;
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'Event',
-    name: event.name,
-    description: event.description,
-    startDate: iso(event.startTime),
-    endDate: iso(event.endTime),
-    eventAttendanceMode: place?.online
-      ? 'https://schema.org/OnlineEventAttendanceMode'
-      : 'https://schema.org/OfflineEventAttendanceMode',
-    location: place?.online
-      ? { '@type': 'VirtualLocation', url: event.externalUrl ?? url }
-      : place?.name || address
-        ? { '@type': 'Place', name: place?.name, address }
-        : undefined,
-    image: event.banner ? [absoluteUrl(event.banner)] : undefined,
-    url,
-    organizer: { '@type': 'Organization', name: site.fullName ?? site.name, url: site.url },
-  };
 }
 
 export default function EventDetailPage() {
@@ -99,7 +72,14 @@ export default function EventDetailPage() {
         path={path}
         image={event.banner}
         noindex={event.isSample}
-        jsonLd={event.isSample ? undefined : eventJsonLd(event, place, path)}
+        jsonLd={
+          event.isSample
+            ? undefined
+            : [
+                eventJsonLd(event, { path, description: event.description, places: venue?.isSample ? [] : [place], speakers }),
+                breadcrumbJsonLd('/events', { name: event.name, path }),
+              ]
+        }
       />
 
       {/* Hero */}
