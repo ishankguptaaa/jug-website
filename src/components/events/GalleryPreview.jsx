@@ -1,5 +1,5 @@
 import Button from '../ui/Button';
-import Thumb from '../ui/Thumb';
+import { ThumbGrid } from '../ui/Thumb';
 
 /**
  * Up to `limit` photo thumbnails from a gallery + "View full gallery" link
@@ -28,13 +28,7 @@ export default function GalleryPreview({
           {gallery.title}
         </Heading>
       ) : null}
-      <ul className="grid grid-cols-3 sm:grid-cols-2 gap-6 sm:gap-3 md:gap-4">
-        {photos.map((photo) => (
-          <li key={photo.src}>
-            <Thumb photo={photo} />
-          </li>
-        ))}
-      </ul>
+      <ThumbGrid photos={photos} />
       <div className="pt-8 sm:pt-5 flex justify-center">
         <Button
           to={`/gallery/${gallery.slug}`}

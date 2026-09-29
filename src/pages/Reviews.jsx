@@ -13,11 +13,8 @@ const Reviews = () =>{
                             </span>
                         </h2>
                         <div className="relative w-full max-w-10xl mx-auto">
-                            <iframe id="testimonial-iframe" src="https://embed-v2.testimonial.to/carousel/all/gujarat-java-user-group-reviews?theme=light&autoplay=off&showmore=on&one-row=on&same-height=on&tag=all&arrowColor=9BA9B4&column-scale=1&cc=off" className="w-full min-h-[700px] sm:min-h-[700px] md:min-h-[700px] lg:min-h-[700px] mt-10"></iframe>
+                            <iframe id="testimonial-iframe" title="Community reviews" loading="lazy" src="https://embed-v2.testimonial.to/carousel/all/gujarat-java-user-group-reviews?theme=light&autoplay=off&showmore=on&one-row=on&same-height=on&tag=all&arrowColor=9BA9B4&column-scale=1&cc=off" className="w-full min-h-[700px] sm:min-h-[700px] md:min-h-[700px] lg:min-h-[700px] mt-10"></iframe>
                         </div>
-                        <button className="bg-[#FFFFFF] text-black px-7 py-[19px] sm:text-[12px] sm:px-3 sm:py-[6px] rounded-2xl transition border border-black mt-3">
-                            View All
-                        </button>
                     </div>
                 </div>
             </div>
