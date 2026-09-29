@@ -54,7 +54,7 @@ const Schedule = ({ sessions, tracks, registrationUrl }) => {
                                 <div 
                                     key={event.slug} 
                                     id={event.slug}
-                                    className="flex items-center gap-6 sm:flex-col sm:gap-0 border-b border-black transition-opacity duration-500 opacity-100"
+                                    className="flex items-center gap-6 sm:flex-col sm:gap-0 border-b border-black"
                                     data-aos="fade-down"
                                 >
                                     <div className="w-[200px] text-left sm:text-center">

@@ -125,7 +125,7 @@ export const getSessionsForEvent = (eventSlug) =>
  */
 export const getSessionsForSpeaker = (speakerSlug) =>
   sessions
-    .filter((s) => (s.speakers ?? []).includes(speakerSlug))
+    .filter((s) => isSpeakerSession(s) && (s.speakers ?? []).includes(speakerSlug))
     .map((s) => ({
       ...s,
       date: getSessionDate(s),

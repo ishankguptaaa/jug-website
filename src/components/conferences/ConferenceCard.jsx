@@ -8,7 +8,7 @@ import Button from '../ui/Button';
 import Card from '../ui/Card';
 import Pill from '../ui/Pill';
 import StatusBadge from '../ui/StatusBadge';
-import { CompactCard } from '../events/EventCard';
+import CompactCard from '../ui/CompactCard';
 import SpeakerAvatars from '../events/SpeakerAvatars';
 
 const TEXT = 'font-raleway text-[16px] leading-[26px] sm:text-[14px] sm:leading-[22px]';
