@@ -1,4 +1,3 @@
-import 'aos/dist/aos.css';
 import { Typewriter } from 'react-simple-typewriter';
 import { site } from '../content';
 import Button from '../components/ui/Button';

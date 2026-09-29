@@ -1,7 +1,6 @@
 import BookYourSlotButton from '../components/BookYourSlotButton'
 import ExternalLink from '../components/ui/ExternalLink'
 import { formatDateRange, formatTimeRange } from '../content'
-import 'aos/dist/aos.css'; 
 
 
 const AboutEvent = ({ conference, mapUrl, registrationUrl }) => {

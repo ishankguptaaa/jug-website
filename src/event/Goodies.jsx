@@ -1,4 +1,3 @@
-import 'aos/dist/aos.css'; 
 import BookYourSlotButton from '../components/BookYourSlotButton'
 
 const Goodies = ({ goodies, registrationUrl }) => {

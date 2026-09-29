@@ -1,4 +1,3 @@
-import 'aos/dist/aos.css'; 
 import BookYourSlotButton from '../components/BookYourSlotButton'
 import ExternalLink from '../components/ui/ExternalLink';
 

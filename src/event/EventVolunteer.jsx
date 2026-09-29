@@ -1,4 +1,3 @@
-import 'aos/dist/aos.css'; 
 import volunteer from '../data/eventVolunteerData';
 import { site } from '../content';
 import ExternalLink from '../components/ui/ExternalLink';
