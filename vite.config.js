@@ -20,5 +20,11 @@ export default defineConfig({
     allowedHosts: [
       '56cd-2409-40e3-3088-98db-e012-e7f8-1404-83e8.ngrok-free.app'
     ]
-  }
+  },
+
+  // Prerender (SSR build): bundle CommonJS packages whose named exports
+  // Node's ESM loader can't see.
+  ssr: {
+    noExternal: ['react-helmet-async'],
+  },
 })

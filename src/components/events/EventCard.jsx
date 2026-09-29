@@ -53,7 +53,7 @@ function MetaLine({ label, children }) {
 /**
  * Full event card for the Upcoming list: banner, title, date/time/place,
  * clamped description, speaker avatars, status, Register + Details.
- * `now` must be a Date (client-only; see useNow).
+ * `now` must be a Date (see useNow).
  */
 export default function EventCard({ event, now, headingAs: Heading = 'h3' }) {
   const status = getStatus(event, now);
