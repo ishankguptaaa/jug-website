@@ -3,7 +3,6 @@ import {
   formatDate,
   formatDateRange,
   getConferencesByStatus,
-  getCurrentConference,
   getEventPlaceLabel,
   getGalleriesByYear,
   getPastEvents,
@@ -14,7 +13,7 @@ import {
 import { usePageChrome } from '../layouts/pageChrome';
 import { useNow } from '../lib/useNow';
 import Button from '../components/ui/Button';
-import Thumb from '../components/ui/Thumb';
+import { ThumbGrid } from '../components/ui/Thumb';
 import ConferenceCard from '../components/conferences/ConferenceCard';
 import EventCard, { EventCardCompact } from '../components/events/EventCard';
 import { GRID } from '../components/events/eventsGrid';
@@ -28,8 +27,6 @@ import Sessions from '../pages/Sessions';
 import Volunteer from '../pages/Volunteer';
 import Reviews from '../pages/Reviews';
 import { JoinJug } from '../pages/JoinJug';
-
-const isOpen = (status) => status === 'upcoming' || status === 'live';
 
 const conferenceFeature = (c, status) => ({
   name: c.name,
@@ -56,11 +53,9 @@ const eventFeature = (e, status) => ({
 });
 
 // Sections that depend on the current time; rendered once `now` is known.
-function ScheduleSections({ now, conference, conferenceStatus }) {
+function ScheduleSections({ now, conference, conferenceStatus, otherOpen, completed }) {
   const upcomingEvents = getUpcomingEvents(now).slice(0, 3);
   const pastEvents = getPastEvents(now).slice(0, 3);
-  const { live, upcoming, completed } = getConferencesByStatus(now);
-  const otherOpen = [...live, ...upcoming].filter((c) => c.slug !== conference?.slug);
   const conferences = (otherOpen.length ? otherOpen : completed).slice(0, 3);
 
   return (
@@ -141,13 +136,7 @@ function GallerySection() {
       squiggle="Gallery"
       action={<Button to="/gallery">View gallery</Button>}
     >
-      <ul className="grid grid-cols-3 sm:grid-cols-2 gap-6 sm:gap-3 md:gap-4">
-        {photos.map((photo) => (
-          <li key={photo.src}>
-            <Thumb photo={photo} />
-          </li>
-        ))}
-      </ul>
+      <ThumbGrid photos={photos} />
     </HomeSection>
   );
 }
@@ -158,9 +147,10 @@ export default function HomePage() {
   // null during prerender and the first client render (SSR-safe), so the
   // classic hero shows until the client knows the current time.
   const now = useNow();
-  const current = now ? getCurrentConference(now) : undefined;
-  const currentStatus = current ? getStatus(current, now) : null;
-  const conference = isOpen(currentStatus) ? current : undefined;
+  const byStatus = now ? getConferencesByStatus(now) : { live: [], upcoming: [], completed: [] };
+  // Live first, then the soonest upcoming — same order as getCurrentConference.
+  const [conference, ...otherOpen] = [...byStatus.live, ...byStatus.upcoming];
+  const currentStatus = conference ? getStatus(conference, now) : null;
   const nextMeetup = now ? getUpcomingEvents(now)[0] : undefined;
 
   let feature = null;
@@ -176,7 +166,13 @@ export default function HomePage() {
       <Seo fullTitle={`${site.name} - Official Community Page`} description={site.description} path="/" />
       <Home feature={feature} />
       <AboutCommunity />
-      {now ? <ScheduleSections now={now} conference={conference} conferenceStatus={currentStatus} /> : null}
+      {now ? <ScheduleSections
+          now={now}
+          conference={conference}
+          conferenceStatus={currentStatus}
+          otherOpen={otherOpen}
+          completed={byStatus.completed}
+        /> : null}
       <Experts />
       <Sessions />
       <GallerySection />
