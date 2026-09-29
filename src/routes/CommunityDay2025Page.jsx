@@ -27,7 +27,12 @@ import BooKSlots from '../event/BooKSlots';
 export default function CommunityDay2025Page() {
   const conference = getConferenceBySlug(CDJ_2025_SLUG);
   // Lilac header to match this page's hero; keep "Conferences" active on the legacy URL too.
-  usePageChrome({ headerTone: 'bg-[#F6EAFF]', activeNav: '/conferences' });
+  // Header CTA is "Book Your Slots" on this page (user decision), not "Join Community".
+  usePageChrome({
+    headerTone: 'bg-[#F6EAFF]',
+    activeNav: '/conferences',
+    headerCta: { label: 'Book Your Slots', href: conference?.registrationUrl },
+  });
 
   const subNavItems = [
     { label: 'About', hash: 'about-event' },

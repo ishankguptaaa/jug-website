@@ -34,7 +34,7 @@ export default function SiteLayout() {
         Skip to content
       </a>
       <ScrollManager />
-      <Header tone={pageChrome.headerTone} activeNav={pageChrome.activeNav} />
+      <Header tone={pageChrome.headerTone} activeNav={pageChrome.activeNav} cta={pageChrome.headerCta} />
       <main id="main" tabIndex={-1} className="focus:outline-none">
         <Suspense fallback={<div className="min-h-[100vh]" aria-busy="true" />}>
           <Outlet context={outletContext} />
