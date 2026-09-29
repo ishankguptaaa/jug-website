@@ -29,7 +29,8 @@ export const organizationJsonLd = () => ({
  * @param {object} entity  event (`date`) or conference (`startDate`/`endDate`)
  * @param {object} opts    { path, description, places: [{ name, address, city, online }], speakers }
  */
-export const eventJsonLd = (entity, { path, description, places, speakers }) => {
+export const eventJsonLd = (entity, { path, description, places: allPlaces, speakers }) => {
+  const places = allPlaces.filter((p) => !p.isSample);
   const url = absoluteUrl(path);
   const online = places.length > 0 && places.every((p) => p.online);
   const location = places.length

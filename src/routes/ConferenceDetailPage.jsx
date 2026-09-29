@@ -89,7 +89,6 @@ export default function ConferenceDetailPage() {
   const hasSponsors = sponsors.length > 0 || venues.length > 0;
   const path = `/conferences/${conference.slug}`;
   const description = conference.description?.[0] ?? conference.tagline;
-  const places = venues.filter((v) => !v.isSample);
 
   const subNavItems = [
     { label: 'About', hash: 'about-event' },
@@ -135,7 +134,7 @@ export default function ConferenceDetailPage() {
           conference.isSample
             ? undefined
             : [
-                eventJsonLd(conference, { path, description, places, speakers }),
+                eventJsonLd(conference, { path, description, places: venues, speakers }),
                 breadcrumbJsonLd('/conferences', { name: conference.name, path }),
               ]
         }

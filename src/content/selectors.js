@@ -334,7 +334,7 @@ export const getSpeakerDirectory = () => {
       const speaker = speakersBySlug.get(slug);
       return speaker && { ...speaker, sessionCount };
     }),
-  ).sort((a, b) => b.sessionCount - a.sessionCount || a.name.localeCompare(b.name));
+  ).sort((a, b) => b.sessionCount - a.sessionCount || a.name.localeCompare(b.name, 'en'));
 };
 
 // ---------- about ----------

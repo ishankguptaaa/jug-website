@@ -5,7 +5,7 @@ import App from './App';
 import { preloadRoute } from './router';
 import { setInitialNow } from './lib/useNow';
 
-export { routes } from './router';
+export { routes, matchedPages } from './router';
 
 const renderApp = (url, pageChrome, helmetContext = {}) =>
   renderToString(

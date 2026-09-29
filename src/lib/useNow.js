@@ -12,11 +12,12 @@ export const setInitialNow = (date) => {
 /** Current time; re-read after mount and then every `intervalMs` (default 5 min). */
 export function useNow(intervalMs = 5 * 60 * 1000) {
   const [now, setNow] = useState(() => initialNow ?? new Date());
+  const startedFromPrerender = now === initialNow;
   useEffect(() => {
     const tick = () => setNow(new Date());
-    tick();
+    if (startedFromPrerender) tick();
     const id = setInterval(tick, intervalMs);
     return () => clearInterval(id);
-  }, [intervalMs]);
+  }, [intervalMs]); // eslint-disable-line react-hooks/exhaustive-deps -- mount-time check only
   return now;
 }

@@ -10,6 +10,9 @@ const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const TIME_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
 
 /** Calendar year in Asia/Kolkata for an absolute Date. */
+/** 'YYYY-MM-DD' calendar date in Asia/Kolkata for an absolute Date. */
+export const dateInIST = (now) => new Date(now.getTime() + IST_OFFSET_MINUTES * 60 * 1000).toISOString().slice(0, 10);
+
 export function getYearInIST(now) {
   return new Date(now.getTime() + IST_OFFSET_MINUTES * 60 * 1000).getUTCFullYear();
 }

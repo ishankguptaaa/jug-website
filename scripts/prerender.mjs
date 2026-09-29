@@ -5,18 +5,17 @@
 // dist/index.html, 404 → dist/404.html), then writes sitemap.xml and
 // robots.txt and checks that every internal link points at a written page.
 
-import { existsSync } from 'node:fs';
+import { existsSync, statSync } from 'node:fs';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { CDJ_2025_SLUG, conferences, events, galleries, site, speakers } from '../src/content/index.js';
-import { render, routes as routeObjects } from '../dist-ssr/entry-server.js';
+import { CDJ_2025_SLUG, conferences, dateInIST, events, galleries, site, speakers } from '../src/content/index.js';
+import { matchedPages, render, routes as routeObjects } from '../dist-ssr/entry-server.js';
 
 const dist = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'dist');
 const now = new Date();
-// Content dates are IST calendar dates.
-const today = new Date(now.getTime() + 330 * 60 * 1000).toISOString().slice(0, 10);
+const today = dateInIST(now); // content dates are IST calendar dates
 // Content dates as lastmod, but never in the future (upcoming events).
 const pastDate = (date) => (date && date <= today ? date : undefined);
 
@@ -43,6 +42,27 @@ const template = (await readFile(path.join(dist, 'index.html'), 'utf8'))
 const ROOT = '<div id="root"></div>';
 if (!template.includes(ROOT) || !template.includes('</head>')) throw new Error(`dist/index.html has no ${ROOT}`);
 
+// Link the matched page chunk's CSS and preload its JS (and imports) so the
+// static HTML is fully styled and hydration doesn't wait on a request chain.
+const manifest = JSON.parse(await readFile(path.join(dist, '.vite', 'manifest.json'), 'utf8'));
+const pageAssets = (pathname) => {
+  const css = new Set();
+  const js = new Set();
+  const walk = (key) => {
+    const chunk = manifest[key];
+    // The entry bundle and its CSS are already in the template.
+    if (!chunk || chunk.isEntry || js.has(chunk.file)) return;
+    js.add(chunk.file);
+    chunk.css?.forEach((f) => css.add(f));
+    chunk.imports?.forEach(walk);
+  };
+  matchedPages(pathname).forEach((page) => walk(`src/routes/${page}.jsx`));
+  return [
+    ...[...css].map((f) => `<link rel="stylesheet" href="/${f}">`),
+    ...[...js].map((f) => `<link rel="modulepreload" href="/${f}">`),
+  ].join('');
+};
+
 const written = new Map(); // path → html
 const indexable = [];
 
@@ -50,11 +70,11 @@ for (const route of routes) {
   const { html, head, pageChrome } = await render(route.path, now);
   const data = JSON.stringify({ path: route.path, now: now.toISOString(), pageChrome }).replace(/</g, '\\u003c');
   const page = template
-    .replace('</head>', () => `${head}</head>`)
+    .replace('</head>', () => `${head}${pageAssets(route.path)}</head>`)
     .replace(ROOT, () => `<div id="root">${html}</div><script id="prerender-data" type="application/json">${data}</script>`);
   // Guard the assembled page, not just the strings that went into it.
-  const visible = page.replace(/<!--[\s\S]*?-->/g, '');
-  if ((visible.match(/<title[\s>]/g) ?? []).length !== 1 || !visible.includes('<script type="module"')) {
+  const visibleHead = page.replace(/<!--[\s\S]*?-->/g, '').split('</head>')[0];
+  if ((visibleHead.match(/<title[\s>]/g) ?? []).length !== 1 || !visibleHead.includes('<script type="module"')) {
     throw new Error(`${route.path}: assembled page lost its <title> or module script (check index.html comments)`);
   }
   const file = path.join(dist, route.path === '/' ? 'index.html' : `${route.path}.html`);
@@ -90,7 +110,7 @@ for (const [from, page] of written) {
       broken.add(`${from} → ${href} (malformed URL)`);
       continue;
     }
-    const ok = written.has(target) || target === `/${CDJ_2025_SLUG}` || existsSync(file);
+    const ok = written.has(target) || target === `/${CDJ_2025_SLUG}` || (existsSync(file) && statSync(file).isFile());
     if (!ok) broken.add(`${from} → ${href}`);
   }
 }

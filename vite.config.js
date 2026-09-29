@@ -25,6 +25,8 @@ export default defineConfig(({ isSsrBuild }) => ({
   // The SSR build is only read by scripts/prerender.mjs; don't copy public/.
   build: {
     copyPublicDir: !isSsrBuild,
+    // Read by scripts/prerender.mjs to link each page chunk's CSS and preload it.
+    manifest: !isSsrBuild,
   },
 
   // Prerender (SSR build): bundle CommonJS packages whose named exports
