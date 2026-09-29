@@ -27,6 +27,18 @@ export const site = {
     whatsapp: 'https://chat.whatsapp.com/I3W75ItQTNs7Hr7WzRWcPR',
     youtube: 'https://www.youtube.com/@juggujarat',
   },
+  // TODO: replace with the real "What is Gujarat JUG" copy (sample text).
+  about:
+    'Gujarat JUG is a community of Java developers, architects, students and technology enthusiasts who meet to learn from each other, share experience and grow together.',
+  // TODO: replace with the real mission statement (sample text).
+  mission:
+    'To help Java developers in Gujarat learn, connect and contribute, through free meetups, workshops and conferences open to everyone.',
+  // TODO: replace with the real milestones; add a `year` to each once confirmed (sample text).
+  milestones: [
+    { title: 'A community is born', body: 'A few Java enthusiasts start meeting to share what they learn.' },
+    { title: 'Meetups take off', body: 'Regular meetups and workshops bring in speakers and members from across the region.' },
+    { title: 'Community Day for Java', body: 'Our first flagship conference brings the community together for a full day of talks.' },
+  ],
   // Speaker slugs shown in the home page "Here Come the Experts!" section, in order.
   featuredSpeakers: ['siva-reddy', 'vikas-rajput', 'vaibhav-choudhary', 'rohan-kumar'],
   // YouTube embeds shown in the home page "Our Sessions" section, in order.

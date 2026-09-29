@@ -333,3 +333,14 @@ export const getSpeakerDirectory = () => {
     }),
   ).sort((a, b) => b.sessionCount - a.sessionCount || a.name.localeCompare(b.name));
 };
+
+// ---------- about ----------
+
+/** CFP link of a live/upcoming conference whose call for papers is still open at `now`; `undefined` if none (or `now` unknown). */
+export const getOpenCfpUrl = (now) => {
+  if (!now) return undefined;
+  const { live, upcoming } = getConferencesByStatus(now);
+  return [...live, ...upcoming].find(
+    (c) => c.cfp?.url && !(c.cfp.closesOn && now > istToDate(c.cfp.closesOn, '23:59')),
+  )?.cfp.url;
+};
