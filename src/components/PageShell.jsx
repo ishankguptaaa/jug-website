@@ -1,15 +1,13 @@
 import Seo from './Seo';
-import Button from './ui/Button';
 import EmptyState from './ui/EmptyState';
 import Container from './ui/Container';
 import Pill from './ui/Pill';
 import PageHero from './ui/PageHero';
 
 /**
- * Hero + message layout shared by the "Coming soon" placeholders and the 404
- * page: light-blue hero (continues the header) with the page <h1>, then a
- * warm section holding a lilac EmptyState card, ending with the same bottom
- * spacing the footer expects.
+ * Hero + message layout for the 404 page: light-blue hero (continues the
+ * header) with the page <h1>, then a warm section holding a lilac EmptyState
+ * card, ending with the same bottom spacing the footer expects.
  */
 export default function PageShell({ seo, eyebrow, title, intro, card }) {
   return (
@@ -46,12 +44,3 @@ export default function PageShell({ seo, eyebrow, title, intro, card }) {
   );
 }
 
-/** Standard actions: back home (internal) + join the community (external). */
-export function HomeAndJoinActions({ joinUrl }) {
-  return (
-    <>
-      <Button to="/">Back to homepage</Button>
-      {joinUrl ? <Button href={joinUrl}>Join Community</Button> : null}
-    </>
-  );
-}

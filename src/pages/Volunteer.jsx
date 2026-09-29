@@ -16,7 +16,7 @@ const Volunteer = () => {
             <Button href={site.volunteerFormUrl} className="sm:mt-3">Become a Volunteer</Button>
           </div>
 
-          <div className="grid xl:grid-cols-4 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-4 gap-x-2 gap-y-8 sm:gap-x-6 pt-[48px] sm:pt-[36px]">
+          <div className="grid grid-cols-4 sm:grid-cols-2 gap-x-2 gap-y-8 sm:gap-x-6 pt-[48px] sm:pt-[36px]">
             {volunteer.map((expert,index) => (
               <div key={expert.id} className="sm:text-center" data-aos="fade-right"   data-aos-delay={`${index * 200}`}>
                 <img src={expert.image} alt={expert.name} className=" sm:w-[320px]" />
