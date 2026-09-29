@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import Seo from '../components/Seo';
 import Container from '../components/ui/Container';
-import { DetailHero } from '../components/ui/PageHero';
+import { DetailHero, DetailTitle } from '../components/ui/PageHero';
 import EmptyState from '../components/ui/EmptyState';
 import DetailSection from '../components/ui/DetailSection';
 import { ConferenceCardCompact } from '../components/conferences/ConferenceCard';
@@ -47,9 +47,9 @@ export default function SpeakerDetailPage() {
           <SpeakerPhoto speaker={speaker} priority />
         </div>
         <div className="col-span-9 md:col-span-8 sm:col-span-12 min-w-0 sm:text-center">
-          <h1 className="font-raleway font-semibold text-[46px] leading-[58px] md:text-[38px] md:leading-[48px] sm:text-[24px] sm:leading-[32px] break-words">
+          <DetailTitle>
             {speaker.name}
-          </h1>
+          </DetailTitle>
           <SpeakerRole
             speaker={speaker}
             className="pt-3 text-[20px] leading-[28px] sm:text-[14px] sm:leading-[22px]"

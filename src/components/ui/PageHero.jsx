@@ -33,3 +33,7 @@ export function DetailHero({ children }) {
     </section>
   );
 }
+
+export function DetailTitle({ className = '', children }) {
+  return <h1 className={`font-raleway font-semibold text-[46px] leading-[58px] md:text-[38px] md:leading-[48px] sm:text-[24px] sm:leading-[32px] break-words ${className}`}>{children}</h1>;
+}

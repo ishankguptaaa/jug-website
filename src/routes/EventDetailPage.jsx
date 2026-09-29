@@ -3,7 +3,7 @@ import Seo from '../components/Seo';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
 import Container from '../components/ui/Container';
-import { DetailHero } from '../components/ui/PageHero';
+import { DetailHero, DetailTitle } from '../components/ui/PageHero';
 import DetailSection from '../components/ui/DetailSection';
 import { HERO_IMG_PRIORITY } from '../components/ui/heroImg';
 import StatusBadge from '../components/ui/StatusBadge';
@@ -112,9 +112,9 @@ export default function EventDetailPage() {
             {place?.online ? <Pill tone="bg-[#CAF8FC] border-black">Online</Pill> : null}
             <StatusBadge status={status} />
           </div>
-          <h1 className="mt-5 font-raleway font-semibold text-[46px] leading-[58px] md:text-[38px] md:leading-[48px] sm:text-[24px] sm:leading-[32px] break-words">
+          <DetailTitle className="mt-5">
             {event.name}
-          </h1>
+          </DetailTitle>
           <dl className="mt-6 sm:mt-4 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 sm:gap-x-4 font-raleway text-[18px] leading-[28px] sm:text-[14px] sm:leading-[22px]">
             {event.date ? (
               <>
