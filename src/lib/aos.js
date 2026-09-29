@@ -23,12 +23,13 @@ export function initAOS() {
   initialised = true;
   Promise.all([import('aos'), import('aos/dist/aos.css?inline')])
     .then(([{ default: AOS }, { default: css }]) => {
+      // offset 0: anything already on screen is marked animated in this same
+      // task, so it never disappears. The hiding styles go in only after init
+      // succeeds, so a failed init leaves everything visible.
+      AOS.init({ duration: 1000, offset: 0 });
       const style = document.createElement('style');
       style.textContent = css;
       document.head.append(style);
-      // offset 0: anything already on screen is marked animated in this same
-      // task, so it never disappears.
-      AOS.init({ duration: 1000, offset: 0 });
     })
     // Chunk failed to load: AOS stays off and content stays visible.
     .catch(() => {});

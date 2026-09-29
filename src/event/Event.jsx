@@ -26,8 +26,7 @@ const Event = ({ conference, status, speakerCount, registrationUrl }) => {
                             <img src='/Home/BannerArrow.svg' alt='' className="absolute -top-4 left-[508px] right-0 sm:left-[260px] sm:-top-1  sm:h-[52px] sm:w-[68px]" />
                             </div>
                             <div className=' flex sm:mt-4  '>
-                            {/* Priority only on the desktop cut-out; the small one is hidden there. */}
-                            <img src={featuredSpeaker.image} alt="" width={featuredSpeaker.width} height={featuredSpeaker.height} className="sm:hidden" {...HERO_IMG_PRIORITY} data-aos="zoom-in-up"/>
+                            <img src={featuredSpeaker.image} alt="" width={featuredSpeaker.width} height={featuredSpeaker.height} className="sm:hidden" data-aos="zoom-in-up"/>
                             <img src={featuredSpeaker.imageSm} alt="" width={featuredSpeaker.widthSm} height={featuredSpeaker.heightSm} className="xl:hidden" data-aos="zoom-in-up"/>
 
                              <div className=" mt-[112px] text-center  sm:mt-12 ">

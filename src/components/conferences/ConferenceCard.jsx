@@ -8,10 +8,11 @@ import {
 import Button from '../ui/Button';
 import Card from '../ui/Card';
 import { CARD_SURFACE } from '../ui/cardSurface';
-import { CARD_BANNER_SIZES, bannerSrcSet } from '../../lib/images';
+import { CARD_BANNER_SIZES, bannerSrcSet, FEATURED_BANNER_SIZES } from '../../lib/images';
 import Pill from '../ui/Pill';
 import StatusBadge from '../ui/StatusBadge';
 import CompactCard from '../ui/CompactCard';
+import { HERO_IMG_PRIORITY } from '../ui/heroImg';
 import SpeakerAvatars from '../events/SpeakerAvatars';
 
 const TEXT = 'font-raleway text-[16px] leading-[26px] sm:text-[14px] sm:leading-[22px]';
@@ -34,13 +35,13 @@ export default function ConferenceCard({ conference: c, status, featured = false
       {c.banner ? (
         <img
           src={c.banner}
-          // The featured card's banner is near full width: always the 1200w file.
-          srcSet={featured ? undefined : bannerSrcSet(c.banner)}
-          sizes={featured ? undefined : CARD_BANNER_SIZES}
+          srcSet={bannerSrcSet(c.banner)}
+          sizes={featured ? FEATURED_BANNER_SIZES : CARD_BANNER_SIZES}
           alt=""
           width="1200"
           height="600"
-          loading="lazy"
+          // The featured card sits right under the page hero.
+          {...(featured ? HERO_IMG_PRIORITY : { loading: 'lazy' })}
           decoding="async"
           className={`block w-full aspect-[2/1] object-cover border-black ${
             featured

@@ -150,11 +150,17 @@ export function validateContent(content, { assetExists } = {}) {
     if (c.startDate === c.endDate) timeOrder('conferences', c);
     status('conferences', c);
     banner('conferences', c);
-    asset('conferences', c, 'heroLogo.src', c.heroLogo?.src);
-    asset('conferences', c, 'heroLogo.srcSm', c.heroLogo?.srcSm);
-    asset('conferences', c, 'featuredSpeaker.image', c.featuredSpeaker?.image);
-    asset('conferences', c, 'featuredSpeaker.imageSm', c.featuredSpeaker?.imageSm);
-    asset('conferences', c, 'aboutImage.src', c.aboutImage?.src);
+    // Hero/about art: path(s) + intrinsic sizes (reserve layout, no CLS).
+    const art = (field, keys) => {
+      const value = c[field];
+      if (value === undefined) return;
+      const missing = keys.filter((k) => value?.[k] === undefined);
+      if (missing.length) err(where('conferences', c), `"${field}" needs ${missing.join(', ')}`);
+      keys.filter((k) => /^(src|image)/.test(k)).forEach((k) => asset('conferences', c, `${field}.${k}`, value?.[k]));
+    };
+    art('heroLogo', ['src', 'width', 'height', 'srcSm', 'widthSm', 'heightSm']);
+    art('featuredSpeaker', ['image', 'width', 'height', 'imageSm', 'widthSm', 'heightSm']);
+    art('aboutImage', ['src', 'width', 'height']);
     (c.goodies ?? []).forEach((g, i) => asset('conferences', c, `goodies[${i}].image`, g.image));
     if (c.cfp !== undefined) {
       if (!c.cfp?.url) err(where('conferences', c), '"cfp" needs a "url"');
