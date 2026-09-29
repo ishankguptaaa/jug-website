@@ -48,7 +48,7 @@ function Feature({ feature: f }) {
 /** Homepage hero. Without a `feature` it is the classic "Connect, Code, Learn" hero. */
 const Home = ({ feature }) => {
   return (
-    <section className="bg-[#E1EEFB]">
+    <section className="bg-[#E1EEFB] overflow-x-clip">
       <Container size="xl" className="sm:max-w-[345px]">
         <div className="pt-12 pb-11">
           <div className="flex items-center justify-center space-x-4 mt-4">
