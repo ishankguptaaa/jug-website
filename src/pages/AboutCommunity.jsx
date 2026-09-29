@@ -29,7 +29,7 @@ const AboutCommunity = () => {
           </div>
           <div className="col-span-6 px-[100px] sm:px-0 sm:mt-7" data-aos="fade-left">
             <img
-              src="/Img/AboutCommunity.png"
+              src="/Img/AboutCommunity.webp"
               alt=""
               width="545"
               height="520"

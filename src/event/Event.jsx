@@ -1,6 +1,8 @@
 import BookYourSlotButton from '../components/BookYourSlotButton'
 import Button from '../components/ui/Button'
 import StatusBadge from '../components/ui/StatusBadge'
+import { HERO_IMG_PRIORITY } from '../components/ui/heroImg'
+import { BANNER_SIZES, bannerSrcSet } from '../lib/images'
 import { getSpeakerBySlug } from '../content'
 
 const Event = ({ conference, status, speakerCount, registrationUrl }) => {
@@ -15,7 +17,7 @@ const Event = ({ conference, status, speakerCount, registrationUrl }) => {
                     <div className=" col-span-6  sm:order-2">
                             {heroLogo ? (
                             <div className='pl-[120px]    sm:pl-0 sm:hidden  '>
-                            <img src={heroLogo.src} alt='' className="" />
+                            <img src={heroLogo.src} alt='' width="492" height="249" />
                             </div>
                             ) : null}
                             {speaker ? (
@@ -24,8 +26,8 @@ const Event = ({ conference, status, speakerCount, registrationUrl }) => {
                             <img src='/Home/BannerArrow.svg' alt='' className="absolute -top-4 left-[508px] right-0 sm:left-[260px] sm:-top-1  sm:h-[52px] sm:w-[68px]" />
                             </div>
                             <div className=' flex sm:mt-4  '>
-                            <img src={featuredSpeaker.image} alt="" className="sm:hidden" data-aos="zoom-in-up"/>
-                            <img src={featuredSpeaker.imageSm} alt="" className="xl:hidden" data-aos="zoom-in-up"/>
+                            <img src={featuredSpeaker.image} alt="" width="358" height="318" className="sm:hidden" data-aos="zoom-in-up"/>
+                            <img src={featuredSpeaker.imageSm} alt="" width="210" height="202" className="xl:hidden" data-aos="zoom-in-up"/>
 
                              <div className=" mt-[112px] text-center  sm:mt-12 ">
                             <p className="font-archivo font-normal text-[26.25px] sm:text-[18.25px] leading-[100%]  sm:leading-[100%] ">Special Speaker</p>
@@ -38,9 +40,12 @@ const Event = ({ conference, status, speakerCount, registrationUrl }) => {
                             {!heroLogo && !speaker && conference.banner ? (
                             <img
                                 src={conference.banner}
+                                srcSet={bannerSrcSet(conference.banner)}
+                                sizes={BANNER_SIZES}
                                 alt=''
                                 width="1200"
                                 height="600"
+                                {...HERO_IMG_PRIORITY}
                                 className="w-full h-auto rounded-[40px] sm:rounded-[24px] border border-black bg-white"
                             />
                             ) : null}
@@ -48,7 +53,7 @@ const Event = ({ conference, status, speakerCount, registrationUrl }) => {
                         <div className="  col-span-6  sm:grid-cols-1  sm:order-1" data-aos="fade-left">
                         {heroLogo ? (
                         <div className=' sm:pl-0 sm:mt-0 flex items-center justify-center ' >
-                                                    <img src={heroLogo.srcSm} alt='' className="xl:hidden" />
+                                                    <img src={heroLogo.srcSm} alt='' width="206" height="104" className="xl:hidden" />
                                                     </div>
                         ) : null}
 
