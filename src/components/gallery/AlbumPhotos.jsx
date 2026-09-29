@@ -76,7 +76,7 @@ export default function AlbumPhotos({ photos }) {
         onKeyDown={onKeyDown}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
-        className="m-0 w-full h-full max-w-none max-h-none p-6 sm:p-3 bg-black/90 text-white open:flex flex-col items-center gap-4 sm:gap-3"
+        className="m-0 w-full h-full max-w-none max-h-none p-6 sm:p-3 bg-black text-white open:flex flex-col items-center gap-4 sm:gap-3"
       >
         <div className="w-full flex items-center justify-between gap-4">
           <p aria-live="polite" className="font-medium text-[16px] sm:text-[14px]">
