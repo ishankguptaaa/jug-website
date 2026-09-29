@@ -28,8 +28,6 @@ const WHAT_WE_DO = [
     title: 'Workshops',
     bg: 'bg-[#CAF8FC]',
     text: site.whatWeDo.workshops,
-    to: '/events',
-    cta: 'Find a workshop',
   },
   {
     title: 'Conferences',
@@ -86,7 +84,8 @@ export default function AboutPage() {
 
   return (
     <>
-      <Seo title="About" description={DESCRIPTION} path="/about" />
+      {/* Stats come from sample events until real ones land; keep the page out of search until then. */}
+      <Seo title="About" description={DESCRIPTION} path="/about" noindex={events.some((e) => e.isSample)} />
 
       <PageHero
         title={`About ${site.name}`}
@@ -149,9 +148,11 @@ export default function AboutPage() {
                   <Card bg={item.bg} className="h-full p-8 sm:p-6 flex flex-col items-start">
                     <h3 className={CARD_TITLE}>{item.title}</h3>
                     <p className={`${CARD_TEXT} flex-1`}>{item.text}</p>
+                  {item.to ? (
                     <Button to={item.to} shape="card" className="mt-6">
                       {item.cta}
                     </Button>
+                  ) : null}
                   </Card>
                 </li>
               ))}

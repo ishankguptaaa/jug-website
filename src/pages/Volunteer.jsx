@@ -20,7 +20,7 @@ const Volunteer = () => {
             {volunteer.map((expert,index) => (
               <div key={expert.id} className="sm:text-center" data-aos="fade-right"   data-aos-delay={`${index * 200}`}>
                 <img src={expert.image} alt={expert.name} className=" sm:w-[320px]" />
-                <h2 className="pt-6 sm:pt-3 font-raleway font-bold text-[24px] leading-[28px] sm:text-[14px] sm:leading-[20px]">{expert.name}</h2>
+                <h3 className="pt-6 sm:pt-3 font-raleway font-bold text-[24px] leading-[28px] sm:text-[14px] sm:leading-[20px]">{expert.name}</h3>
                 <p className="text-gray-600 font-raleway font-normal text-[16px] leading-[18px]  sm:text-[12px] sm:leading-[18px] pt-2 sm:pt-1">{expert.expertise} <strong className='text-black-600'>{expert.profession}</strong></p>
               </div>
             ))}
