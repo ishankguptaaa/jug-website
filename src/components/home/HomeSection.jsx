@@ -4,8 +4,8 @@ import SectionHeading from '../ui/SectionHeading';
 /** Homepage section: coloured band, heading with an optional action button, then the content. */
 export default function HomeSection({ id, bg, title, squiggle, action, children }) {
   return (
-    <section id={id} aria-labelledby={`${id}-heading`} className={bg}>
-      <Container className="overflow-hidden pt-[128px] pb-[100px] sm:pt-[50px] sm:pb-[50px]">
+    <section id={id} aria-labelledby={`${id}-heading`} className={`${bg} overflow-x-clip`}>
+      <Container className="pt-[128px] pb-[100px] sm:pt-[50px] sm:pb-[50px]">
         <div className="flex justify-between items-center gap-4 sm:flex-col">
           <SectionHeading id={`${id}-heading`} squiggle={squiggle} className="sm:text-center">
             {title}

@@ -4,8 +4,8 @@ import Container from '../components/ui/Container';
 
 const AboutCommunity = () => {
   return (
-    <section id="about" aria-labelledby="about-heading" className="bg-[#D7FFF1]">
-      <Container size="xl" className="overflow-hidden">
+    <section id="about" aria-labelledby="about-heading" className="bg-[#D7FFF1] overflow-x-clip">
+      <Container size="xl">
         <div className="pt-[128px] pb-[155px] sm:pt-[50px] sm:pb-[50px] grid grid-cols-12 sm:grid-cols-1">
           <div className="col-span-6 ps-[110px] pt-[50px] sm:p-0" data-aos="fade-right">
             <h2
