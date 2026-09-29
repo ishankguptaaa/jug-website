@@ -344,5 +344,5 @@ export const isCfpOpen = (conference, now) => {
   return !(closes && now > closes);
 };
 
-/** CFP link of the first conference whose CFP is open at `now`; `undefined` if none. */
-export const getOpenCfpUrl = (now) => getUpcomingConferences(now).find((c) => isCfpOpen(c, now))?.cfp.url;
+/** CFP link of the soonest conference whose CFP is open at `now`; `undefined` if none. */
+export const getOpenCfpUrl = (now) => [...conferences].sort(byStartAsc).find((c) => isCfpOpen(c, now))?.cfp.url;

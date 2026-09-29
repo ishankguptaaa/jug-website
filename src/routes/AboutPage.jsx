@@ -5,6 +5,7 @@ import Container from '../components/ui/Container';
 import SectionHeading from '../components/ui/SectionHeading';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
+import EmptyState from '../components/ui/EmptyState';
 import Volunteer from '../pages/Volunteer';
 import { useNow } from '../lib/useNow';
 
@@ -42,14 +43,14 @@ const WHAT_WE_DO = [
 export default function AboutPage() {
   const now = useNow();
   const events = getAllEvents();
-  const firstMeetup = events.at(-1)?.date;
+  const firstMeetup = events.at(-1).date;
   const openCfpUrl = getOpenCfpUrl(now);
   const stats = [
-    firstMeetup ? { label: 'First meetup', value: <time dateTime={firstMeetup}>{formatDate(firstMeetup)}</time> } : null,
+    { label: 'First meetup', value: <time dateTime={firstMeetup}>{formatDate(firstMeetup)}</time> },
     { label: 'Events', value: events.length },
     { label: 'Speakers', value: getSpeakerDirectory().length },
     { label: 'Conferences', value: getAllConferences().length },
-  ].filter(Boolean);
+  ];
 
   const participate = [
     {
@@ -64,11 +65,6 @@ export default function AboutPage() {
       title: 'Speak',
       text: openCfpUrl ? site.participate.speak : site.participate.speakClosed,
       actions: [openCfpUrl ? { href: openCfpUrl, label: 'Submit a talk' } : { href: site.joinUrl, label: 'Get in touch' }],
-    },
-    {
-      title: 'Volunteer',
-      text: site.participate.volunteer,
-      actions: [{ href: site.volunteerFormUrl, label: 'Become a volunteer' }],
     },
     {
       title: 'Host a meetup',
@@ -159,19 +155,9 @@ export default function AboutPage() {
             </ul>
           </section>
 
-          <section aria-labelledby="community-heading" className={SECTION}>
-            <Card bg="bg-[#FFE8AC]" className="px-[50px] py-[50px] sm:px-6 sm:py-8 text-center">
-              <h2
-                id="community-heading"
-                className="font-raleway font-bold text-[40px] leading-[48px] sm:text-[24px] sm:leading-[32px]"
-              >
-                Community-driven and non-commercial
-              </h2>
-              <p className="mt-4 mx-auto max-w-[760px] font-raleway font-medium text-[20px] leading-[30px] sm:text-[16px] sm:leading-[24px]">
-                {site.nonCommercial}
-              </p>
-            </Card>
-          </section>
+          <div className={SECTION}>
+            <EmptyState title="Community-driven and non-commercial" message={site.nonCommercial} bg="bg-[#FFE8AC]" />
+          </div>
         </Container>
       </div>
 

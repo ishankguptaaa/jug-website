@@ -27,12 +27,10 @@ export const site = {
     whatsapp: 'https://chat.whatsapp.com/I3W75ItQTNs7Hr7WzRWcPR',
     youtube: 'https://www.youtube.com/@juggujarat',
   },
-  // TODO: replace with the real "What is Gujarat JUG" copy (sample text).
   about:
-    'Gujarat JUG is a community of Java developers, architects, students and technology enthusiasts who meet to learn from each other, share experience and grow together.',
-  // TODO: replace with the real mission statement (sample text).
+    'Gujarat Java User Group (Gujarat JUG) is a thriving community of Java developers, architects, students, and technology enthusiasts passionate about learning, sharing, and growing together.',
   mission:
-    'To help Java developers in Gujarat learn, connect and contribute, through meetups, workshops and conferences open to everyone.',
+    'Our mission is to empower Java professionals, promote best practices, and create a platform where developers can connect, collaborate, and innovate.',
   // TODO: replace with the real milestones (sample text; no dates until confirmed).
   milestones: [
     { title: 'A community is born', body: 'A few Java enthusiasts start meeting to share what they learn.' },
@@ -52,7 +50,6 @@ export const site = {
     attend: 'Come along to a meetup or conference, and follow our Luma calendar so you never miss one.',
     speak: 'Have something to share? Submit a talk while a call for papers is open.',
     speakClosed: 'Speaking slots open with each call for papers. Get in touch and we will let you know.',
-    volunteer: 'Help us run events and welcome newcomers.',
     host: 'Have a venue and want to host a meetup? See our venue partners.',
     join: 'Chat with fellow Java developers and hear about events first.',
   },
