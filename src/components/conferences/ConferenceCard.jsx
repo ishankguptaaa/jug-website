@@ -1,4 +1,5 @@
 import {
+  countLabel,
   formatDateRange,
   getSessionsForConference,
   getSpeakersForConference,
@@ -6,14 +7,13 @@ import {
 } from '../../content';
 import Button from '../ui/Button';
 import Card from '../ui/Card';
+import { CARD_SURFACE } from '../ui/cardSurface';
 import Pill from '../ui/Pill';
 import StatusBadge from '../ui/StatusBadge';
 import CompactCard from '../ui/CompactCard';
 import SpeakerAvatars from '../events/SpeakerAvatars';
 
 const TEXT = 'font-raleway text-[16px] leading-[26px] sm:text-[14px] sm:leading-[22px]';
-
-const countLabel = (n, word) => (n ? `${n} ${word}${n === 1 ? '' : 's'}` : null);
 
 /**
  * Conference card for the /conferences lists. `featured` is the full-width
@@ -27,13 +27,14 @@ export default function ConferenceCard({ conference: c, status, featured = false
   ].filter(Boolean);
   const highlights = (c.highlights ?? []).slice(0, 3);
   const showRegister = Boolean(c.registrationUrl) && status !== 'completed';
+  // Featured is the big pastel Card; list cards share the 24px event-card surface.
+  const Box = featured ? Card : 'article';
 
   return (
-    <Card
-      as="article"
-      bg={featured ? 'bg-[#FFEFC6]' : 'bg-white'}
+    <Box
+      {...(featured && { as: 'article', bg: 'bg-[#FFEFC6]' })}
       className={`h-full overflow-hidden ${
-        featured ? 'grid grid-cols-2 md:grid-cols-1 sm:grid-cols-1' : '!rounded-[24px] flex flex-col'
+        featured ? 'grid grid-cols-2 md:grid-cols-1 sm:grid-cols-1' : `${CARD_SURFACE} flex flex-col`
       }`}
     >
       {c.banner ? (
@@ -105,7 +106,7 @@ export default function ConferenceCard({ conference: c, status, featured = false
           </Button>
         </div>
       </div>
-    </Card>
+    </Box>
   );
 }
 

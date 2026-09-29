@@ -11,6 +11,8 @@ import SpeakerPhoto from '../components/speakers/SpeakerPhoto';
 import SpeakerRole from '../components/speakers/SpeakerRole';
 import SpeakerSocials from '../components/speakers/SpeakerSocials';
 import {
+  getConferencesForSpeaker,
+  getEventsForSpeaker,
   getSessionsForSpeaker,
   getSpeakerBySlug,
   site,
@@ -26,11 +28,8 @@ export default function SpeakerDetailPage() {
   if (!speaker) return <NotFoundPage />;
 
   const talks = getSessionsForSpeaker(speaker.slug);
-  const parents = (type) => [
-    ...new Set(talks.filter((t) => t.parent.type === type).map((t) => t.parent.item)),
-  ];
-  const events = parents('event').sort((a, b) => b.date.localeCompare(a.date));
-  const conferences = parents('conference').sort((a, b) => b.startDate.localeCompare(a.startDate));
+  const events = getEventsForSpeaker(speaker.slug);
+  const conferences = getConferencesForSpeaker(speaker.slug);
 
   return (
     <>
@@ -79,7 +78,7 @@ export default function SpeakerDetailPage() {
                       as="li"
                       session={talk}
                       showDate
-                      speakers={talk.speakers.length > 1 ? talk.speakers.map(getSpeakerBySlug).filter(Boolean) : []}
+                      speakers={talk.speakers.length > 1 ? undefined : []}
                       titleTo={sessionPath(talk)}
                     />
                   ))}

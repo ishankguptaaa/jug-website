@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { site } from '../../content';
+import { countLabel, site } from '../../content';
 import { focusRing } from '../ui/focusRing';
 import SpeakerPhoto from './SpeakerPhoto';
 import SpeakerRole from './SpeakerRole';
@@ -28,7 +28,7 @@ export default function SpeakerCard({ speaker }) {
         className="pt-2 sm:pt-1 text-[16px] leading-[18px] sm:text-[12px] sm:leading-[18px]"
       />
       <p className="pt-3 sm:pt-2 font-raleway font-medium text-[14px] leading-[20px] sm:text-[12px] sm:leading-[18px]">
-        {sessionCount} {sessionCount === 1 ? 'session' : 'sessions'} at {site.name}
+        {countLabel(sessionCount, 'session')} at {site.name}
       </p>
       <SpeakerSocials speaker={speaker} className="relative z-10 pt-4 sm:pt-3 sm:justify-center" />
     </article>

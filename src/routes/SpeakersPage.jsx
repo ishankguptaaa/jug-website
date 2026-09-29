@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getSpeakerDirectory, site } from '../content';
+import { countLabel, getSpeakerDirectory, site } from '../content';
 import Seo from '../components/Seo';
 import Container from '../components/ui/Container';
 import EmptyState from '../components/ui/EmptyState';
@@ -52,7 +52,7 @@ export default function SpeakersPage() {
             />
           </div>
           <p role="status" className="sr-only">
-            {shown.length} {shown.length === 1 ? 'speaker' : 'speakers'}
+            {countLabel(shown.length, 'speaker') ?? '0 speakers'}
           </p>
 
           <div className="pt-[48px] sm:pt-[24px]">
