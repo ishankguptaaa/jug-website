@@ -48,7 +48,7 @@ export default function GalleryDetailPage() {
       <div className="bg-[#FFFCEF]">
         <Container className="pt-[100px] pb-[100px] sm:pt-[50px] sm:pb-[50px]">
           {gallery.photos.length ? (
-            <AlbumPhotos photos={gallery.photos} />
+            <AlbumPhotos key={gallery.slug} photos={gallery.photos} />
           ) : (
             <EmptyState title="Photos coming soon" message="We are still putting this album together. Check back shortly." />
           )}
