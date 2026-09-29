@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { FaChevronLeft, FaChevronRight, FaXmark } from 'react-icons/fa6';
+import { useBodyScrollLock } from '../../lib/useBodyScrollLock';
 import { focusRing } from '../ui/focusRing';
 import Thumb from '../ui/Thumb';
 
@@ -22,13 +23,7 @@ export default function AlbumPhotos({ photos }) {
 
   const isOpen = index !== null;
 
-  useEffect(() => {
-    if (!isOpen) return;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isOpen]);
+  useBodyScrollLock(isOpen);
 
   const open = (i) => {
     setIndex(i);
@@ -42,13 +37,15 @@ export default function AlbumPhotos({ photos }) {
     if (e.key === 'ArrowRight') step(1);
   };
   const onTouchStart = (e) => {
-    touch.current = e.touches.length === 1 ? e.touches[0] : null;
+    const t = e.touches[0];
+    touch.current = e.touches.length === 1 ? { x: t.clientX, y: t.clientY } : null;
   };
   const onTouchEnd = (e) => {
-    if (!touch.current) return;
-    const dx = e.changedTouches[0].clientX - touch.current.clientX;
-    const dy = e.changedTouches[0].clientY - touch.current.clientY;
+    const start = touch.current;
     touch.current = null;
+    if (!start || window.visualViewport?.scale > 1) return;
+    const dx = e.changedTouches[0].clientX - start.x;
+    const dy = e.changedTouches[0].clientY - start.y;
     if (Math.abs(dx) > SWIPE_PX && Math.abs(dx) > Math.abs(dy)) step(dx < 0 ? 1 : -1);
   };
 
@@ -91,6 +88,7 @@ export default function AlbumPhotos({ photos }) {
         </div>
         {photo ? (
           <img
+            key={photo.src}
             src={photo.src}
             alt={photo.alt}
             width={photo.w}

@@ -24,6 +24,7 @@ export default function GalleryDetailPage() {
         description={`Photos from ${parent.name} by the ${site.name} community.`}
         path={`/gallery/${gallery.slug}`}
         image={gallery.cover}
+        noindex={gallery.isSample}
       />
 
       <section className="bg-[#E1EEFB]">

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { FiX } from 'react-icons/fi';
 import { Link, useLocation } from 'react-router-dom';
 import { getCurrentConference, getStatus, site } from '../content';
+import { useBodyScrollLock } from '../lib/useBodyScrollLock';
 import { useNow } from '../lib/useNow';
 import { DEFAULT_PAGE_CHROME } from '../layouts/pageChrome';
 import { NAV_ITEMS, isNavItemActive } from './navItems';
@@ -83,21 +84,19 @@ const Header = ({ tone = 'bg-[#E1EEFB]', activeNav = null, cta = DEFAULT_PAGE_CH
     const desktop = window.matchMedia(DESKTOP_QUERY);
     const onDesktop = (e) => e.matches && setIsOpen(false);
 
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
     document.addEventListener('keydown', onKeyDown);
     document.addEventListener('mousedown', onPointerDown);
     document.addEventListener('touchstart', onPointerDown);
     desktop.addEventListener('change', onDesktop);
 
     return () => {
-      document.body.style.overflow = previousOverflow;
       document.removeEventListener('keydown', onKeyDown);
       document.removeEventListener('mousedown', onPointerDown);
       document.removeEventListener('touchstart', onPointerDown);
       desktop.removeEventListener('change', onDesktop);
     };
   }, [isOpen]);
+  useBodyScrollLock(isOpen);
 
   const close = () => setIsOpen(false);
 
