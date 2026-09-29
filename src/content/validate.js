@@ -167,7 +167,7 @@ export function validateContent(content, { assetExists } = {}) {
 
   // --- speakers ---
   for (const s of speakers ?? []) {
-    required('speakers', s, ['name', 'photo']);
+    required('speakers', s, ['name']);
     asset('speakers', s, 'photo');
   }
 

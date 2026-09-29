@@ -5,7 +5,7 @@
 // Fields:
 //   slug         kebab-case, stable (used in /speakers/:slug)
 //   name         display name (mixed case)
-//   photo        root-relative path under public/
+//   photo?       root-relative path under public/ (missing → initials avatar)
 //   designation  job title, e.g. 'JVM Engineer'
 //   company      organisation, e.g. 'Salesforce'
 //   rolePrefix?  optional text shown before the company on cards; defaults to
@@ -72,7 +72,6 @@ export const speakers = [
   {
     slug: 'sample-speaker-asha',
     name: 'Asha Sample',
-    photo: '/AvatarIcon/avt01.svg',
     designation: 'Sample Backend Engineer',
     company: 'Example Corp',
     bio: 'Placeholder speaker used to preview the new event pages. Not a real person.',
@@ -81,7 +80,6 @@ export const speakers = [
   {
     slug: 'sample-speaker-rahul',
     name: 'Rahul Placeholder',
-    photo: '/AvatarIcon/avt02.svg',
     designation: 'Sample Java Architect',
     company: 'Example Labs',
     bio: 'Placeholder speaker used to preview the new event pages. Not a real person.',
@@ -90,7 +88,6 @@ export const speakers = [
   {
     slug: 'sample-speaker-meera',
     name: 'Meera Demo',
-    photo: '/AvatarIcon/avt03.svg',
     designation: 'Sample Developer Advocate',
     company: 'Demo Systems',
     bio: 'Placeholder speaker used to preview the new event pages. Not a real person.',
