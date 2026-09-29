@@ -1,6 +1,7 @@
 import { getPastEventsByYear, getUpcomingEvents, site } from '../content';
 import Seo from '../components/Seo';
 import Button from '../components/ui/Button';
+import PageHero from '../components/ui/PageHero';
 import Container from '../components/ui/Container';
 import EmptyState from '../components/ui/EmptyState';
 import SectionHeading from '../components/ui/SectionHeading';
@@ -22,22 +23,12 @@ export default function EventsPage() {
     <>
       <Seo title="Events" description={DESCRIPTION} path="/events" />
 
-      <section className="bg-[#E1EEFB]">
-        <Container size="xl" className="sm:max-w-[345px]">
-          <div className="pt-12 pb-[80px] sm:pt-6 sm:pb-[40px] text-center">
-            <h1 className="font-raleway font-medium text-[56px] leading-[65px] sm:text-[24px] sm:leading-[32px] md:text-[44px] md:leading-[52px]">
-              Meetups &amp; Events
-            </h1>
-            <p className="mt-6 mx-auto max-w-[760px] font-raleway text-[18px] leading-[30px] sm:text-[14px] sm:leading-[24px]">
-              Hands-on sessions and talks by the {site.name} community. Join the next one, or catch
-              up on the talks you missed.
-            </p>
-            <div className="mt-8 sm:mt-6 flex justify-center">
-              <Button href={site.lumaCalendarUrl}>Follow us on Luma</Button>
-            </div>
-          </div>
-        </Container>
-      </section>
+      <PageHero
+        title="Meetups &amp; Events"
+        intro={`Hands-on sessions and talks by the ${site.name} community. Join the next one, or catch up on the talks you missed.`}
+      >
+        <Button href={site.lumaCalendarUrl}>Follow us on Luma</Button>
+      </PageHero>
 
       <section aria-labelledby="upcoming-heading" className="bg-[#FFFCEF]">
         <Container>

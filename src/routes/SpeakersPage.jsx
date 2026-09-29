@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { countLabel, getSpeakerDirectory, site } from '../content';
 import Seo from '../components/Seo';
+import PageHero from '../components/ui/PageHero';
 import Container from '../components/ui/Container';
 import EmptyState from '../components/ui/EmptyState';
 import { focusRing } from '../components/ui/focusRing';
@@ -22,19 +23,10 @@ export default function SpeakersPage() {
     <>
       <Seo title="Speakers" description={DESCRIPTION} path="/speakers" />
 
-      <section className="bg-[#E1EEFB]">
-        <Container size="xl" className="sm:max-w-[345px]">
-          <div className="pt-12 pb-[80px] sm:pt-6 sm:pb-[40px] text-center">
-            <h1 className="font-raleway font-medium text-[56px] leading-[65px] sm:text-[24px] sm:leading-[32px] md:text-[44px] md:leading-[52px]">
-              Speakers
-            </h1>
-            <p className="mt-6 mx-auto max-w-[760px] font-raleway text-[18px] leading-[30px] sm:text-[14px] sm:leading-[24px]">
-              Everyone who has shared their knowledge on a {site.name} stage. Pick a speaker to see
-              their talks, slides and recordings.
-            </p>
-          </div>
-        </Container>
-      </section>
+      <PageHero
+        title="Speakers"
+        intro={`Everyone who has shared their knowledge on a ${site.name} stage. Pick a speaker to see their talks, slides and recordings.`}
+      />
 
       <section className="bg-[#FFFCEF]">
         <Container className="pt-[100px] pb-[100px] sm:pt-[50px] sm:pb-[50px]">

@@ -3,6 +3,7 @@ import Seo from '../components/Seo';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
 import Container from '../components/ui/Container';
+import { DetailHero } from '../components/ui/PageHero';
 import DetailSection from '../components/ui/DetailSection';
 import { HERO_IMG_PRIORITY } from '../components/ui/heroImg';
 import StatusBadge from '../components/ui/StatusBadge';
@@ -102,73 +103,69 @@ export default function EventDetailPage() {
       />
 
       {/* Hero */}
-      <section className="bg-[#E1EEFB]">
-        <Container size="xl" className="sm:max-w-[345px]">
-          <div className="grid grid-cols-12 gap-10 md:gap-8 sm:gap-6 items-center pt-12 pb-[80px] sm:pt-6 sm:pb-[40px]">
-            <div
-              className={`${event.banner ? 'col-span-6' : 'col-span-12 max-w-[900px]'} md:col-span-12 sm:col-span-12 min-w-0`}
-            >
-              <div className="flex flex-wrap items-center gap-3 sm:gap-2">
-                <Pill tone="bg-[#FFFCEF] border-[#E8C52A]">Meetup</Pill>
-                {place?.online ? <Pill tone="bg-[#CAF8FC] border-black">Online</Pill> : null}
-                <StatusBadge status={status} />
-              </div>
-              <h1 className="mt-5 font-raleway font-semibold text-[46px] leading-[58px] md:text-[38px] md:leading-[48px] sm:text-[24px] sm:leading-[32px] break-words">
-                {event.name}
-              </h1>
-              <dl className="mt-6 sm:mt-4 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 sm:gap-x-4 font-raleway text-[18px] leading-[28px] sm:text-[14px] sm:leading-[22px]">
-                {event.date ? (
-                  <>
-                    <dt className="font-semibold">Date</dt>
-                    <dd>
-                      <time dateTime={event.date}>{formatDate(event.date)}</time>
-                    </dd>
-                  </>
-                ) : null}
-                {time ? (
-                  <>
-                    <dt className="font-semibold">Time</dt>
-                    <dd>{time}</dd>
-                  </>
-                ) : null}
-                {where ? (
-                  <>
-                    <dt className="font-semibold">Where</dt>
-                    <dd className="min-w-0 break-words">{where}</dd>
-                  </>
-                ) : null}
-              </dl>
-              {hasCtas ? (
-                <div className="mt-8 sm:mt-6 flex flex-wrap gap-4 sm:gap-3">
-                  {canRegister ? (
-                    <Button href={event.registrationUrl} shape="card">
-                      Register now
-                    </Button>
-                  ) : null}
-                  {event.externalUrl ? (
-                    <Button href={event.externalUrl} shape="card">
-                      {isLuma(event.externalUrl) ? 'View on Luma' : 'Event page'}
-                    </Button>
-                  ) : null}
-                </div>
+      <DetailHero>
+        <div
+          className={`${event.banner ? 'col-span-6' : 'col-span-12 max-w-[900px]'} md:col-span-12 sm:col-span-12 min-w-0`}
+        >
+          <div className="flex flex-wrap items-center gap-3 sm:gap-2">
+            <Pill tone="bg-[#FFFCEF] border-[#E8C52A]">Meetup</Pill>
+            {place?.online ? <Pill tone="bg-[#CAF8FC] border-black">Online</Pill> : null}
+            <StatusBadge status={status} />
+          </div>
+          <h1 className="mt-5 font-raleway font-semibold text-[46px] leading-[58px] md:text-[38px] md:leading-[48px] sm:text-[24px] sm:leading-[32px] break-words">
+            {event.name}
+          </h1>
+          <dl className="mt-6 sm:mt-4 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 sm:gap-x-4 font-raleway text-[18px] leading-[28px] sm:text-[14px] sm:leading-[22px]">
+            {event.date ? (
+              <>
+                <dt className="font-semibold">Date</dt>
+                <dd>
+                  <time dateTime={event.date}>{formatDate(event.date)}</time>
+                </dd>
+              </>
+            ) : null}
+            {time ? (
+              <>
+                <dt className="font-semibold">Time</dt>
+                <dd>{time}</dd>
+              </>
+            ) : null}
+            {where ? (
+              <>
+                <dt className="font-semibold">Where</dt>
+                <dd className="min-w-0 break-words">{where}</dd>
+              </>
+            ) : null}
+          </dl>
+          {hasCtas ? (
+            <div className="mt-8 sm:mt-6 flex flex-wrap gap-4 sm:gap-3">
+              {canRegister ? (
+                <Button href={event.registrationUrl} shape="card">
+                  Register now
+                </Button>
+              ) : null}
+              {event.externalUrl ? (
+                <Button href={event.externalUrl} shape="card">
+                  {isLuma(event.externalUrl) ? 'View on Luma' : 'Event page'}
+                </Button>
               ) : null}
             </div>
-            {event.banner ? (
-              <div className="col-span-6 md:col-span-12 sm:col-span-12">
-                <img
-                  src={event.banner}
-                  alt={`Banner for ${event.name}`}
-                  width="1440"
-                  height="734"
-                  {...HERO_IMG_PRIORITY}
-                  decoding="async"
-                  className="w-full h-auto aspect-[1440/734] object-cover rounded-[40px] sm:rounded-[24px] border border-black bg-white"
-                />
-              </div>
-            ) : null}
+          ) : null}
+        </div>
+        {event.banner ? (
+          <div className="col-span-6 md:col-span-12 sm:col-span-12">
+            <img
+              src={event.banner}
+              alt={`Banner for ${event.name}`}
+              width="1440"
+              height="734"
+              {...HERO_IMG_PRIORITY}
+              decoding="async"
+              className="w-full h-auto aspect-[1440/734] object-cover rounded-[40px] sm:rounded-[24px] border border-black bg-white"
+            />
           </div>
-        </Container>
-      </section>
+        ) : null}
+      </DetailHero>
 
       <div className="bg-[#FFFCEF]">
         <Container size="xl" className="sm:max-w-[345px] pb-[100px] sm:pb-[50px]">
