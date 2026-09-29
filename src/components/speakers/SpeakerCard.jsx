@@ -8,28 +8,31 @@ import SpeakerSocials from './SpeakerSocials';
 /**
  * Directory card in the Experts look: photo, name, role, session count and
  * socials. The name link is stretched over the card so the photo is clickable too.
- * `speaker` comes from getSpeakerDirectory (has `sessionCount`).
+ * `speaker` usually comes from getSpeakerDirectory (has `sessionCount`); the
+ * session line is left out when there is no count.
  */
-export default function SpeakerCard({ speaker }) {
+export default function SpeakerCard({ speaker, headingAs: Heading = 'h2' }) {
   const { sessionCount } = speaker;
   return (
     <article className="relative h-full sm:text-center">
       <SpeakerPhoto speaker={speaker} decorative />
-      <h2 className="pt-6 sm:pt-3 font-raleway font-bold text-[24px] leading-[28px] sm:text-[14px] sm:leading-[20px] break-words">
+      <Heading className="pt-6 sm:pt-3 font-raleway font-bold text-[24px] leading-[28px] sm:text-[14px] sm:leading-[20px] break-words">
         <Link
           to={`/speakers/${speaker.slug}`}
           className={`hover:underline underline-offset-4 after:absolute after:inset-0 ${focusRing}`}
         >
           {speaker.name}
         </Link>
-      </h2>
+      </Heading>
       <SpeakerRole
         speaker={speaker}
         className="pt-2 sm:pt-1 text-[16px] leading-[18px] sm:text-[12px] sm:leading-[18px]"
       />
-      <p className="pt-3 sm:pt-2 font-raleway font-medium text-[14px] leading-[20px] sm:text-[12px] sm:leading-[18px]">
-        {countLabel(sessionCount, 'session')} at {site.name}
-      </p>
+      {sessionCount ? (
+        <p className="pt-3 sm:pt-2 font-raleway font-medium text-[14px] leading-[20px] sm:text-[12px] sm:leading-[18px]">
+          {countLabel(sessionCount, 'session')} at {site.name}
+        </p>
+      ) : null}
       <SpeakerSocials speaker={speaker} className="pt-4 sm:pt-3 sm:justify-center" />
     </article>
   );
