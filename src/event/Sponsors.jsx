@@ -8,6 +8,14 @@ const supporterStyles = {
 
 const TIER_ROW = 'flex flex-wrap justify-center gap-x-8 gap-y-4 sm:gap-x-3 sm:mt-[25px] mt-[24px] mb-11 sm:mb-4';
 
+const SponsorTile = ({ sponsor, className }) => (
+  <ExternalLink href={sponsor.website}>
+    <div className={`flex h-[112px] w-[285px] items-center justify-center rounded-3xl bg-[#FFFFFF] ${className}`}>
+      <img src={sponsor.logo} alt={sponsor.logoAlt ?? sponsor.name} loading="lazy" decoding="async" />
+    </div>
+  </ExternalLink>
+);
+
 const Sponsors = ({ sponsors, venueSponsors }) => {
   const platinumSponsors = sponsors.filter((s) => s.tier === 'platinum');
   const silverSponsors = sponsors.filter((s) => s.tier === 'silver');
@@ -54,11 +62,7 @@ const Sponsors = ({ sponsors, venueSponsors }) => {
 
             <div className={TIER_ROW}>
               {platinumSponsors.map((sponsor) => (
-              <ExternalLink key={sponsor.slug} href={sponsor.website}>
-                <div className="flex h-[112px] w-[285px] sm:w-[154px] sm:h-[76px] items-center justify-center rounded-3xl bg-[#FFFFFF] sm:px-4">
-                  <img src={sponsor.logo} alt={sponsor.logoAlt ?? sponsor.name} loading="lazy" decoding="async" />
-                </div>
-              </ExternalLink>
+              <SponsorTile key={sponsor.slug} sponsor={sponsor} className="sm:w-[154px] sm:h-[76px] sm:px-4" />
               ))}
             </div>
             </>
@@ -105,11 +109,7 @@ const Sponsors = ({ sponsors, venueSponsors }) => {
 
             <div className={TIER_ROW}>
               {goldSponsors.map((sponsor) => (
-              <ExternalLink key={sponsor.slug} href={sponsor.website}>
-                <div className="flex h-[112px] w-[285px] sm:w-[148px] sm:h-[84px] items-center justify-center rounded-3xl bg-[#FFFFFF] px-4 sm:px-2">
-                  <img src={sponsor.logo} alt={sponsor.logoAlt ?? sponsor.name} loading="lazy" decoding="async" />
-                </div>
-              </ExternalLink>
+              <SponsorTile key={sponsor.slug} sponsor={sponsor} className="px-4 sm:w-[148px] sm:h-[84px] sm:px-2" />
               ))}
             </div>
 
@@ -125,11 +125,7 @@ const Sponsors = ({ sponsors, venueSponsors }) => {
             </div>
             <div className={TIER_ROW}>
               {silverSponsors.map((sponsor) => (
-              <ExternalLink key={sponsor.slug} href={sponsor.website}>
-                <div className="flex h-[112px] w-[285px] sm:w-[148px] sm:h-[84px] items-center justify-center rounded-3xl bg-[#FFFFFF] px-4 sm:px-2">
-                  <img src={sponsor.logo} alt={sponsor.logoAlt ?? sponsor.name} loading="lazy" decoding="async" />
-                </div>
-              </ExternalLink>
+              <SponsorTile key={sponsor.slug} sponsor={sponsor} className="px-4 sm:w-[148px] sm:h-[84px] sm:px-2" />
               ))}
             </div>
             </>
