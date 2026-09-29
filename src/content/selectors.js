@@ -336,11 +336,13 @@ export const getSpeakerDirectory = () => {
 
 // ---------- about ----------
 
-/** CFP link of a live/upcoming conference whose call for papers is still open at `now`; `undefined` if none (or `now` unknown). */
-export const getOpenCfpUrl = (now) => {
-  if (!now) return undefined;
-  const { live, upcoming } = getConferencesByStatus(now);
-  return [...live, ...upcoming].find(
-    (c) => c.cfp?.url && !(c.cfp.closesOn && now > istToDate(c.cfp.closesOn, '23:59')),
-  )?.cfp.url;
+/** True while a conference's call for papers can be acted on: upcoming/live and before `cfp.closesOn` (end of day IST). */
+export const isCfpOpen = (conference, now) => {
+  if (!conference?.cfp?.url) return false;
+  if (!['upcoming', 'live'].includes(getStatus(conference, now))) return false;
+  const closes = conference.cfp.closesOn && istToDate(conference.cfp.closesOn, '23:59');
+  return !(closes && now > closes);
 };
+
+/** CFP link of the first conference whose CFP is open at `now`; `undefined` if none. */
+export const getOpenCfpUrl = (now) => getUpcomingConferences(now).find((c) => isCfpOpen(c, now))?.cfp.url;

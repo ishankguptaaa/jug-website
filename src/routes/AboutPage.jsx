@@ -5,7 +5,6 @@ import Container from '../components/ui/Container';
 import SectionHeading from '../components/ui/SectionHeading';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
-import Team from '../event/Team';
 import Volunteer from '../pages/Volunteer';
 import { useNow } from '../lib/useNow';
 
@@ -20,21 +19,21 @@ const WHAT_WE_DO = [
   {
     title: 'Meetups',
     bg: 'bg-[#FFEFC6]',
-    text: 'Regular sessions where developers share what they are building and learning.',
+    text: site.whatWeDo.meetups,
     to: '/events',
     cta: 'See events',
   },
   {
     title: 'Workshops',
     bg: 'bg-[#CAF8FC]',
-    text: 'Hands-on sessions where you write code alongside people who use the tools every day.',
+    text: site.whatWeDo.workshops,
     to: '/events',
     cta: 'Find a workshop',
   },
   {
     title: 'Conferences',
     bg: 'bg-[#FFC0E7]',
-    text: 'Full-day community conferences with talks, workshops and time to meet other developers.',
+    text: site.whatWeDo.conferences,
     to: '/conferences',
     cta: 'See conferences',
   },
@@ -43,8 +42,10 @@ const WHAT_WE_DO = [
 export default function AboutPage() {
   const now = useNow();
   const events = getAllEvents();
+  const firstMeetup = events.at(-1)?.date;
+  const openCfpUrl = getOpenCfpUrl(now);
   const stats = [
-    events.length ? { label: 'First meetup', value: formatDate(events.at(-1).date) } : null,
+    firstMeetup ? { label: 'First meetup', value: <time dateTime={firstMeetup}>{formatDate(firstMeetup)}</time> } : null,
     { label: 'Events', value: events.length },
     { label: 'Speakers', value: getSpeakerDirectory().length },
     { label: 'Conferences', value: getAllConferences().length },
@@ -53,7 +54,7 @@ export default function AboutPage() {
   const participate = [
     {
       title: 'Attend',
-      text: 'Come along to a meetup or conference. Follow our Luma calendar so you never miss one.',
+      text: site.participate.attend,
       actions: [
         { to: '/events', label: 'Browse events' },
         { href: site.lumaCalendarUrl, label: 'Follow on Luma' },
@@ -61,22 +62,22 @@ export default function AboutPage() {
     },
     {
       title: 'Speak',
-      text: 'Have something to share? First-time speakers are welcome.',
-      actions: [{ href: getOpenCfpUrl(now) ?? site.joinUrl, label: 'Submit a talk' }],
+      text: openCfpUrl ? site.participate.speak : site.participate.speakClosed,
+      actions: [openCfpUrl ? { href: openCfpUrl, label: 'Submit a talk' } : { href: site.joinUrl, label: 'Get in touch' }],
     },
     {
       title: 'Volunteer',
-      text: 'Help run our events, welcome newcomers or spread the word.',
+      text: site.participate.volunteer,
       actions: [{ href: site.volunteerFormUrl, label: 'Become a volunteer' }],
     },
     {
       title: 'Host a meetup',
-      text: 'Have a venue and want to bring the community to your campus or office?',
+      text: site.participate.host,
       actions: [{ to: '/partners', label: 'Venue partners' }],
     },
     {
       title: 'Join the community',
-      text: 'Chat with fellow Java developers and hear about events first.',
+      text: site.participate.join,
       actions: [
         { href: site.socials.whatsapp, label: 'WhatsApp' },
         { href: site.socials.linkedin, label: 'LinkedIn' },
@@ -125,23 +126,18 @@ export default function AboutPage() {
                 </Card>
               ))}
             </dl>
-            {site.milestones?.length ? (
-              <ol className="mt-10 sm:mt-6 ml-3 border-l-2 border-black space-y-8 sm:space-y-6">
-                {site.milestones.map((m) => (
-                  <li key={m.title} className="relative pl-8 sm:pl-6">
-                    <span
-                      aria-hidden="true"
-                      className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full border-2 border-black bg-[#FFC62E]"
-                    />
-                    <h3 className={CARD_TITLE}>
-                      {m.year ? `${m.year}: ` : null}
-                      {m.title}
-                    </h3>
-                    {m.body ? <p className={CARD_TEXT}>{m.body}</p> : null}
-                  </li>
-                ))}
-              </ol>
-            ) : null}
+            <ol className="mt-10 sm:mt-6 ml-3 border-l-2 border-black space-y-8 sm:space-y-6">
+              {site.milestones.map((m) => (
+                <li key={m.title} className="relative pl-8 sm:pl-6">
+                  <span
+                    aria-hidden="true"
+                    className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full border-2 border-black bg-[#FFC62E]"
+                  />
+                  <h3 className={CARD_TITLE}>{m.title}</h3>
+                  <p className={CARD_TEXT}>{m.body}</p>
+                </li>
+              ))}
+            </ol>
           </section>
 
           <section aria-labelledby="what-heading" className={SECTION}>
@@ -172,15 +168,13 @@ export default function AboutPage() {
                 Community-driven and non-commercial
               </h2>
               <p className="mt-4 mx-auto max-w-[760px] font-raleway font-medium text-[20px] leading-[30px] sm:text-[16px] sm:leading-[24px]">
-                {site.name} is run by volunteers. We do not sell anything and we do not run for profit. Sponsors and
-                venue partners help us cover costs, and they never decide what we teach.
+                {site.nonCommercial}
               </p>
             </Card>
           </section>
         </Container>
       </div>
 
-      <Team />
       <Volunteer />
 
       <div className="bg-[#FFFCEF]">
