@@ -8,7 +8,7 @@ export default function SpeakerRole({ speaker, className = '' }) {
     <p className={`text-gray-600 font-raleway ${className}`}>
       {role}
       {role && speaker.company ? ' ' : null}
-      {speaker.company ? <strong className="text-black">{speaker.company}</strong> : null}
+      {speaker.company ? <strong>{speaker.company}</strong> : null}
     </p>
   );
 }

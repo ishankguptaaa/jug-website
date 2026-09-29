@@ -79,10 +79,7 @@ export default function SpeakerDetailPage() {
                       as="li"
                       session={talk}
                       showDate
-                      speakers={talk.speakers
-                        .filter((slug) => slug !== speaker.slug)
-                        .map(getSpeakerBySlug)
-                        .filter(Boolean)}
+                      speakers={talk.speakers.length > 1 ? talk.speakers.map(getSpeakerBySlug).filter(Boolean) : []}
                       titleTo={sessionPath(talk)}
                     />
                   ))}

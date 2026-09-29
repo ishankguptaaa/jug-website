@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { getSpeakerRolePrefix } from '../content';
+import SpeakerRole from '../components/speakers/SpeakerRole';
 import ExternalLink from '../components/ui/ExternalLink';
 import { focusRing } from '../components/ui/focusRing';
 import 'aos/dist/aos.css'; 
@@ -47,7 +47,7 @@ const Speaker = ({ speakers, cfpUrl }) => {
               <h3 className="pt-6 font-raleway font-bold text-[24px] leading-[28px] sm:text-[14px] sm:leading-[18px] sm:pt-4">
                 <Link to={`/speakers/${speaker.slug}`} className={`hover:underline underline-offset-4 ${focusRing}`}>{speaker.name.toUpperCase()}</Link>
               </h3>
-              <p className="text-gray-600 font-raleway font-normal text-[16px] leading-[20px] sm:text-[14px] sm:leading-[22px] pt-2 sm:pt-1">{getSpeakerRolePrefix(speaker)} <strong className='text-black-600'>{speaker.company}</strong></p>
+              <SpeakerRole speaker={speaker} className="font-normal text-[16px] leading-[20px] sm:text-[14px] sm:leading-[22px] pt-2 sm:pt-1" />
 
             </div>
           ))}
