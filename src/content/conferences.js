@@ -10,10 +10,15 @@
 //   location                    human-readable, e.g. 'LJ University, Ahmedabad'
 //   venues[]                    venue slugs (venues.js)
 //   banner, registrationUrl, externalUrl?
+//   heroLogo?                   { src, srcSm } wordmark art shown in the page hero
+//   featuredSpeaker?            { speaker: <speaker slug>, image, imageSm } hero cut-out
+//   aboutImage?                 illustration next to the About text
+//   goodies[]?                  [{ image, text }] "More Than Just Talks" perks
+//   sponsorship?                { deckEmbedUrl, phone } sponsorship pitch section
 //   cfp?                        { url, closesOn? ('YYYY-MM-DD') } call for papers
 //   tracks[]                    [{ slug, name }]
 //   highlights[]                short bullet strings
-//   stats                       { attendees, speakers, sessions, ... } (display strings/numbers)
+//   stats                       { attendees } (display string)
 //   announcements[]             [{ date, title, body }]
 //   sponsors[]                  [{ sponsor: <sponsor slug>, tier: 'platinum'|'gold'|'silver'|'community-supporter' }]
 //   partners[]                  sponsor slugs of kind 'jug' / 'community', in display order
@@ -23,7 +28,7 @@
 // Sessions point at a conference via `conference: <slug>` (sessions.js);
 // speakers are derived from those sessions.
 
-// Slug of the legacy flagship page (also served at /community-day-for-java-2025).
+// Slug of the flagship conference (/community-day-for-java-2025 redirects to its page).
 // The single place this string lives in code; routes and pages import it.
 export const CDJ_2025_SLUG = 'community-day-for-java-2025';
 
@@ -44,6 +49,26 @@ export const conferences = [
     venues: ['lj-university'],
     banner: '/Home/community-banner.png',
     registrationUrl: 'https://konfhub.com/community-day-for-java-2025',
+    heroLogo: { src: '/Home/CommunityDayJava.svg', srcSm: '/Home/CommunityDayJavaSm.svg' },
+    featuredSpeaker: {
+      speaker: 'venkat-subramaniam',
+      image: '/Home/VenkatXl.png',
+      imageSm: '/Home/VenkatSm.png',
+    },
+    aboutImage: '/Img/AboutEvent.png',
+    goodies: [
+      { image: '/Goodies/Food.png', text: 'Delicious Food & Breakfast Included – Fuel up while networking!' },
+      { image: '/Goodies/Bag.png', text: 'Exclusive Swags & Goodies – Walk away with special event memorabilia!' },
+      {
+        image: '/Goodies/Speakers.png',
+        text: 'Technical Talks from Industry Experts – Get insights from top minds in Java.',
+      },
+    ],
+    sponsorship: {
+      deckEmbedUrl:
+        'https://docs.google.com/presentation/d/1e_eKQ3kvR7318PCQNxNNsJrsshI9mq9Qi-bLz2UO_aA/embed?start=true&loop=true&delayms=3000',
+      phone: '98794 83841',
+    },
     cfp: { url: 'https://www.papercall.io/community-day-for-java' },
     tracks: [],
     highlights: [
@@ -54,8 +79,6 @@ export const conferences = [
     ],
     stats: {
       attendees: '300+',
-      speakers: 4,
-      sessions: 4,
     },
     announcements: [],
     sponsors: [

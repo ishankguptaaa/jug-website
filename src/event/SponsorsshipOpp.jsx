@@ -1,10 +1,10 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const SponsorsshipOpp = () => {
+const SponsorsshipOpp = ({ sponsorship }) => {
 
     const handleCallClick = () => {
-        const phoneNumber = "9879483841";
+        const phoneNumber = sponsorship.phone.replace(/\s/g, "");
         const isMobile = /iPhone|Android/i.test(navigator.userAgent);
     
         if (isMobile) {
@@ -41,11 +41,13 @@ const SponsorsshipOpp = () => {
                     <div className="flex items-center gap-6 sm:flex-col  sm:gap-0 border-b border-black ">
 
                     <iframe
-      src="https://docs.google.com/presentation/d/1e_eKQ3kvR7318PCQNxNNsJrsshI9mq9Qi-bLz2UO_aA/embed?start=true&loop=true&delayms=3000"
+      src={sponsorship.deckEmbedUrl}
+      title="Sponsorship deck"
       width="800"
       height="450"
       allowFullScreen
-      className=" border border-gray-300 rounded-lg sm:w-[320px] sm:h-[320px]"
+      loading="lazy"
+      className=" border border-gray-300 rounded-lg sm:w-[320px] sm:h-[320px] md:w-[700px] md:h-[394px]"
     ></iframe>
 
                     </div>
@@ -61,7 +63,7 @@ const SponsorsshipOpp = () => {
 
                         {/* Button text */}
                         <span className="relative z-10 text-white group-hover:text-black transition-colors duration-300 font-bold font-sans text-[18px] sm:text-[16px]">
-                            Call 98794 83841 Today!
+                            Call {sponsorship.phone} Today!
                         </span>
                     </button>
 

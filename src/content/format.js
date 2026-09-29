@@ -43,6 +43,10 @@ export function formatDate(date) {
   return `${WEEKDAYS[utc.getUTCDay()]}, ${d} ${MONTHS[m - 1]} ${y}`;
 }
 
+/** Start date, or 'start – end' when the end differs. */
+export const formatDateRange = (start, end) =>
+  !end || end === start ? formatDate(start) : `${formatDate(start)} – ${formatDate(end)}`;
+
 /** 'HH:mm' (24h) -> '6:30 PM'. Returns the input unchanged if it isn't 'HH:mm'. */
 export function formatTimeAmPm(time) {
   const t = parseTime(time);
