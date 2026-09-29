@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { CARD_SURFACE } from './cardSurface';
 import { focusRing } from './focusRing';
 
 /**
@@ -9,7 +10,7 @@ export default function CompactCard({ to, date, title, place, headingAs: Heading
   return (
     <Link
       to={to}
-      className={`border border-black rounded-[24px] bg-white overflow-hidden ${focusRing} group block h-full p-6 sm:p-5 transition-colors duration-300 hover:bg-[#FFEFC6] motion-reduce:transition-none`}
+      className={`${CARD_SURFACE} ${focusRing} group block h-full p-6 sm:p-5 transition-colors duration-300 hover:bg-[#FFEFC6] motion-reduce:transition-none`}
     >
       <p className="font-medium text-[14px] leading-[20px] sm:text-[12px] sm:leading-[18px]">{date}</p>
       <Heading className="mt-2 font-raleway font-bold text-[20px] leading-[26px] sm:text-[16px] sm:leading-[22px] break-words group-hover:underline underline-offset-4">
