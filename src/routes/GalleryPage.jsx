@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import { formatDate, getGalleriesByYear, site } from '../content';
 import Seo from '../components/Seo';
+import PageHero from '../components/ui/PageHero';
 import Container from '../components/ui/Container';
 import EmptyState from '../components/ui/EmptyState';
-import SectionHeading from '../components/ui/SectionHeading';
 import { focusRing } from '../components/ui/focusRing';
 import { GRID } from '../components/events/eventsGrid';
 
@@ -47,19 +47,10 @@ export default function GalleryPage() {
     <>
       <Seo title="Gallery" description={DESCRIPTION} path="/gallery" />
 
-      <section className="bg-[#E1EEFB]">
-        <Container size="xl" className="sm:max-w-[345px]">
-          <div className="pt-12 pb-[80px] sm:pt-6 sm:pb-[40px] text-center">
-            <SectionHeading as="h1" className="md:text-[44px] md:leading-[52px]">
-              Community Gallery
-            </SectionHeading>
-            <p className="mt-6 mx-auto max-w-[760px] font-raleway text-[18px] leading-[30px] sm:text-[14px] sm:leading-[24px]">
-              Moments from {site.name} meetups and conferences: the talks, the workshops and the
-              people.
-            </p>
-          </div>
-        </Container>
-      </section>
+      <PageHero
+        title="Community Gallery"
+        intro={`Moments from ${site.name} meetups and conferences: the talks, the workshops and the people.`}
+      />
 
       <div className="bg-[#FFFCEF]">
         <Container className="pt-[50px] pb-[100px] sm:pt-[25px] sm:pb-[50px]">

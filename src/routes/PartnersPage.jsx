@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { formatDateRange, getVenueHistory, site, sponsors, venues } from '../content';
 import Seo from '../components/Seo';
+import PageHero from '../components/ui/PageHero';
 import Container from '../components/ui/Container';
 import SectionHeading from '../components/ui/SectionHeading';
 import ExternalLink from '../components/ui/ExternalLink';
@@ -77,19 +78,10 @@ export default function PartnersPage() {
     <>
       <Seo title="Partners" description={DESCRIPTION} path="/partners" />
 
-      <section className="bg-[#E1EEFB]">
-        <Container size="xl" className="sm:max-w-[345px]">
-          <div className="pt-12 pb-[80px] sm:pt-6 sm:pb-[40px] text-center">
-            <SectionHeading as="h1" className="md:text-[44px] md:leading-[52px]">
-              Our Partners
-            </SectionHeading>
-            <p className="mt-6 mx-auto max-w-[760px] font-raleway text-[18px] leading-[30px] sm:text-[14px] sm:leading-[24px]">
-              {site.name} runs on the generosity of the campuses and companies that open their doors
-              to us, our sponsors, and the communities we build with.
-            </p>
-          </div>
-        </Container>
-      </section>
+      <PageHero
+        title="Our Partners"
+        intro={`${site.name} runs on the generosity of the campuses and companies that open their doors to us, our sponsors, and the communities we build with.`}
+      />
 
       <div className="bg-[#FFFCEF]">
         <Container className="pb-[100px] sm:pb-[50px] text-center">
