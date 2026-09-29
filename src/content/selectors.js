@@ -333,3 +333,18 @@ export const getSpeakerDirectory = () => {
     }),
   ).sort((a, b) => b.sessionCount - a.sessionCount || a.name.localeCompare(b.name));
 };
+
+// ---------- about ----------
+
+/** True while a conference's call for papers can be acted on: upcoming/live and before `cfp.closesOn` (end of day IST). */
+export const isCfpOpen = (conference, now) => {
+  if (!conference?.cfp?.url) return false;
+  if (!['upcoming', 'live'].includes(getStatus(conference, now))) return false;
+  const closes = conference.cfp.closesOn && istToDate(conference.cfp.closesOn, '23:59');
+  if (!closes) return true;
+  // Unknown time (prerender / first render): don't advertise a CFP that may have closed.
+  return Boolean(now) && now <= closes;
+};
+
+/** CFP link of the soonest conference whose CFP is open at `now`; `undefined` if none. */
+export const getOpenCfpUrl = (now) => [...conferences].sort(byStartAsc).find((c) => isCfpOpen(c, now))?.cfp.url;

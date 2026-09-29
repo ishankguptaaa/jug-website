@@ -20,7 +20,7 @@ import {
   getSpeakersForConference,
   getSponsorsForConference,
   getStatus,
-  istToDate,
+  isCfpOpen,
   getVenuesForConference,
   getWorkshopsForConference,
 } from '../content';
@@ -74,9 +74,7 @@ export default function ConferenceDetailPage() {
   // EventDetailPage); the header CTA always shows (user decision).
   const isOpen = status === 'upcoming' || status === 'live';
   const registrationUrl = isOpen ? conference.registrationUrl : undefined;
-  const cfpClosesOn = conference.cfp?.closesOn;
-  const cfpUrl =
-    isOpen && !(cfpClosesOn && now > istToDate(cfpClosesOn, '23:59')) ? conference.cfp?.url : undefined;
+  const cfpUrl = isCfpOpen(conference, now) ? conference.cfp.url : undefined;
   const sessions = getSessionsForConference(slug);
   const speakers = getSpeakersForConference(slug);
   const workshops = getWorkshopsForConference(slug);

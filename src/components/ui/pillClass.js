@@ -5,7 +5,7 @@
 const BASE = 'inline-block rounded-full border font-medium tracking-[1%]';
 
 const SIZES = {
-  // PageShell eyebrow, EventDetailPage "Meetup"/"Online" hero badges.
+  // 404 page eyebrow, EventDetailPage "Meetup"/"Online" hero badges.
   default: 'whitespace-nowrap px-4 py-[6px] text-[12px] sm:px-2 sm:py-[4px] sm:text-[10px]',
   // SessionItem type label + resource links — same size at every width.
   compact: 'whitespace-nowrap px-3 py-[4px] text-[12px]',
