@@ -150,17 +150,20 @@ export function validateContent(content, { assetExists } = {}) {
     if (c.startDate === c.endDate) timeOrder('conferences', c);
     status('conferences', c);
     banner('conferences', c);
-    // Hero/about art: path(s) + intrinsic sizes (reserve layout, no CLS).
-    const art = (field, keys) => {
+    // Hero/about art: path(s) + numeric intrinsic sizes (reserve layout, no CLS).
+    const art = (field, paths, sizes) => {
       const value = c[field];
       if (value === undefined) return;
-      const missing = keys.filter((k) => value?.[k] === undefined);
-      if (missing.length) err(where('conferences', c), `"${field}" needs ${missing.join(', ')}`);
-      keys.filter((k) => /^(src|image)/.test(k)).forEach((k) => asset('conferences', c, `${field}.${k}`, value?.[k]));
+      const bad = sizes.filter((k) => typeof value?.[k] !== 'number');
+      if (bad.length) err(where('conferences', c), `"${field}" needs numeric ${bad.join(', ')}`);
+      paths.forEach((k) => {
+        if (!value?.[k]) err(where('conferences', c), `"${field}.${k}" is missing`);
+        else asset('conferences', c, `${field}.${k}`, value[k]);
+      });
     };
-    art('heroLogo', ['src', 'width', 'height', 'srcSm', 'widthSm', 'heightSm']);
-    art('featuredSpeaker', ['image', 'width', 'height', 'imageSm', 'widthSm', 'heightSm']);
-    art('aboutImage', ['src', 'width', 'height']);
+    art('heroLogo', ['src', 'srcSm'], ['width', 'height', 'widthSm', 'heightSm']);
+    art('featuredSpeaker', ['image', 'imageSm'], ['width', 'height', 'widthSm', 'heightSm']);
+    art('aboutImage', ['src'], ['width', 'height']);
     (c.goodies ?? []).forEach((g, i) => asset('conferences', c, `goodies[${i}].image`, g.image));
     if (c.cfp !== undefined) {
       if (!c.cfp?.url) err(where('conferences', c), '"cfp" needs a "url"');

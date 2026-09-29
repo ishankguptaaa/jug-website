@@ -19,9 +19,9 @@ function ConferenceSection({ id, title, squiggle, status, conferences, featured 
         {title}
       </SectionHeading>
       <ul className={`pt-[48px] sm:pt-[24px] ${featured ? 'space-y-8 sm:space-y-6' : GRID}`}>
-        {conferences.map((c) => (
+        {conferences.map((c, i) => (
           <li key={c.slug} className="h-full">
-            <ConferenceCard conference={c} status={status} featured={featured} />
+            <ConferenceCard conference={c} status={status} featured={featured} priority={featured && i === 0} />
           </li>
         ))}
       </ul>
