@@ -2,7 +2,7 @@ import ExternalLink from '../ui/ExternalLink';
 
 /** Centered row of fixed-size logo tiles; each links to the partner's website when it has one. */
 const TILE =
-  'flex items-center justify-center w-[285px] h-[112px] sm:w-[148px] sm:h-[84px] rounded-3xl border border-black bg-white px-6 py-4 sm:px-3 sm:py-2 text-center font-bold';
+  'flex items-center justify-center w-[285px] h-[163px] sm:w-[148px] sm:h-[112px] rounded-3xl border border-black bg-white px-6 py-4 sm:px-3 sm:py-2 text-center font-bold';
 const TILE_LINK = 'transition-colors hover:bg-[#FFEFC6] motion-reduce:transition-none';
 
 export default function PartnerLogos({ partners, className = '' }) {

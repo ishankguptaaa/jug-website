@@ -7,6 +7,7 @@ import ExternalLink from '../components/ui/ExternalLink';
 import { focusRing } from '../components/ui/focusRing';
 import { linkClass } from '../components/ui/linkClass';
 import VenueCard from '../components/events/VenueCard';
+import SpeakerPhoto from '../components/speakers/SpeakerPhoto';
 import PartnerLogos from '../components/partners/PartnerLogos';
 
 const DESCRIPTION = `The venue partners, sponsors and communities that make ${site.name} meetups and conferences happen.`;
@@ -117,17 +118,8 @@ export default function PartnersPage() {
                     {supporters.map((s) => {
                       const card = (
                         <>
-                          {s.logo ? (
-                            <img
-                              src={s.logo}
-                              alt=""
-                              width="285"
-                              height="296"
-                              loading="lazy"
-                              decoding="async"
-                              className="block w-full h-auto aspect-[285/296] object-cover rounded-3xl"
-                            />
-                          ) : null}
+                          {/* Same square frame as speaker photos (supporters are people). */}
+                          <SpeakerPhoto speaker={{ name: s.name, photo: s.logo }} decorative />
                           <span className="block pt-3 font-bold text-[20px] leading-[28px] sm:text-[14px] sm:leading-[20px] group-hover:underline underline-offset-4">
                             {s.name}
                           </span>
