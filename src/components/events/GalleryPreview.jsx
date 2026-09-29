@@ -1,4 +1,5 @@
 import Button from '../ui/Button';
+import Thumb from '../ui/Thumb';
 
 /**
  * Up to `limit` photo thumbnails from a gallery + "View full gallery" link
@@ -30,15 +31,7 @@ export default function GalleryPreview({
       <ul className="grid grid-cols-3 sm:grid-cols-2 gap-6 sm:gap-3 md:gap-4">
         {photos.map((photo) => (
           <li key={photo.src}>
-            <img
-              src={photo.thumb ?? photo.src}
-              alt={photo.alt ?? ''}
-              width={photo.w}
-              height={photo.h}
-              loading="lazy"
-              decoding="async"
-              className="w-full h-auto aspect-[4/3] object-cover rounded-[24px] sm:rounded-2xl border border-black bg-[#FAFAFA]"
-            />
+            <Thumb photo={photo} />
           </li>
         ))}
       </ul>

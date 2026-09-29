@@ -1,7 +1,6 @@
 import Card from '../ui/Card';
 import ExternalLink from '../ui/ExternalLink';
-
-const linkClass = 'font-semibold underline underline-offset-4 hover:text-gray-600';
+import { linkClass } from '../ui/linkClass';
 
 /**
  * Where something happens + thanks to the venue partner.

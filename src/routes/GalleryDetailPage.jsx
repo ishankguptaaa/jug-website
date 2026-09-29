@@ -3,6 +3,7 @@ import { formatDate, getConferenceBySlug, getEventBySlug, getGalleryBySlug, site
 import Seo from '../components/Seo';
 import Button from '../components/ui/Button';
 import Container from '../components/ui/Container';
+import EmptyState from '../components/ui/EmptyState';
 import SectionHeading from '../components/ui/SectionHeading';
 import AlbumPhotos from '../components/gallery/AlbumPhotos';
 import NotFoundPage from './NotFoundPage';
@@ -45,7 +46,11 @@ export default function GalleryDetailPage() {
 
       <div className="bg-[#FFFCEF]">
         <Container className="pt-[100px] pb-[100px] sm:pt-[50px] sm:pb-[50px]">
-          <AlbumPhotos photos={gallery.photos} />
+          {gallery.photos.length ? (
+            <AlbumPhotos photos={gallery.photos} />
+          ) : (
+            <EmptyState title="Photos coming soon" message="We are still putting this album together. Check back shortly." />
+          )}
         </Container>
       </div>
     </>

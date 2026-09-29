@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
-import { formatDateRange, getSponsorsByKind, getVenueHistory, site, venues } from '../content';
+import { formatDateRange, getVenueHistory, site, sponsors, venues } from '../content';
 import Seo from '../components/Seo';
 import Container from '../components/ui/Container';
 import SectionHeading from '../components/ui/SectionHeading';
 import ExternalLink from '../components/ui/ExternalLink';
 import { focusRing } from '../components/ui/focusRing';
+import { linkClass } from '../components/ui/linkClass';
 import VenueCard from '../components/events/VenueCard';
 import PartnerLogos from '../components/partners/PartnerLogos';
 
@@ -12,42 +13,47 @@ const DESCRIPTION = `The venue partners, sponsors and communities that make ${si
 
 const GROUP_HEADING = 'font-raleway font-bold text-[16px] leading-[22px] tracking-[0.5em] uppercase';
 
-const HOSTED = [
-  { type: 'event', title: 'Events hosted', base: '/events' },
-  { type: 'conference', title: 'Conferences hosted', base: '/conferences' },
-];
+function HostedList({ title, base, items }) {
+  if (!items.length) return null;
+  return (
+    <div>
+      <h4 className="font-bold text-[20px] leading-[28px] sm:text-[16px] sm:leading-[24px]">{title}</h4>
+      <ul className="mt-2 space-y-2 text-[16px] leading-[24px] sm:text-[14px] sm:leading-[22px]">
+        {items.map((item) => {
+          const start = item.date ?? item.startDate;
+          return (
+            <li key={item.slug}>
+              <Link to={`${base}/${item.slug}`} className={`${linkClass} ${focusRing}`}>
+                {item.name}
+              </Link>
+              <time dateTime={start} className="block">{formatDateRange(start, item.endDate)}</time>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
 
 function VenueHistory({ venueSlug }) {
   const history = getVenueHistory(venueSlug);
-  const lists = HOSTED.map((list) => ({
-    ...list,
-    items: history.filter((h) => h.type === list.type).map((h) => h.item),
-  })).filter((list) => list.items.length);
-  if (!lists.length) return null;
+  const events = history.filter((h) => h.type === 'event').map((h) => h.item);
+  const conferences = history.filter((h) => h.type === 'conference').map((h) => h.item);
+  if (!events.length && !conferences.length) return null;
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-1 gap-6 pt-6">
-      {lists.map(({ type, title, base, items }) => (
-        <div key={type}>
-          <h4 className="font-bold text-[20px] leading-[28px] sm:text-[16px] sm:leading-[24px]">{title}</h4>
-          <ul className="mt-2 space-y-2 text-[16px] leading-[24px] sm:text-[14px] sm:leading-[22px]">
-            {items.map((item) => {
-              const start = item.date ?? item.startDate;
-              return (
-                <li key={item.slug}>
-                  <Link
-                    to={`${base}/${item.slug}`}
-                    className={`font-semibold underline underline-offset-4 hover:text-gray-600 ${focusRing}`}
-                  >
-                    {item.name}
-                  </Link>
-                  <time dateTime={start} className="block">{formatDateRange(start, item.endDate)}</time>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      ))}
+      <HostedList title="Events hosted" base="/events" items={events} />
+      <HostedList title="Conferences hosted" base="/conferences" items={conferences} />
+    </div>
+  );
+}
+
+function Group({ title, children }) {
+  return (
+    <div className="pt-[48px] sm:pt-[24px]">
+      <h3 className={GROUP_HEADING}>{title}</h3>
+      {children}
     </div>
   );
 }
@@ -55,47 +61,16 @@ function VenueHistory({ venueSlug }) {
 function LogoGroup({ title, partners }) {
   if (!partners.length) return null;
   return (
-    <div className="pt-[48px] sm:pt-[24px]">
-      <h3 className={GROUP_HEADING}>{title}</h3>
+    <Group title={title}>
       <PartnerLogos partners={partners} className="pt-6 sm:pt-4" />
-    </div>
-  );
-}
-
-/** Individual supporters: their photo is a headshot, so show name and role too. */
-function SupporterGroup({ supporters }) {
-  if (!supporters.length) return null;
-  return (
-    <div className="pt-[48px] sm:pt-[24px]">
-      <h3 className={GROUP_HEADING}>Community Supporters</h3>
-      <ul className="pt-6 sm:pt-4 flex flex-wrap justify-center gap-6 sm:gap-3 font-raleway">
-        {supporters.map((s) => (
-          <li key={s.slug} className="w-[285px] sm:w-[148px]">
-            <ExternalLink href={s.website} className="group block rounded-3xl">
-              <img
-                src={s.logo}
-                alt=""
-                width="285"
-                height="296"
-                loading="lazy"
-                decoding="async"
-                className="block w-full h-auto aspect-[285/296] object-cover rounded-3xl"
-              />
-              <span className="block pt-3 font-bold text-[20px] leading-[28px] sm:text-[14px] sm:leading-[20px] group-hover:underline underline-offset-4">
-                {s.name}
-              </span>
-            </ExternalLink>
-            <p className="text-[16px] leading-[24px] sm:text-[12px] sm:leading-[18px]">
-              {[s.designation, s.company ?? s.location].filter(Boolean).join(', ')}
-            </p>
-          </li>
-        ))}
-      </ul>
-    </div>
+    </Group>
   );
 }
 
 export default function PartnersPage() {
+  const ofKind = (kind) => sponsors.filter((s) => s.kind === kind);
+  const supporters = ofKind('supporter');
+
   return (
     <>
       <Seo title="Partners" description={DESCRIPTION} path="/partners" />
@@ -133,16 +108,42 @@ export default function PartnersPage() {
 
           <section aria-labelledby="sponsors-heading" className="pt-[100px] sm:pt-[50px]">
             <SectionHeading id="sponsors-heading">Sponsors</SectionHeading>
-            <LogoGroup title="Companies" partners={getSponsorsByKind('sponsor')} />
-            <SupporterGroup supporters={getSponsorsByKind('supporter')} />
+            <LogoGroup title="Companies" partners={ofKind('sponsor')} />
+            {supporters.length ? (
+              <Group title="Community Supporters">
+                <ul className="pt-6 sm:pt-4 flex flex-wrap justify-center gap-6 sm:gap-3 font-raleway">
+                  {supporters.map((s) => (
+                    <li key={s.slug} className="w-[285px] sm:w-[148px]">
+                      <ExternalLink href={s.website} className="group block rounded-3xl">
+                        <img
+                          src={s.logo}
+                          alt=""
+                          width="285"
+                          height="296"
+                          loading="lazy"
+                          decoding="async"
+                          className="block w-full h-auto aspect-[285/296] object-cover rounded-3xl"
+                        />
+                        <span className="block pt-3 font-bold text-[20px] leading-[28px] sm:text-[14px] sm:leading-[20px] group-hover:underline underline-offset-4">
+                          {s.name}
+                        </span>
+                      </ExternalLink>
+                      <p className="text-[16px] leading-[24px] sm:text-[12px] sm:leading-[18px]">
+                        {[s.designation, s.company ?? s.location].filter(Boolean).join(', ')}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </Group>
+            ) : null}
           </section>
 
           <section aria-labelledby="community-heading" className="pt-[100px] sm:pt-[50px]">
             <SectionHeading id="community-heading" squiggle="Partners">
               Community
             </SectionHeading>
-            <LogoGroup title="Java User Groups" partners={getSponsorsByKind('jug')} />
-            <LogoGroup title="Communities" partners={getSponsorsByKind('community')} />
+            <LogoGroup title="Java User Groups" partners={ofKind('jug')} />
+            <LogoGroup title="Communities" partners={ofKind('community')} />
           </section>
         </Container>
       </div>

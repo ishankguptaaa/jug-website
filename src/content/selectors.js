@@ -238,9 +238,6 @@ export const getPartnersForConference = (conferenceSlug, kind) => {
   );
 };
 
-/** Records in sponsors.js of one kind ('sponsor' | 'community' | 'jug' | 'supporter'), in file order. */
-export const getSponsorsByKind = (kind) => sponsors.filter((s) => s.kind === kind);
-
 // ---------- venues ----------
 
 /** Venue records for a conference (conference.venues[]). */

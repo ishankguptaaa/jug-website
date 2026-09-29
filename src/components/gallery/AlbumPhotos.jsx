@@ -1,6 +1,7 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FaChevronLeft, FaChevronRight, FaXmark } from 'react-icons/fa6';
 import { focusRing } from '../ui/focusRing';
+import Thumb from '../ui/Thumb';
 
 const SWIPE_PX = 50;
 
@@ -15,9 +16,19 @@ const CONTROL =
  */
 export default function AlbumPhotos({ photos }) {
   const dialogRef = useRef(null);
-  const touchX = useRef(0);
+  const touch = useRef(null);
   const [index, setIndex] = useState(null);
   const photo = index === null ? null : photos[index];
+
+  const isOpen = index !== null;
+
+  useEffect(() => {
+    if (!isOpen) return;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
 
   const open = (i) => {
     setIndex(i);
@@ -30,9 +41,15 @@ export default function AlbumPhotos({ photos }) {
     if (e.key === 'ArrowLeft') step(-1);
     if (e.key === 'ArrowRight') step(1);
   };
+  const onTouchStart = (e) => {
+    touch.current = e.touches.length === 1 ? e.touches[0] : null;
+  };
   const onTouchEnd = (e) => {
-    const dx = e.changedTouches[0].clientX - touchX.current;
-    if (Math.abs(dx) > SWIPE_PX) step(dx < 0 ? 1 : -1);
+    if (!touch.current) return;
+    const dx = e.changedTouches[0].clientX - touch.current.clientX;
+    const dy = e.changedTouches[0].clientY - touch.current.clientY;
+    touch.current = null;
+    if (Math.abs(dx) > SWIPE_PX && Math.abs(dx) > Math.abs(dy)) step(dx < 0 ? 1 : -1);
   };
 
   return (
@@ -43,32 +60,25 @@ export default function AlbumPhotos({ photos }) {
             <button
               type="button"
               onClick={() => open(i)}
-              className={`block w-full overflow-hidden rounded-[24px] sm:rounded-2xl border border-black bg-[#FAFAFA] ${focusRing}`}
+              className={`block w-full rounded-[24px] sm:rounded-2xl ${focusRing}`}
             >
-              <img
-                src={p.thumb ?? p.src}
-                alt={p.alt}
-                width={p.w}
-                height={p.h}
-                loading="lazy"
-                decoding="async"
-                className="block w-full h-auto aspect-[4/3] object-cover transition-opacity duration-300 hover:opacity-80 motion-reduce:transition-none"
+              <Thumb
+                photo={p}
+                className="block transition-opacity duration-300 hover:opacity-80 motion-reduce:transition-none"
               />
             </button>
           </li>
         ))}
       </ul>
 
-      {/* Clicks on the dialog itself (not its children) are on the dark
-          backdrop area, so they close it. */}
       <dialog
         ref={dialogRef}
         aria-label="Photo viewer"
         onClose={() => setIndex(null)}
+        tabIndex={-1}
         onKeyDown={onKeyDown}
-        onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
+        onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
-        onClick={(e) => e.target === e.currentTarget && close()}
         className="m-0 w-full h-full max-w-none max-h-none p-6 sm:p-3 bg-black/90 text-white open:flex flex-col items-center gap-4 sm:gap-3"
       >
         <div className="w-full flex items-center justify-between gap-4">
