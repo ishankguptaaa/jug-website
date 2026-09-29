@@ -1,4 +1,4 @@
-import { formatMonthYear, getAllConferences, getAllEvents, getOpenCfpUrl, getSpeakerDirectory, site } from '../content';
+import { getAllConferences, getAllEvents, getOpenCfpUrl, getSpeakerDirectory, site } from '../content';
 import Seo from '../components/Seo';
 import PageHero from '../components/ui/PageHero';
 import Container from '../components/ui/Container';
@@ -42,15 +42,10 @@ const WHAT_WE_DO = [
 export default function AboutPage() {
   const now = useNow();
   const events = getAllEvents();
-  // Keep the page out of search while its copy or stats are still sample data.
+  // Keep the page out of search while its copy or event records are still samples.
   const noindex = site.aboutCopyIsSample || events.some((e) => e.isSample);
-  // Optional: the sample events may be removed before real ones are added.
-  const firstMeetup = events.at(-1)?.date;
   const openCfpUrl = getOpenCfpUrl(now);
   const stats = [
-    ...(firstMeetup
-      ? [{ label: 'First meetup', value: <time dateTime={firstMeetup}>{formatMonthYear(firstMeetup)}</time> }]
-      : []),
     { label: 'Events', value: events.length },
     { label: 'Speakers', value: getSpeakerDirectory().length },
     { label: 'Conferences', value: getAllConferences().length },

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { allSample, formatDateRange, getVenueHistory, site, sponsors, venues } from '../content';
+import { useNow } from '../lib/useNow';
 import Seo from '../components/Seo';
 import PageHero from '../components/ui/PageHero';
 import Container from '../components/ui/Container';
@@ -37,8 +38,8 @@ function HostedList({ title, base, items }) {
   );
 }
 
-function VenueHistory({ venueSlug }) {
-  const { events, conferences } = getVenueHistory(venueSlug);
+function VenueHistory({ venueSlug, now }) {
+  const { events, conferences } = getVenueHistory(venueSlug, now);
   if (!events.length && !conferences.length) return null;
 
   return (
@@ -68,6 +69,7 @@ function LogoGroup({ title, partners }) {
 }
 
 export default function PartnersPage() {
+  const now = useNow();
   const ofKind = (kind) => sponsors.filter((s) => s.kind === kind);
   const companies = ofKind('sponsor');
   const supporters = ofKind('supporter');
@@ -93,7 +95,7 @@ export default function PartnersPage() {
               {venues.map((venue) => (
                 <li key={venue.slug}>
                   <VenueCard venue={venue} bg="bg-[#EDD7FF]">
-                    <VenueHistory venueSlug={venue.slug} />
+                    <VenueHistory venueSlug={venue.slug} now={now} />
                   </VenueCard>
                 </li>
               ))}

@@ -7,7 +7,7 @@ Website of the Gujarat Java User Group (JUG) and Community Day for Java. Contrib
 The site covers meetups, conferences (Community Day for Java), speakers, photo galleries, venue and community partners, and an about page.
 
 - React 18 + Vite, Tailwind CSS v3, React Router.
-- All content lives in plain JavaScript files in `src/content/` (events, conferences, speakers, sessions, venues, sponsors, galleries, site). Pages never hard-code content; they read it through `src/content/selectors.js`.
+- All content lives in plain JavaScript files in `src/content/` (events, conferences, speakers, sessions, venues, sponsors, galleries, site). Event, speaker and conference pages read it through `src/content/selectors.js`. The exceptions are the core team and volunteers, which live in `src/data/*.jsx` (`volunteerData.jsx` for the About page; `eventVolunteerData.jsx`, the CDJ 2025 crew, shown only on that conference's page).
 - `npm run build` prerenders every route to static HTML, deployed on Vercel (`vercel.json`).
 
 ## Getting started
@@ -71,9 +71,9 @@ Three pieces: the event, its speakers, and its sessions (talks).
   venue: 'lj-university', // a slug from venues.js
   // location: { name: 'Coworking Space', address: 'SG Highway', city: 'Ahmedabad' },
   // online: true,
-  banner: '/Events/java-21-features-meetup.webp', // optional, see image conventions
-  registrationUrl: 'https://lu.ma/your-event', // optional
-  externalUrl: 'https://lu.ma/your-event', // optional
+  // banner: '/Events/java-21-features-meetup.webp', // optional, the files must exist (see Images)
+  // registrationUrl: 'https://luma.com/your-event', // optional
+  // externalUrl: 'https://luma.com/your-event', // optional
 },
 ```
 
@@ -115,9 +115,9 @@ Add to `src/content/conferences.js`. Only `slug`, `name`, `startDate`, `endDate`
   venues: ['lj-university'],
   tracks: [{ slug: 'core-java', name: 'Core Java' }],
   highlights: ['20+ talks', 'Hands-on workshops'],
-  registrationUrl: 'https://lu.ma/your-conference',
+  registrationUrl: 'https://luma.com/your-conference',
   cfp: { url: 'https://sessionize.com/your-cfp', closesOn: '2026-12-31' },
-  sponsors: [{ sponsor: 'acme', tier: 'gold' }], // sponsor slugs from sponsors.js
+  sponsors: [], // e.g. { sponsor: '<slug from sponsors.js>', tier: 'gold' }
   partners: [], // sponsor slugs of kind 'jug' or 'community'
 },
 ```
@@ -126,7 +126,7 @@ The call for papers is shown as open while the conference is upcoming or live an
 
 ### Add a speaker
 
-Add to `src/content/speakers.js`. Only `name` is required.
+Add to `src/content/speakers.js`. `slug` and `name` are required.
 
 ```js
 {
@@ -211,7 +211,7 @@ npx --yes sharp-cli -i in.jpg -o out.jpg -f jpeg -q 80 resize 1200 --withoutEnla
 ```
 
 - **Banners** (events and conferences), for `banner: '/Events/name.webp'`, need three files next to each other:
-  - `name.webp` (1200w)
+  - `name.webp` (1200w, aspect ratio about 2:1, like the existing 1200x600 banners)
   - `name-640.webp` (640w, used for cards and small screens)
   - `name.jpg` (1200w, used for social share previews, since not every scraper reads WebP)
 - **Gallery** photos, in `public/gallery/<gallery-slug>/`:
@@ -233,6 +233,7 @@ Tailwind screens in `tailwind.config.js` are min-max ranges, not mobile-first:
 | `md:` | 768-1023px only |
 | `lg:` | 1024-1279px only |
 | `xl:` | 1280px and up |
+| `2xl:` | 1440px and up |
 
 Unprefixed classes apply at every width, and `sm:` does not cascade upward. Write the desktop style unprefixed, then override with `sm:` (mobile) and `md:` (tablet). A style meant for both tablet and mobile needs both `sm:x md:x`.
 

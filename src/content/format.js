@@ -72,12 +72,6 @@ export const initialsOf = (name = '') =>
 /** '1 session' / '3 sessions'; null for 0 or missing. */
 export const countLabel = (n, word) => (n ? `${n} ${word}${n === 1 ? '' : 's'}` : null);
 
-/** 'YYYY-MM-DD' -> 'Nov 2025'. Returns the input unchanged if invalid. */
-export function formatMonthYear(date) {
-  const match = DATE_PARTS_RE.exec(date ?? '');
-  return match ? `${MONTHS[Number(match[2]) - 1]} ${match[1]}` : date;
-}
-
 /** Year of a 'YYYY-MM-DD' string, as a number. */
 export const yearOf = (date) => Number(String(date).slice(0, 4));
 

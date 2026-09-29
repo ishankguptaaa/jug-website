@@ -8,7 +8,7 @@ const JugPartners = ({ partners, registrationUrl }) => {
         <div className='pt-[128px] pb-[155px] sm:pt-[50px] sm:pb-[50px]'>
           <div className='mt-[20px] text-center'>
             <h2 className="font-raleway font-medium text-[56px] leading-[62px] sm:text-[32px] sm:leading-[48px] tracking-[0%]">
-              Partnering JUGs Across India
+              Partner JUGs
             </h2>
           </div>
           <div className="grid grid-cols-12 justify-center mt-11 sm:mt-6">

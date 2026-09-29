@@ -59,10 +59,6 @@ export const allSample = (list) => list.every((record) => record.isSample);
 
 // ---------- speakers ----------
 
-/** All speakers in file order. Pass `{ includeSamples: false }` to hide samples. */
-export const getAllSpeakers = ({ includeSamples = true } = {}) =>
-  includeSamples ? speakers : speakers.filter((s) => !s.isSample);
-
 /**
  * Text shown before the company on speaker cards, e.g. "JVM Engineer at".
  * Uses `rolePrefix` when present, else `${designation} at`.
@@ -298,10 +294,14 @@ export const getEventPlaceLabel = (eventOrSlug) => {
     : place.name;
 };
 
-/** Everything hosted at a venue, each list newest first: { events, conferences } */
-export const getVenueHistory = (venueSlug) => ({
-  events: events.filter((e) => e.venue === venueSlug).sort(byStartDesc),
-  conferences: conferences.filter((c) => (c.venues ?? []).includes(venueSlug)).sort(byStartDesc),
+/** Everything already held at a venue (completed only), each list newest first: { events, conferences } */
+export const getVenueHistory = (venueSlug, now) => ({
+  events: events
+    .filter((e) => e.venue === venueSlug && getStatus(e, now) === 'completed')
+    .sort(byStartDesc),
+  conferences: conferences
+    .filter((c) => (c.venues ?? []).includes(venueSlug) && getStatus(c, now) === 'completed')
+    .sort(byStartDesc),
 });
 
 // ---------- galleries ----------

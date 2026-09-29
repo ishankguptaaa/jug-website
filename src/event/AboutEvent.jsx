@@ -13,7 +13,7 @@ const AboutEvent = ({ conference, mapUrl, registrationUrl }) => {
                     <div className="grid grid-cols-12 sm:grid-cols-1" >
                         {/* Grid Item 1 */}
                         <div
-                            className="col-span-6 ps-[110px] pt-[50px] sm:p-0 "
+                            className={`${conference.aboutImage ? 'col-span-6 ps-[110px]' : 'col-span-12 px-[110px]'} pt-[50px] sm:p-0`}
                              data-aos="fade-right" 
                         >
                             <h2 className="font-raleway font-bold text-[40px] leading-[48px] tracking-[1%] text-colour-text sm:text-[24px] sm:leading-[28.8px] mb-8">
@@ -56,16 +56,14 @@ const AboutEvent = ({ conference, mapUrl, registrationUrl }) => {
 
                         </div>
 
-                        {/* Grid Item 2 */}
+                        {conference.aboutImage ? (
                         <div
                             className="col-span-6 sm:grid-cols-1 sm:px-0 px-[100px] sm:mt-4 sm:order-1 "
-                            data-aos="fade-left" 
+                            data-aos="fade-left"
                         >
-                            {conference.aboutImage ? (
                             <img src={conference.aboutImage.src} alt="" width={conference.aboutImage.width} height={conference.aboutImage.height} loading="lazy" decoding="async" className='sm:w-[320px]'/>
-                            ) : null}
                         </div>
-                        
+                        ) : null}
                     </div>
                     <div className="flex justify-center items-center mt-4 xl:hidden ">
                                 <div className="flex flex-col ">

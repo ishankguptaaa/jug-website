@@ -23,6 +23,7 @@ import {
   isCfpOpen,
   getVenuesForConference,
   getWorkshopsForConference,
+  CDJ_2025_SLUG,
 } from '../content';
 import { usePageChrome } from '../layouts/pageChrome';
 import { useNow } from '../lib/useNow';
@@ -86,6 +87,8 @@ export default function ConferenceDetailPage() {
   const jugPartners = getPartnersForConference(slug, 'jug');
   const communityPartners = getPartnersForConference(slug, 'community');
   const multiDay = conference.startDate !== conference.endDate;
+  // The volunteer team on file is the CDJ 2025 crew.
+  const showTeam = slug === CDJ_2025_SLUG;
   const hasSponsors = sponsors.length > 0 || venues.length > 0;
   const path = `/conferences/${conference.slug}`;
   const description = conference.description?.[0] ?? conference.tagline;
@@ -96,7 +99,7 @@ export default function ConferenceDetailPage() {
     cfpUrl ? { label: 'Submit a CFP', href: cfpUrl } : null,
     sessions.length > 0 ? { label: 'Schedule', hash: 'schedule-event' } : null,
     hasSponsors ? { label: 'Sponsors', hash: 'sponsors-event' } : null,
-    { label: 'Our RockStars', hash: 'team-event' },
+    showTeam ? { label: 'Our RockStars', hash: 'team-event' } : null,
   ].filter(Boolean);
 
   const announcementsSection =
@@ -206,9 +209,11 @@ export default function ConferenceDetailPage() {
       {communityPartners.length > 0 ? (
         <CommunityPartners partners={communityPartners} registrationUrl={registrationUrl} />
       ) : null}
-      <div id="team-event">
-        <EventVolunteer />
-      </div>
+      {showTeam ? (
+        <div id="team-event">
+          <EventVolunteer />
+        </div>
+      ) : null}
       {registrationUrl ? (
         <BooKSlots name={conference.name} registrationUrl={registrationUrl} />
       ) : null}
