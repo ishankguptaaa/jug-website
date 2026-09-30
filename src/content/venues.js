@@ -40,6 +40,8 @@ export const venues = [
   {
     slug: 'staunchsys',
     name: 'Staunchsys IT Services Pvt. Ltd.',
+    logo: '/Sponsors/Staunchsys.webp',
+    website: 'https://www.staunchsys.com/',
     address: 'Staunchsys IT Services Pvt. Ltd., 410-413, Aaron Spectra Behind Rajpath club, Rajpath Rangoli Road, Sarkhej - Gandhinagar Hwy, Bodakdev, Ahmedabad, Gujarat 380054, India',
     city: 'Ahmedabad',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=23.033914,72.504981',
@@ -47,6 +49,7 @@ export const venues = [
   {
     slug: '7span',
     name: '7Span',
+    logo: '/Img/venues/7span.svg',
     website: 'https://7span.com/',
     address: '7Span, 201, Isquare Corporate Park, Science City Rd, Science City, Panchamrut Bunglows II, Sola, Ahmedabad, Gujarat 380060, India',
     city: 'Ahmedabad',
@@ -55,6 +58,8 @@ export const venues = [
   {
     slug: 'smartsense',
     name: 'smartSense Consulting Solutions Pvt. Ltd',
+    logo: '/Img/venues/smartsense.svg',
+    website: 'https://www.smartsensesolutions.com/',
     address: 'smartSense Consulting Solutions Pvt. Ltd, 4th Floor, GIFT One, Gujarat International Finance Tec-City, Gandhinagar, Gujarat 382050, India',
     city: 'Gandhinagar',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=23.1644923,72.6801305',
@@ -62,6 +67,8 @@ export const venues = [
   {
     slug: 'york-ie',
     name: 'York IE APAC Pvt Ltd',
+    logo: '/Img/venues/york-ie.svg',
+    website: 'https://york.ie/',
     address: 'York IE APAC Pvt Ltd, 2nd floor Eastface, Iscon, Ambli Rd, behind Maruti Suzuki Arena, Ambli, Ahmedabad, Gujarat 380058, India',
     city: 'Ahmedabad',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=23.0244203,72.4787312',
@@ -69,6 +76,8 @@ export const venues = [
   {
     slug: 'aubergine',
     name: 'Aubergine Solutions Pvt. Ltd.',
+    logo: '/Img/venues/aubergine.svg',
+    website: 'https://aubergine.co/',
     address: 'Aubergine Solutions Pvt. Ltd., A2, Tenth Floor, Safal Profitaire, Corporate Rd, Prahlad Nagar, Ahmedabad, Gujarat 380015, India',
     city: 'Ahmedabad',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=23.0096067,72.5062465',
@@ -83,6 +92,7 @@ export const venues = [
   {
     slug: 'royal-technosoft',
     name: 'Royal Technosoft P Limited',
+    logo: '/Img/venues/royal-technosoft.webp',
     website: 'https://royaltechnosoft.com',
     address: 'Royal Technosoft P Limited, 2nd and 3rd floor, Surbhi Complex, Chimanlal Girdharlal Rd, Opposite Municipal Market, Vasant Vihar, Navrangpura, Ahmedabad, Gujarat 380009, India',
     city: 'Ahmedabad',
@@ -91,6 +101,8 @@ export const venues = [
   {
     slug: 'silver-oak-college',
     name: 'Silver Oak College of Engineering and Technology',
+    logo: '/Img/venues/silver-oak-college.svg',
+    website: 'https://www.silveroakuni.ac.in/',
     address: 'Silver Oak College Of Engineering And Technology Class Room, Gota, Ahmedabad, Gujarat 382481, India',
     city: 'Ahmedabad',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=23.0901508,72.535029',
@@ -98,6 +110,8 @@ export const venues = [
   {
     slug: 'ibm-isl-gift-city',
     name: 'IBM ISL, GIFT City',
+    logo: '/Img/venues/ibm-isl-gift-city.svg',
+    website: 'https://www.ibm.com/',
     address: 'IBM ISL, GIFT City, Floor 18-20, Prestige Fintech, Gujarat International Finance Tec-City, Gandhinagar, Gujarat 382050, India',
     city: 'Gandhinagar',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=23.164987,72.6852203',
@@ -105,6 +119,8 @@ export const venues = [
   {
     slug: 'caffix',
     name: 'Caffix - The Tech Cafe',
+    logo: '/Img/venues/caffix.webp',
+    website: 'https://www.caffix.in/',
     address: 'Caffix- The Tech Cafe, Third Floor, 301, Soham Pristine, above Vadilal Happiness, PRL Colony, Thaltej, Ahmedabad, Gujarat 380059, India',
     city: 'Ahmedabad',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=23.0449837,72.4986407',
@@ -112,6 +128,7 @@ export const venues = [
   {
     slug: 'ignek',
     name: 'IGNEK - Liferay Boutique Company',
+    logo: '/Img/venues/ignek.webp',
     website: 'https://www.ignek.com/',
     address: 'IGNEK - Liferay Boutique Company, E 910-912, Ganesh Glory 11, Jagatpur Road, Sarkhej - Gandhinagar Hwy, Jagatpur, Ahmedabad, Gujarat 382470, India',
     city: 'Ahmedabad',
