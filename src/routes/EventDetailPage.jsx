@@ -6,7 +6,7 @@ import Container from '../components/ui/Container';
 import { DetailHero, DetailTitle } from '../components/ui/PageHero';
 import DetailSection from '../components/ui/DetailSection';
 import { HERO_IMG_PRIORITY } from '../components/ui/heroImg';
-import { BANNER_SIZES, bannerSrcSet } from '../lib/images';
+import { BANNER_SIZES, EVENT_COVER_CLASS, bannerSrcSet } from '../lib/images';
 import StatusBadge from '../components/ui/StatusBadge';
 import Pill from '../components/ui/Pill';
 import SpeakerChip from '../components/events/SpeakerChip';
@@ -139,11 +139,11 @@ export default function EventDetailPage() {
               srcSet={bannerSrcSet(event.banner)}
               sizes={BANNER_SIZES}
               alt={`Banner for ${event.name}`}
-              width="1200"
-              height="612"
+              width="1080"
+              height="1080"
               {...HERO_IMG_PRIORITY}
               decoding="async"
-              className="w-full h-auto aspect-[1440/734] object-cover rounded-[40px] sm:rounded-[24px] border border-black bg-white"
+              className={`w-full h-auto ${EVENT_COVER_CLASS} rounded-[40px] sm:rounded-[24px] border border-black`}
             />
           </div>
         ) : null}

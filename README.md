@@ -219,7 +219,7 @@ npx --yes sharp-cli -i in.jpg -o out.jpg -f jpeg -q 80 resize 1200 --withoutEnla
 ```
 
 - **Banners** (events and conferences), for `banner: '/Events/name.webp'`, need three files next to each other:
-  - `name.webp` (1200w, aspect ratio about 2:1, like the existing 1200x600 banners)
+  - `name.webp` (1200w; meetup covers are square like Luma's 1080x1080 posters and are shown whole, conference banners are about 2:1 like the existing 1200x600 ones)
   - `name-640.webp` (640w, used for cards and small screens)
   - `name.jpg` (1200w, used for social share previews, since not every scraper reads WebP)
 - **Gallery** photos, in `public/gallery/<gallery-slug>/`:

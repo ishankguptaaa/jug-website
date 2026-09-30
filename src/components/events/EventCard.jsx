@@ -9,7 +9,7 @@ import Button from '../ui/Button';
 import CompactCard from '../ui/CompactCard';
 import StatusBadge from '../ui/StatusBadge';
 import { CARD_SURFACE } from '../ui/cardSurface';
-import { CARD_BANNER_SIZES, bannerSrcSet } from '../../lib/images';
+import { CARD_BANNER_SIZES, EVENT_COVER_CLASS, bannerSrcSet } from '../../lib/images';
 import EventPlace from './EventPlace';
 import SpeakerAvatars from './SpeakerAvatars';
 
@@ -21,17 +21,17 @@ function Banner({ event }) {
         srcSet={bannerSrcSet(event.banner)}
         sizes={CARD_BANNER_SIZES}
         alt=""
-        width="1200"
-        height="612"
+        width="1080"
+        height="1080"
         loading="lazy"
         decoding="async"
-        className="block w-full h-auto aspect-[1440/734] object-cover border-b border-black"
+        className={`block w-full h-auto ${EVENT_COVER_CLASS} border-b border-black`}
       />
     );
   }
   // No banner: keep the same footprint so cards in a row stay aligned.
   return (
-    <div className="relative w-full aspect-[1440/734] bg-[#E1EEFB] border-b border-black">
+    <div className="relative w-full aspect-square bg-[#E1EEFB] border-b border-black">
       <img
         src="/Img/duke-logo-svg.svg"
         alt=""

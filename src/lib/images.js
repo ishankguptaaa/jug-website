@@ -5,6 +5,9 @@ export const FEATURED_BANNER_SIZES = '(min-width: 1024px) 1200px, 100vw';
 /** Cards sit in the 3 / 2 / 1-column GRID. */
 export const CARD_BANNER_SIZES = '(min-width: 1024px) 640px, (min-width: 768px) 50vw, 100vw';
 
+/** Event covers are square Luma posters: show the whole poster, letterboxed if it isn't quite square. */
+export const EVENT_COVER_CLASS = 'aspect-square object-contain bg-[#E1EEFB]';
+
 export const bannerSmall = (src) => src.replace(/\.webp$/, '-640.webp');
 
 /** Share previews use a .jpg twin of WebP images (not every scraper reads WebP). */
