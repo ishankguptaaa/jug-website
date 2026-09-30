@@ -126,7 +126,7 @@ export default function EventDetailPage() {
               ) : null}
               {event.externalUrl ? (
                 <Button href={event.externalUrl} shape="card">
-                  {isLuma(event.externalUrl) ? 'View on Luma' : 'Event page'}
+                  {isLuma(event.externalUrl) ? 'More details on Luma' : 'Event page'}
                 </Button>
               ) : null}
             </div>

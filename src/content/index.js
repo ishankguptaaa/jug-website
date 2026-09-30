@@ -1,7 +1,7 @@
 // Single entry point for the content layer.
 // import { getSpeakersForConference, site } from '../content';
 
-export { events } from './events.js';
+export { events } from './eventList.js';
 export { conferences, CDJ_2025_SLUG } from './conferences.js';
 export { speakers } from './speakers.js';
 export { sessions, SESSION_TYPES, SPEAKER_SESSION_TYPES, AGENDA_SESSION_TYPES } from './sessions.js';

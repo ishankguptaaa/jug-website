@@ -3,7 +3,7 @@
 // every reverse relationship is derived here.
 // No React, no window/document. Time-dependent selectors take `now`.
 
-import { events } from './events.js';
+import { events } from './eventList.js';
 import { conferences } from './conferences.js';
 import { speakers } from './speakers.js';
 import { sessions, SPEAKER_SESSION_TYPES } from './sessions.js';
