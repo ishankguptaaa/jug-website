@@ -1,4 +1,4 @@
-import { venues } from '../../content';
+import { getVenuesByLatest } from '../../content';
 import Button from '../ui/Button';
 import Container from '../ui/Container';
 import SectionHeading from '../ui/SectionHeading';
@@ -12,7 +12,7 @@ export default function VenuePartnersStrip() {
         <SectionHeading id="venue-partners-heading" squiggle="Partners">
           Our Venue
         </SectionHeading>
-        <PartnerLogos partners={venues} className="pt-[48px] sm:pt-[24px]" />
+        <PartnerLogos partners={getVenuesByLatest()} className="pt-[48px] sm:pt-[24px]" />
         <div className="pt-[48px] sm:pt-[24px] flex justify-center">
           <Button to="/partners">View All Partners</Button>
         </div>

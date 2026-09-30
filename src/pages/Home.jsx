@@ -3,6 +3,7 @@ import { site } from '../content';
 import Button from '../components/ui/Button';
 import Container from '../components/ui/Container';
 import StatusBadge from '../components/ui/StatusBadge';
+import Countdown from '../components/ui/Countdown';
 
 const AVATARS = [1, 2, 3, 4, 5];
 
@@ -25,6 +26,7 @@ function Feature({ feature: f }) {
         <time dateTime={f.dateIso}>{f.dateLabel}</time>
         {f.place ? <span>{f.place}</span> : null}
       </p>
+      {f.status === 'upcoming' ? <Countdown entity={f.record} className="mt-5 justify-center" /> : null}
       {f.blurb ? (
         <p className="mt-3 mx-auto max-w-[760px] line-clamp-3 font-raleway text-[18px] leading-[30px] sm:text-[14px] sm:leading-[24px]">
           {f.blurb}

@@ -1,4 +1,5 @@
-import { getAllConferences, getAllEvents, getOpenCfpUrl, getSpeakerDirectory, site } from '../content';
+import { Link } from 'react-router-dom';
+import { conferences, formatDateRange, getAllEvents, getOpenCfpUrl, getStatus, site } from '../content';
 import Seo from '../components/Seo';
 import PageHero from '../components/ui/PageHero';
 import Container from '../components/ui/Container';
@@ -6,6 +7,7 @@ import SectionHeading from '../components/ui/SectionHeading';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import EmptyState from '../components/ui/EmptyState';
+import { linkClass } from '../components/ui/linkClass';
 import Volunteer from '../pages/Volunteer';
 import { useNow } from '../lib/useNow';
 import { organizationJsonLd } from '../lib/jsonLd';
@@ -16,6 +18,8 @@ const SECTION = 'pt-[100px] sm:pt-[50px]';
 const GRID = 'pt-[48px] sm:pt-[24px] grid sm:grid-cols-1 md:grid-cols-1 gap-8 sm:gap-6';
 const CARD_TITLE = 'font-raleway font-bold text-[24px] leading-[32px] sm:text-[20px] sm:leading-[28px]';
 const CARD_TEXT = 'mt-3 font-raleway text-[18px] leading-[28px] sm:text-[14px] sm:leading-[24px]';
+
+const JOURNEY_BGS = ['bg-[#EDD7FF]', 'bg-[#D7FFF1]', 'bg-[#FFEFC6]', 'bg-[#CAF8FC]'];
 
 const WHAT_WE_DO = [
   {
@@ -42,14 +46,11 @@ const WHAT_WE_DO = [
 export default function AboutPage() {
   const now = useNow();
   const events = getAllEvents();
-  // Keep the page out of search while its copy or event records are still samples.
-  const noindex = site.aboutCopyIsSample || events.some((e) => e.isSample);
+  // Keep the page out of search while any event record is still a sample.
+  const noindex = events.some((e) => e.isSample);
   const openCfpUrl = getOpenCfpUrl(now);
-  const stats = [
-    { label: 'Events', value: events.length },
-    { label: 'Speakers', value: getSpeakerDirectory().length },
-    { label: 'Conferences', value: getAllConferences().length },
-  ];
+  // Journey timeline: every conference, oldest first.
+  const timeline = [...conferences].sort((a, b) => a.startDate.localeCompare(b.startDate));
 
   const participate = [
     {
@@ -114,28 +115,44 @@ export default function AboutPage() {
           </section>
 
           <section aria-labelledby="history-heading" className={SECTION}>
-            <SectionHeading id="history-heading" squiggle="Story" className="sm:text-center">
+            <SectionHeading id="history-heading" squiggle="Journey" className="sm:text-center">
               Our
             </SectionHeading>
-            <dl className="pt-[48px] sm:pt-[24px] grid grid-cols-4 sm:grid-cols-2 md:grid-cols-2 gap-6 sm:gap-3">
-              {stats.map((stat) => (
-                <Card key={stat.label} bg="bg-[#D7FFF1]" className="p-6 sm:p-4 text-center">
-                  <dt className="font-raleway text-[16px] leading-[24px] sm:text-[14px]">{stat.label}</dt>
-                  <dd className="font-raleway font-bold text-[32px] leading-[40px] sm:text-[22px] sm:leading-[30px]">
-                    {stat.value}
-                  </dd>
-                </Card>
-              ))}
-            </dl>
+            {site.journey?.length ? (
+              <dl className="pt-[48px] sm:pt-[24px] grid grid-cols-4 sm:grid-cols-2 md:grid-cols-2 gap-6 sm:gap-3">
+                {site.journey.map((stat, i) => (
+                  <Card key={stat.label} bg={JOURNEY_BGS[i % JOURNEY_BGS.length]} className="p-8 sm:p-4 flex flex-col-reverse text-center">
+                    <dt className="mt-2 font-raleway font-medium text-[18px] leading-[26px] sm:text-[14px] sm:leading-[20px]">
+                      {stat.label}
+                    </dt>
+                    <dd className="font-raleway font-bold text-[48px] leading-[56px] md:text-[40px] md:leading-[48px] sm:text-[26px] sm:leading-[32px]">
+                      {stat.value}
+                    </dd>
+                  </Card>
+                ))}
+              </dl>
+            ) : null}
             <ol className="mt-10 sm:mt-6 ml-3 border-l-2 border-black space-y-8 sm:space-y-6">
-              {site.milestones.map((m) => (
-                <li key={m.title} className="relative pl-8 sm:pl-6">
+              {timeline.map((c) => (
+                <li key={c.slug} className="relative pl-8 sm:pl-6">
                   <span
                     aria-hidden="true"
                     className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full border-2 border-black bg-[#FFC62E]"
                   />
-                  <h3 className={CARD_TITLE}>{m.title}</h3>
-                  <p className={CARD_TEXT}>{m.body}</p>
+                  <time dateTime={c.startDate} className="font-raleway font-medium text-[16px] leading-[24px] sm:text-[14px] text-gray-600">
+                    {formatDateRange(c.startDate, c.endDate)}
+                  </time>
+                  <h3 className={`mt-1 ${CARD_TITLE}`}>
+                    <Link to={`/conferences/${c.slug}`} className={linkClass}>
+                      {c.name}
+                    </Link>
+                  </h3>
+                  <p className={CARD_TEXT}>
+                    {c.location}
+                    {c.stats?.attendees
+                      ? ` · ${c.stats.attendees} ${getStatus(c, now) === 'upcoming' ? 'expected attendees' : 'participants'}`
+                      : null}
+                  </p>
                 </li>
               ))}
             </ol>

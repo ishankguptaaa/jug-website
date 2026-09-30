@@ -1,6 +1,7 @@
 import BookYourSlotButton from '../components/BookYourSlotButton'
 import Button from '../components/ui/Button'
 import StatusBadge from '../components/ui/StatusBadge'
+import Countdown from '../components/ui/Countdown'
 import { HERO_IMG_PRIORITY } from '../components/ui/heroImg'
 import { BANNER_SIZES, bannerSrcSet } from '../lib/images'
 import { getSpeakerBySlug } from '../content'
@@ -67,10 +68,10 @@ const Event = ({ conference, status, speakerCount, registrationUrl }) => {
                                     {stats.attendees} Participant
                                 </div>
                                 ) : null}
-                                {speakerCount > 0 ? (
+                                {speakerCount > 0 || stats.speakers ? (
                                 <div className="px-[18px] py-2  rounded-full  sm:px-2 sm:py-[4px] bg-[#FFFCEF] border  border-[#E8C52A]
                                   font-medium text-[12px]  tracking-[1%] sm:text-[10px] ">
-                                    {speakerCount} Industry Speaker
+                                    {speakerCount || stats.speakers} Industry Speaker
                                 </div>
                                 ) : null}
                                 <StatusBadge status={status} />
@@ -85,6 +86,9 @@ const Event = ({ conference, status, speakerCount, registrationUrl }) => {
                              ) : conference.name}
                             </h1>
                             </div>
+                            {status === 'upcoming' ? (
+                            <Countdown entity={conference} className={`mt-6 sm:justify-center ${hasArt ? '' : 'justify-center'}`} />
+                            ) : null}
 
                               {highlights.length > 0 ? (
                               <div>

@@ -173,9 +173,6 @@ export const getEventsForConference = (conferenceSlug) =>
 
 // ---------- conferences ----------
 
-/** All conferences, newest first. */
-export const getAllConferences = () => [...conferences].sort(byStartDesc);
-
 export const getUpcomingConferences = (now = new Date()) =>
   conferences.filter((c) => getStatus(c, now) !== 'completed').sort(byStartAsc);
 
@@ -294,15 +291,20 @@ export const getEventPlaceLabel = (eventOrSlug) => {
     : place.name;
 };
 
-/** Everything already held at a venue (completed only), each list newest first: { events, conferences } */
-export const getVenueHistory = (venueSlug, now) => ({
-  events: events
-    .filter((e) => e.venue === venueSlug && getStatus(e, now) === 'completed')
-    .sort(byStartDesc),
-  conferences: conferences
-    .filter((c) => (c.venues ?? []).includes(venueSlug) && getStatus(c, now) === 'completed')
-    .sort(byStartDesc),
+/** Everything held (or scheduled) at a venue, each list newest first: { events, conferences } */
+export const getVenueHistory = (venueSlug) => ({
+  events: events.filter((e) => e.venue === venueSlug).sort(byStartDesc),
+  conferences: conferences.filter((c) => (c.venues ?? []).includes(venueSlug)).sort(byStartDesc),
 });
+
+/** Venue partners, most recent (or next) host first; venues that haven't hosted yet keep file order, last. */
+export const getVenuesByLatest = () => {
+  const latest = (v) => {
+    const { events: e, conferences: c } = getVenueHistory(v.slug);
+    return Math.max(-Infinity, ...[...e, ...c].map(startMs));
+  };
+  return [...venues].sort((a, b) => latest(b) - latest(a));
+};
 
 // ---------- galleries ----------
 

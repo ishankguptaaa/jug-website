@@ -7,7 +7,7 @@ Website of the Gujarat Java User Group (JUG) and Community Day for Java. Contrib
 The site covers meetups, conferences (Community Day for Java), speakers, photo galleries, venue and community partners, and an about page.
 
 - React 18 + Vite, Tailwind CSS v3, React Router.
-- All content lives in plain JavaScript files in `src/content/` (events, conferences, speakers, sessions, venues, sponsors, galleries, site). Event, speaker and conference pages read it through `src/content/selectors.js`. The exceptions are the core team and volunteers, which live in `src/data/*.jsx` (`volunteerData.jsx` for the About page; `eventVolunteerData.jsx`, the CDJ 2025 crew, shown only on that conference's page).
+- All content lives in plain JavaScript files in `src/content/` (events, conferences, speakers, sessions, venues, sponsors, galleries, site). Event, speaker and conference pages read it through `src/content/selectors.js`. The exception is the core team, which lives in `src/data/volunteerData.jsx` (home and About pages); each conference's volunteer team is its `volunteers` list in `conferences.js`.
 - `npm run build` prerenders every route to static HTML, deployed on Vercel (`vercel.json`).
 
 ## Getting started

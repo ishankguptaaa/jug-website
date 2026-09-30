@@ -18,7 +18,8 @@
 //   cfp?                        { url, closesOn? ('YYYY-MM-DD') } call for papers
 //   tracks[]                    [{ slug, name }]
 //   highlights[]                short bullet strings
-//   stats                       { attendees } (display string)
+//   stats                       { attendees, speakers? } (display strings; speakers = expected count before the lineup is announced)
+//   volunteers[]?               [{ name, role, company, image, linkedin? }] "Our Rockstar Volunteer" team
 //   announcements[]             [{ date, title, body }]
 //   sponsors[]                  [{ sponsor: <sponsor slug>, tier: 'platinum'|'gold'|'silver'|'community-supporter' }]
 //   partners[]                  sponsor slugs of kind 'jug' / 'community', in display order
@@ -92,6 +93,25 @@ export const conferences = [
       attendees: '300+',
     },
     announcements: [],
+    volunteers: [
+      { name: 'Dhaval Gajjar', role: 'System Architect', company: 'Staunchsys IT Services', image: '/Volunteer/Dhaval.webp', linkedin: 'https://www.linkedin.com/in/dhavalgajjarin/' },
+      { name: 'Vikas Rajput', role: 'Sr. Java Consultant', company: 'TechXplore IT Solutions', image: '/Volunteer/Vikas.webp', linkedin: 'https://www.linkedin.com/in/vikasrajputin/' },
+      { name: 'Bharat Ranpariya', role: 'Team Lead', company: 'Thomson Reuters', image: '/Volunteer/Bharat.webp', linkedin: 'https://www.linkedin.com/in/bharat-ranpariya/' },
+      { name: 'Daman Singh Rajput', role: 'Java FullStack Developer', company: 'TechXplore IT Solutions', image: '/Volunteer/Damansingh.webp', linkedin: 'https://www.linkedin.com/in/daman-singh-rajput-2a1ba4237/' },
+      { name: 'Harshvardhan Parmar', role: 'LFX\'25 Mentee', company: 'Microcks', image: '/Volunteer/Harsh.webp', linkedin: 'https://www.linkedin.com/in/harshvardhan-parmar/' },
+      { name: 'Vinay Rajput', role: 'Sr. Visual Designer', company: 'Apexure India', image: '/Volunteer/Vinay.webp', linkedin: 'https://www.linkedin.com/in/vinay21496/' },
+      { name: 'Meet Patel', role: 'Student', company: 'Royal Technosoft', image: '/Volunteer/Meet.webp', linkedin: 'https://www.linkedin.com/in/meet-patel-1b30a5255/' },
+      { name: 'Dubey Saurav', role: 'Graphic Designer', company: 'Gujarat University', image: '/Volunteer/Sourav.webp' },
+      { name: 'Kevin Gokani', role: 'Java Developer', company: 'Qatar Airways', image: '/Volunteer/Kevin.webp', linkedin: 'https://www.linkedin.com/in/kevin-gokani/' },
+      { name: 'Shalin Sabuwala', role: 'Java Developer', company: 'Sanctuary Technologies', image: '/Volunteer/Shalin.webp', linkedin: 'https://www.linkedin.com/in/shalin-sabuwala/' },
+      { name: 'Harshit Gajjar', role: 'Graphic Designer', company: 'Indus university', image: '/Volunteer/Harshit.webp' },
+      { name: 'Akshay Vadsara', role: 'Java Head', company: '7Span', image: '/Volunteer/Akshay.webp', linkedin: 'https://www.linkedin.com/in/akshay-vadsara/' },
+      { name: 'Pravin Jain', role: 'Java Trainer and Evangelist', company: 'Zen Softech Private Limited', image: '/Volunteer/Pravin.webp', linkedin: 'https://www.linkedin.com/in/jainpravin/' },
+      { name: 'Sandip Godhani', role: 'Student', company: 'LJ university', image: '/Volunteer/Sandip.webp', linkedin: 'https://www.linkedin.com/in/sandip-godhani-836294311/' },
+      { name: 'Ravi Soni', role: '2x AWS & Cloud Architect', company: 'Rishabh Software Pvt Ltd', image: '/Volunteer/Ravi.webp', linkedin: 'https://www.linkedin.com/in/rvsoni/' },
+      { name: 'Aryan Gajjar', role: 'Student', company: 'Swarrnim Startup & Innovation University', image: '/Volunteer/Aryan.webp', linkedin: 'https://www.linkedin.com/in/aryangajjar/' },
+      { name: 'Jayesh Gupta', role: 'Software Engineer', company: 'Tata Consultancy Services', image: '/Volunteer/Jayesh.webp', linkedin: 'https://www.linkedin.com/in/jayeshgupta91/' },
+    ],
     sponsors: [
       { sponsor: 'codelab-technologies', tier: 'platinum' },
       { sponsor: 'rezoomex', tier: 'platinum' },

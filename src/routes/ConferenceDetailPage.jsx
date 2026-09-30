@@ -5,6 +5,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Seo from '../components/Seo';
 import Card from '../components/ui/Card';
+import Button from '../components/ui/Button';
+import EmptyState from '../components/ui/EmptyState';
+import Pill from '../components/ui/Pill';
 import Container from '../components/ui/Container';
 import SectionHeading from '../components/ui/SectionHeading';
 import SessionItem from '../components/events/SessionItem';
@@ -16,6 +19,7 @@ import {
   getConferenceBySlug,
   getGalleriesForConference,
   getPartnersForConference,
+  getPastConferences,
   getSessionsForConference,
   getSpeakersForConference,
   getSponsorsForConference,
@@ -23,7 +27,6 @@ import {
   isCfpOpen,
   getVenuesForConference,
   getWorkshopsForConference,
-  CDJ_2025_SLUG,
 } from '../content';
 import { usePageChrome } from '../layouts/pageChrome';
 import { useNow } from '../lib/useNow';
@@ -82,24 +85,33 @@ export default function ConferenceDetailPage() {
   const recorded = sessions.filter((s) => s.slidesUrl || s.videoUrl || s.repoUrl);
   const announcements = getAnnouncementsForConference(slug);
   const galleries = getGalleriesForConference(slug).filter((g) => g.photos?.length > 0);
+  // Before the lineup is out, show "coming soon" blocks and the last edition's photos.
+  const isUpcoming = status === 'upcoming';
+  const lineupPending = isUpcoming && speakers.length === 0;
+  const schedulePending = isUpcoming && sessions.length === 0;
+  const lastEditionGalleries =
+    isUpcoming && !galleries.length
+      ? (getPastConferences(now)
+          .map((c) => getGalleriesForConference(c.slug).filter((g) => g.photos?.length > 0))
+          .find((list) => list.length) ?? [])
+      : [];
   const sponsors = getSponsorsForConference(slug);
   const venues = getVenuesForConference(slug);
   const jugPartners = getPartnersForConference(slug, 'jug');
   const communityPartners = getPartnersForConference(slug, 'community');
   const multiDay = conference.startDate !== conference.endDate;
-  // The volunteer team on file is the CDJ 2025 crew.
-  const showTeam = slug === CDJ_2025_SLUG;
+  const volunteers = conference.volunteers ?? [];
   const hasSponsors = sponsors.length > 0 || venues.length > 0;
   const path = `/conferences/${conference.slug}`;
   const description = conference.description?.[0] ?? conference.tagline;
 
   const subNavItems = [
     { label: 'About', hash: 'about-event' },
-    speakers.length > 0 ? { label: 'Speakers', hash: 'speakers-event' } : null,
+    speakers.length > 0 || lineupPending ? { label: 'Speakers', hash: 'speakers-event' } : null,
     cfpUrl ? { label: 'Submit a CFP', href: cfpUrl } : null,
-    sessions.length > 0 ? { label: 'Schedule', hash: 'schedule-event' } : null,
+    sessions.length > 0 || schedulePending ? { label: 'Schedule', hash: 'schedule-event' } : null,
     hasSponsors ? { label: 'Sponsors', hash: 'sponsors-event' } : null,
-    showTeam ? { label: 'Our RockStars', hash: 'team-event' } : null,
+    volunteers.length > 0 ? { label: 'Our RockStars', hash: 'team-event' } : null,
   ].filter(Boolean);
 
   const announcementsSection =
@@ -156,6 +168,18 @@ export default function ConferenceDetailPage() {
           <Speaker speakers={speakers} cfpUrl={cfpUrl} />
         </div>
       ) : null}
+      {lineupPending ? (
+        <div id="speakers-event">
+          <Section bg="bg-[#E1EEFB]" title="Java Innovators" squiggle="Coming Soon">
+            <EmptyState
+              headingAs="h3"
+              title="Speakers revealed soon"
+              message={`${conference.stats?.speakers ? `${conference.stats.speakers} industry speakers` : 'Industry speakers'} are taking the stage. The lineup will be announced soon.`}
+              action={registrationUrl ? <Button href={registrationUrl}>Book Your Slots</Button> : null}
+            />
+          </Section>
+        </div>
+      ) : null}
       {sessions.length > 0 ? (
         <div id="schedule-event">
           <Schedule
@@ -163,6 +187,33 @@ export default function ConferenceDetailPage() {
             tracks={conference.tracks ?? []}
             registrationUrl={registrationUrl}
           />
+        </div>
+      ) : null}
+      {schedulePending ? (
+        <div id="schedule-event">
+          <Section bg="bg-[#FFFCEF]" title="Explore the" squiggle="Schedule">
+            <EmptyState
+              headingAs="h3"
+              bg="bg-[#D7FFF1]"
+              title="Sessions announced soon"
+              message={
+                conference.tracks?.length
+                  ? 'Sessions will be announced with the speaker lineup, across these tracks:'
+                  : 'Sessions will be announced with the speaker lineup.'
+              }
+              action={
+                conference.tracks?.length ? (
+                  <ul className="flex flex-wrap justify-center gap-3">
+                    {conference.tracks.map((track) => (
+                      <li key={track.slug}>
+                        <Pill>{track.name}</Pill>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null
+              }
+            />
+          </Section>
         </div>
       ) : null}
       {workshops.length > 0 ? (
@@ -187,6 +238,15 @@ export default function ConferenceDetailPage() {
       {conference.goodies?.length > 0 ? (
         <Goodies goodies={conference.goodies} registrationUrl={registrationUrl} />
       ) : null}
+      {lastEditionGalleries.length > 0 ? (
+        <Section bg="bg-[#FFFCEF]" title="Moments from the" squiggle="Last Edition">
+          <div className="flex flex-col gap-[64px] sm:gap-10">
+            {lastEditionGalleries.map((gallery) => (
+              <GalleryPreview key={gallery.slug} gallery={gallery} showTitle />
+            ))}
+          </div>
+        </Section>
+      ) : null}
       {galleries.length > 0 ? (
         <Section bg="bg-[#FFFCEF]" title="Moments from the" squiggle="Conference">
           <div className="flex flex-col gap-[64px] sm:gap-10">
@@ -209,9 +269,9 @@ export default function ConferenceDetailPage() {
       {communityPartners.length > 0 ? (
         <CommunityPartners partners={communityPartners} registrationUrl={registrationUrl} />
       ) : null}
-      {showTeam ? (
+      {volunteers.length > 0 ? (
         <div id="team-event">
-          <EventVolunteer />
+          <EventVolunteer volunteers={volunteers} />
         </div>
       ) : null}
       {registrationUrl ? (
