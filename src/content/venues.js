@@ -85,6 +85,8 @@ export const venues = [
   {
     slug: 'intech',
     name: 'INTECH',
+    logo: '/Img/venues/intech.webp',
+    website: 'https://theintechgroup.com/',
     address: 'INTECH Creative Services Pvt. Ltd., 6th Floor, IT Tower – 1, Infocity, Gandhinagar – 382009, Gujarat, India',
     city: 'Gandhinagar',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=23.1934387,72.6377256',
