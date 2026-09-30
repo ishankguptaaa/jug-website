@@ -102,6 +102,42 @@ export const sessions = [
 
   // ---- Community meetups (imported from Luma) ----
   {
+    slug: 'mastering-java-latest-updates',
+    title: 'Mastering Java Latest Updates',
+    speakers: ['vikas-rajput', 'bharat-ranpariya'],
+    event: 'mastering-java-latest-updates',
+    type: 'talk',
+    startTime: '11:00',
+    endTime: '12:30',
+  },
+  {
+    slug: 'building-modular-monoliths-using-spring-modulith',
+    title: 'Building Modular Monoliths Using Spring Modulith',
+    speakers: ['siva-reddy'],
+    event: 'building-modular-monoliths-using-spring-modulith',
+    type: 'talk',
+    startTime: '10:00',
+    endTime: '11:30',
+  },
+  {
+    slug: 'boosting-application-performance-with-modern-java',
+    title: 'Boosting Application Performance with Modern Java',
+    speakers: ['vaibhav-choudhary'],
+    event: 'boosting-application-performance-with-modern-java',
+    type: 'talk',
+    startTime: '11:00',
+    endTime: '12:30',
+  },
+  {
+    slug: 'hacktoberfest-special-kickstart-your-open-source-journey',
+    title: 'Hacktoberfest Special: Kickstart Your Open Source Journey!',
+    speakers: ['rohan-kumar'],
+    event: 'hacktoberfest-special-kickstart-your-open-source-journey',
+    type: 'talk',
+    startTime: '11:00',
+    endTime: '12:30',
+  },
+  {
     slug: 'unlock-the-future-powering-machine-learning-in-java',
     title: 'Unlock the Future: Powering Machine Learning in Java',
     speakers: ['rajadurai-krishnamoorthy', 'thamaraikkanni-panneerselvam'],

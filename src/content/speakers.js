@@ -83,20 +83,24 @@ export const speakers = [
   {
     slug: 'rajadurai-krishnamoorthy',
     name: 'Rajadurai Krishnamoorthy',
+    photo: '/speakers/rajadurai-krishnamoorthy.webp',
   },
   {
     slug: 'thamaraikkanni-panneerselvam',
     name: 'Thamaraikkanni Panneerselvam',
+    photo: '/speakers/thamaraikkanni-panneerselvam.webp',
   },
   {
     slug: 'sathish-kumar',
     name: 'Sathish Kumar',
+    photo: '/speakers/sathish-kumar.webp',
     bio:
       'A passionate software engineer, open-source contributor, and expert in R&D, backend systems, and data engineering. Sathish brings a wealth of knowledge in C, Java, Python, and building scalable solutions.',
   },
   {
     slug: 'priyanka-shinghala',
     name: 'Priyanka Shinghala',
+    photo: '/speakers/priyanka-shinghala.webp',
     designation: 'Java Principal Consultant',
     company: 'Staunchsys',
   },
@@ -111,6 +115,7 @@ export const speakers = [
   {
     slug: 'akshay-vadsara',
     name: 'Akshay Vadsara',
+    photo: '/Volunteer/Akshay.webp',
   },
   {
     slug: 'bharat-ranpariya',
@@ -143,6 +148,7 @@ export const speakers = [
   {
     slug: 'jeemy-patel',
     name: 'Jeemy Patel',
+    photo: '/speakers/jeemy-patel.webp',
     designation: 'Full Stack Java Team Lead',
     company: '7Span',
     bio:
@@ -152,6 +158,7 @@ export const speakers = [
   {
     slug: 'vaibhav-savaliya',
     name: 'Vaibhav Savaliya',
+    photo: '/speakers/vaibhav-savaliya.webp',
     designation: 'Lead Software Engineer',
     company: '7Span',
     bio:
@@ -161,6 +168,7 @@ export const speakers = [
   {
     slug: 'ketan-bhavsar',
     name: 'Ketan Bhavsar',
+    photo: '/Volunteer/cdj-2026/ketan-bhavsar.webp',
     designation: 'Technical Architect',
     bio:
       'Ketan Bhavsar is a Technical Architect with 15+ years of experience across finance, healthcare, trading, and sports tech. Expert in Java, Spring Boot, and microservices, he is now exploring applied AI and prompt engineering to bring intelligence into enterprise systems.',
@@ -178,6 +186,7 @@ export const speakers = [
   {
     slug: 'falgun-bhalsod',
     name: 'Falgun Bhalsod',
+    photo: '/speakers/falgun-bhalsod.webp',
     designation: 'DevOps Engineer',
     company: 'Yellow Panther',
     bio:
@@ -187,6 +196,7 @@ export const speakers = [
   {
     slug: 'tanvir-dhanani',
     name: 'Tanvir Dhanani',
+    photo: '/Volunteer/cdj-2026/tanvir-dhanani.webp',
     designation: 'Senior Backend Developer',
     company: 'IBM India Pvt. Ltd.',
     bio:
@@ -196,6 +206,7 @@ export const speakers = [
   {
     slug: 'divyeshkumar-prajapati',
     name: 'Divyeshkumar Prajapati',
+    photo: '/Volunteer/cdj-2026/divyesh-prajapati.webp',
     designation: 'Assistant Consultant',
     company: 'TCS',
     bio:
@@ -205,6 +216,7 @@ export const speakers = [
   {
     slug: 'aniket-datt',
     name: 'Aniket Datt',
+    photo: '/speakers/aniket-datt.webp',
     designation: 'Senior Software Engineer',
     company: 'Thomson Reuters',
     bio:
@@ -214,12 +226,14 @@ export const speakers = [
   {
     slug: 'ashish-vaghela',
     name: 'Ashish Vaghela',
+    photo: '/Volunteer/cdj-2026/ashish-vaghela.webp',
     designation: 'Software Crafter',
     company: 'Nelkinda Software Craft',
   },
   {
     slug: 'ronald-dehuysser',
     name: 'Ronald Dehuysser',
+    photo: '/speakers/ronald-dehuysser.webp',
     designation: 'Founder',
     company: 'JobRunr BV',
     socials: { linkedin: 'https://www.linkedin.com/in/ronalddehuysser' },
@@ -227,6 +241,7 @@ export const speakers = [
   {
     slug: 'vinayak-joglekar',
     name: 'Vinayak Joglekar',
+    photo: '/speakers/vinayak-joglekar.webp',
     bio:
       '40 years of IT experience and a serial entrepreneur. He specializes in harnessing agentic AI to transform product delivery, scale operations, and drive innovation.',
     socials: { linkedin: 'https://www.linkedin.com/in/vinayak-joglekar-b95329/' },
