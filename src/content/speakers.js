@@ -134,6 +134,7 @@ export const speakers = [
   {
     slug: 'nidhi-arora',
     name: 'Dr. Nidhi Arora',
+    photo: '/speakers/nidhi-arora.webp',
     designation: 'Co-Founder & Director of AI',
     company: 'Advit',
     socials: { linkedin: 'https://www.linkedin.com/in/nidhi-arora-phd/' },
@@ -141,6 +142,7 @@ export const speakers = [
   {
     slug: 'bhagyesh-radiya',
     name: 'Bhagyesh Radiya',
+    photo: '/speakers/bhagyesh-radiya.webp',
     designation: 'Team Lead',
     company: '7Span',
     socials: { linkedin: 'https://www.linkedin.com/in/bhagyeshradiya' },
@@ -177,6 +179,7 @@ export const speakers = [
   {
     slug: 'milind-mehta',
     name: 'Milind Mehta',
+    photo: '/speakers/milind-mehta.webp',
     designation: 'Senior Solution Architect',
     company: 'Hexaware Technologies Ltd.',
     bio:
