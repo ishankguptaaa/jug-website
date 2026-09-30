@@ -4,9 +4,10 @@ import StatusBadge from '../components/ui/StatusBadge'
 import Countdown from '../components/ui/Countdown'
 import { HERO_IMG_PRIORITY } from '../components/ui/heroImg'
 import { BANNER_SIZES, bannerSrcSet } from '../lib/images'
-import { getSpeakerBySlug } from '../content'
+import { getConferenceSpeakerCount, getSpeakerBySlug } from '../content'
 
-const Event = ({ conference, status, speakerCount, registrationUrl }) => {
+const Event = ({ conference, status, registrationUrl }) => {
+    const speakerCount = getConferenceSpeakerCount(conference);
     const { heroLogo, featuredSpeaker, stats = {}, highlights = [] } = conference;
     const speaker = getSpeakerBySlug(featuredSpeaker?.speaker);
     const hasArt = Boolean(heroLogo || speaker || conference.banner);
@@ -68,10 +69,10 @@ const Event = ({ conference, status, speakerCount, registrationUrl }) => {
                                     {stats.attendees} Participant
                                 </div>
                                 ) : null}
-                                {speakerCount > 0 || stats.speakers ? (
+                                {speakerCount ? (
                                 <div className="px-[18px] py-2  rounded-full  sm:px-2 sm:py-[4px] bg-[#FFFCEF] border  border-[#E8C52A]
                                   font-medium text-[12px]  tracking-[1%] sm:text-[10px] ">
-                                    {speakerCount || stats.speakers} Industry Speaker
+                                    {speakerCount} Industry Speaker
                                 </div>
                                 ) : null}
                                 <StatusBadge status={status} />

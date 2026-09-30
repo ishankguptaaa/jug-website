@@ -173,6 +173,13 @@ export const getEventsForConference = (conferenceSlug) =>
 
 // ---------- conferences ----------
 
+/** All conferences, oldest first (About page timeline). */
+export const getConferencesOldestFirst = () => [...conferences].sort(byStartAsc);
+
+/** Announced speaker count, else the expected figure (`stats.speakers`) before the lineup is out. */
+export const getConferenceSpeakerCount = (conference) =>
+  getSpeakersForConference(conference.slug).length || conference.stats?.speakers;
+
 export const getUpcomingConferences = (now = new Date()) =>
   conferences.filter((c) => getStatus(c, now) !== 'completed').sort(byStartAsc);
 
@@ -299,11 +306,13 @@ export const getVenueHistory = (venueSlug) => ({
 
 /** Venue partners, most recent (or next) host first; venues that haven't hosted yet keep file order, last. */
 export const getVenuesByLatest = () => {
-  const latest = (v) => {
-    const { events: e, conferences: c } = getVenueHistory(v.slug);
-    return Math.max(-Infinity, ...[...e, ...c].map(startMs));
-  };
-  return [...venues].sort((a, b) => latest(b) - latest(a));
+  const latest = new Map(
+    venues.map((v) => {
+      const { events: e, conferences: c } = getVenueHistory(v.slug);
+      return [v.slug, Math.max(-1, ...[...e, ...c].map(startMs))];
+    }),
+  );
+  return [...venues].sort((a, b) => latest.get(b.slug) - latest.get(a.slug));
 };
 
 // ---------- galleries ----------

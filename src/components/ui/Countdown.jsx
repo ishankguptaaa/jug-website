@@ -1,6 +1,8 @@
 import { getStartDateTime } from '../../content';
 import { useNow } from '../../lib/useNow';
 
+const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
+
 const UNITS = [
   ['Days', 86400],
   ['Hours', 3600],
@@ -20,7 +22,7 @@ export default function Countdown({ entity, className = '' }) {
   });
 
   return (
-    <div role="timer" aria-label={`Starts in ${parts[0][1]} days`} className={`flex gap-3 sm:gap-2 ${className}`}>
+    <div role="timer" aria-label={`Starts in ${plural(parts[0][1], 'day')}, ${plural(parts[1][1], 'hour')}`} className={`flex gap-3 sm:gap-2 ${className}`}>
       {parts.map(([label, value]) => (
         <div
           key={label}

@@ -1,6 +1,7 @@
 import {
   formatDateRange,
   getSessionsForConference,
+  getConferenceSpeakerCount,
   getSpeakersForConference,
   getSponsorsForConference,
   getWorkshopsForConference,
@@ -15,9 +16,11 @@ const SUBHEADING = 'font-raleway font-bold text-[24px] leading-[30px] sm:text-[1
 
 /** Homepage block for the live / upcoming conference. */
 export default function ConferenceHighlights({ conference: c, status }) {
-  const speakerCount = getSpeakersForConference(c.slug).length;
   const stats = [
-    { value: speakerCount || c.stats?.speakers, label: speakerCount ? 'Speakers' : 'Expected speakers' },
+    {
+      value: getConferenceSpeakerCount(c),
+      label: getSpeakersForConference(c.slug).length ? 'Speakers' : 'Expected speakers',
+    },
     { value: getSessionsForConference(c.slug).filter((s) => isSpeakerSession(s) && s.type !== 'workshop').length, label: 'Sessions' },
     { value: getWorkshopsForConference(c.slug).length, label: 'Workshops' },
     { value: c.tracks?.length, label: 'Tracks' },

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { conferences, formatDateRange, getAllEvents, getOpenCfpUrl, getStatus, site } from '../content';
+import { formatDateRange, getConferencesOldestFirst, getAllEvents, getOpenCfpUrl, getStatus, site } from '../content';
 import Seo from '../components/Seo';
 import PageHero from '../components/ui/PageHero';
 import Container from '../components/ui/Container';
@@ -49,8 +49,7 @@ export default function AboutPage() {
   // Keep the page out of search while any event record is still a sample.
   const noindex = events.some((e) => e.isSample);
   const openCfpUrl = getOpenCfpUrl(now);
-  // Journey timeline: every conference, oldest first.
-  const timeline = [...conferences].sort((a, b) => a.startDate.localeCompare(b.startDate));
+  const timeline = getConferencesOldestFirst();
 
   const participate = [
     {

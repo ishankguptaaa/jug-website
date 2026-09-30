@@ -17,6 +17,7 @@ import {
   formatDate,
   getAnnouncementsForConference,
   getConferenceBySlug,
+  getConferenceSpeakerCount,
   getGalleriesForConference,
   getPartnersForConference,
   getPastConferences,
@@ -88,6 +89,7 @@ export default function ConferenceDetailPage() {
   // Before the lineup is out, show "coming soon" blocks and the last edition's photos.
   const isUpcoming = status === 'upcoming';
   const lineupPending = isUpcoming && speakers.length === 0;
+  const expectedSpeakers = getConferenceSpeakerCount(conference);
   const schedulePending = isUpcoming && sessions.length === 0;
   const lastEditionGalleries =
     isUpcoming && !galleries.length
@@ -152,7 +154,7 @@ export default function ConferenceDetailPage() {
       />
       <ToastContainer position="bottom-center" autoClose={2000} hideProgressBar closeOnClick />
       <EventSubNav label={`${conference.name} sections`} items={subNavItems} />
-      <Event conference={conference} status={status} speakerCount={speakers.length} registrationUrl={registrationUrl} />
+      <Event conference={conference} status={status} registrationUrl={registrationUrl} />
       {isLive ? (
         <>
           <HappeningNow conference={conference} now={now} mapUrl={venues[0]?.mapUrl} />
@@ -174,7 +176,7 @@ export default function ConferenceDetailPage() {
             <EmptyState
               headingAs="h3"
               title="Speakers revealed soon"
-              message={`${conference.stats?.speakers ? `${conference.stats.speakers} industry speakers` : 'Industry speakers'} are taking the stage. The lineup will be announced soon.`}
+              message={`${expectedSpeakers ? `${expectedSpeakers} industry speakers` : 'Industry speakers'} are taking the stage. The lineup will be announced soon.`}
               action={registrationUrl ? <Button href={registrationUrl}>Book Your Slots</Button> : null}
             />
           </Section>
