@@ -10,6 +10,7 @@ import CompactCard from '../ui/CompactCard';
 import StatusBadge from '../ui/StatusBadge';
 import { CARD_SURFACE } from '../ui/cardSurface';
 import { CARD_BANNER_SIZES, bannerSrcSet } from '../../lib/images';
+import EventPlace from './EventPlace';
 import SpeakerAvatars from './SpeakerAvatars';
 
 function Banner({ event }) {
@@ -78,10 +79,14 @@ export default function EventCard({ event, now, headingAs: Heading = 'h3' }) {
             <time dateTime={event.date}>{formatDate(event.date)}</time>
           </MetaLine>
           {time ? <MetaLine label="Time">{time}</MetaLine> : null}
-          {place ? <MetaLine label="Where">{place}</MetaLine> : null}
+          {place || event.externalUrl ? (
+            <MetaLine label="Where">
+              <EventPlace event={event} />
+            </MetaLine>
+          ) : null}
         </div>
         {event.description ? (
-          <p className="mt-4 font-raleway text-[16px] leading-[26px] sm:text-[14px] sm:leading-[22px] line-clamp-3">
+          <p className="mt-4 font-raleway text-[16px] leading-[26px] sm:text-[14px] sm:leading-[22px] line-clamp-3 whitespace-pre-line">
             {event.description}
           </p>
         ) : null}

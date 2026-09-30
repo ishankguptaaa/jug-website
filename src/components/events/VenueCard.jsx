@@ -9,7 +9,6 @@ import { linkClass } from '../ui/linkClass';
  *
  * @param {object} [place]      from getEventPlace(): { name, address, city, mapUrl, online }
  * @param {object} [venue]      venue partner record (venues.js): logo, website, name…
- * @param {string} [onlineUrl]  page to join/see an online event (e.g. Luma)
  * @param {string|false} [thanks] thanks line; defaults to one naming the venue partner, `false` hides it
  * @param {string} [headingAs]  tag for the place name (default 'h3')
  * @param {string} [bg]         Card background class (default white)
@@ -19,7 +18,6 @@ import { linkClass } from '../ui/linkClass';
 export default function VenueCard({
   place,
   venue,
-  onlineUrl,
   thanks,
   headingAs: Heading = 'h3',
   bg = 'bg-white',
@@ -76,7 +74,7 @@ export default function VenueCard({
             {thanksLine}
           </p>
         ) : null}
-        {venue?.website || mapUrl || (online && onlineUrl) ? (
+        {venue?.website || mapUrl ? (
           <ul className="flex flex-wrap gap-x-6 gap-y-2 pt-4 text-[16px] sm:text-[14px]">
             {venue?.website ? (
               <li>
@@ -89,13 +87,6 @@ export default function VenueCard({
               <li>
                 <ExternalLink href={mapUrl} className={linkClass}>
                   Open in Maps<span className="sr-only">: {name}</span>
-                </ExternalLink>
-              </li>
-            ) : null}
-            {online && onlineUrl ? (
-              <li>
-                <ExternalLink href={onlineUrl} className={linkClass}>
-                  Event page
                 </ExternalLink>
               </li>
             ) : null}

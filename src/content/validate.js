@@ -124,7 +124,8 @@ export function validateContent(content, { assetExists } = {}) {
     status('events', e);
     ref('events', e, 'venue', 'venues', e.venue);
     const placeCount = [e.venue !== undefined, e.location !== undefined, e.online === true].filter(Boolean).length;
-    if (placeCount !== 1) {
+    // Events synced from Luma may have no place when the feed hides the address.
+    if (placeCount !== 1 && !(placeCount === 0 && e.source === 'luma')) {
       err(
         where('events', e),
         'must set exactly one of "venue" (venue partner slug), "location" ({ name, address?, city }) or "online: true"',
@@ -207,7 +208,11 @@ export function validateContent(content, { assetExists } = {}) {
   const confBySlug = new Map((conferences ?? []).map((c) => [c.slug, c]));
   const eventBySlug = new Map((events ?? []).map((e) => [e.slug, e]));
   for (const s of sessions ?? []) {
-    required('sessions', s, ['title', 'type', 'startTime', 'endTime']);
+    // Event sessions may omit times; conference sessions need them (and both or neither).
+    required('sessions', s, ['title', 'type', ...(s.conference !== undefined ? ['startTime', 'endTime'] : [])]);
+    if ((s.startTime === undefined) !== (s.endTime === undefined)) {
+      err(where('sessions', s), 'set both "startTime" and "endTime", or neither');
+    }
     if (s.type !== undefined && !SESSION_TYPES.includes(s.type)) {
       err(where('sessions', s), `unknown type "${s.type}" (use ${SESSION_TYPES.join(', ')})`);
     }
