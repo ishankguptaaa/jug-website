@@ -76,7 +76,7 @@ export const venues = [
   {
     slug: 'intech',
     name: 'INTECH',
-    address: 'INTECH, Tower 1 Ground Floor, Infocity IT, 1-A, Infocity, Gandhinagar, Gujarat 382007, India',
+    address: 'INTECH Creative Services Pvt. Ltd., 6th Floor, IT Tower – 1, Infocity, Gandhinagar – 382009, Gujarat, India',
     city: 'Gandhinagar',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=23.1934387,72.6377256',
   },
@@ -98,7 +98,7 @@ export const venues = [
   {
     slug: 'ibm-isl-gift-city',
     name: 'IBM ISL, GIFT City',
-    address: 'IBM ISL, GIFT City, Floor 18-20, Prestige Fintech, Gujarat International Finance Tec-City, Gujarat 382050, India',
+    address: 'IBM ISL, GIFT City, Floor 18-20, Prestige Fintech, Gujarat International Finance Tec-City, Gandhinagar, Gujarat 382050, India',
     city: 'Gandhinagar',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=23.164987,72.6852203',
   },

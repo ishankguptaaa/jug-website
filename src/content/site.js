@@ -13,19 +13,17 @@ export const site = {
   ogImage: '/Img/AboutCommunity.png',
   joinUrl: 'https://linktr.ee/juggujarat',
   volunteerFormUrl: 'https://forms.gle/TQrY7pC7k7heAw87A',
-  lumaCalendarUrl: 'https://luma.com/juggujarat',
-  lumaIcsUrl: 'https://api.lu.ma/ics/get?entity=calendar&id=cal-9GeA8E6xpITOUpi',
+  lumaCalendarUrl: 'https://luma.com/user/juggujarat',
+  lumaIcsUrl: 'https://api.lu.ma/ics/get?entity=calendar&id=cal-Fl3NDi747v81PTV',
   timeZone: 'Asia/Kolkata',
   // Footer shows © this year – current IST year (never earlier than this).
   copyrightStartYear: 2025,
   stats: {
     members: '500',
   },
-  // About page "Our Journey" figures, from the "Our Journey" slide of the
-  // CDJ 2026 sponsorship deck (update them together when the deck changes).
+  // Extra About page "Our Journey" figures, from the "Our Journey" slide of the
+  // CDJ 2026 sponsorship deck (meetup count and years are derived from events.js).
   journey: [
-    { value: '1.5+ years', label: 'Since inception' },
-    { value: '19', label: 'Meetups' },
     { value: '2600+', label: 'Registrations' },
     { value: '1100+', label: 'In-person attendees' },
   ],

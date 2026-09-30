@@ -103,8 +103,10 @@ export const speakers = [
   {
     slug: 'dhaval-gajjar',
     name: 'Dhaval Gajjar',
+    photo: '/Team/Dhaval.webp',
     designation: 'System Architect',
     company: 'Staunchsys',
+    socials: { linkedin: 'https://www.linkedin.com/in/dhavalgajjarin/' },
   },
   {
     slug: 'akshay-vadsara',
@@ -113,8 +115,9 @@ export const speakers = [
   {
     slug: 'bharat-ranpariya',
     name: 'Bharat Ranpariya',
-    designation: 'Technical Engineering Manager',
-    company: 'Dataorb',
+    photo: '/Team/Bharat.webp',
+    designation: 'Engineering Manager',
+    company: 'DataOrb',
     bio:
       'Bharat is an experienced technical leader with a strong background in software development, team leadership, and project delivery. He has successfully led enterprise-scale projects, improved development efficiency through agile practices, and built scalable cloud-based systems.',
     socials: { linkedin: 'https://www.linkedin.com/in/bharat-ranpariya/' },

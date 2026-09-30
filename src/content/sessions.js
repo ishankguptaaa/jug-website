@@ -15,7 +15,7 @@
 //   date            'YYYY-MM-DD' — required for conference sessions (multi-day
 //                   scheduling); optional for event sessions (defaults to the
 //                   event's date via getSessionDate() in selectors.js)
-//   startTime, endTime   'HH:mm' IST, 24h
+//   startTime, endTime   'HH:mm' IST, 24h (optional for meetup talks without a known slot; both or neither)
 //   room?, slidesUrl?, videoUrl?, repoUrl?
 //   isSample?
 
@@ -103,8 +103,7 @@ export const sessions = [
   // ---- Community meetups (imported from Luma) ----
   {
     slug: 'unlock-the-future-powering-machine-learning-in-java',
-    title:
-      'Unlock the Future: Powering Machine Learning in Java',
+    title: 'Unlock the Future: Powering Machine Learning in Java',
     speakers: ['rajadurai-krishnamoorthy', 'thamaraikkanni-panneerselvam'],
     event: 'unlock-the-future-powering-machine-learning-in-java',
     type: 'talk',
@@ -113,8 +112,7 @@ export const sessions = [
   },
   {
     slug: 'missing-pieces-in-java-persistence-puzzle',
-    title:
-      'Missing Pieces in Java Persistence Puzzle',
+    title: 'Missing Pieces in Java Persistence Puzzle',
     speakers: ['sathish-kumar'],
     event: 'missing-pieces-in-java-persistence-puzzle',
     type: 'talk',
@@ -123,48 +121,35 @@ export const sessions = [
   },
   {
     slug: 'march-meetup-2025-mastering-java-latest-updates',
-    title:
-      'Mastering Java Latest Updates',
+    title: 'Mastering Java Latest Updates',
     speakers: ['priyanka-shinghala'],
     event: 'march-meetup-2025',
     type: 'talk',
-    startTime: '10:00',
-    endTime: '12:00',
   },
   {
     slug: 'march-meetup-2025-dockerizing-java-apps',
-    title:
-      'The Art of Dockerizing Java Apps',
+    title: 'The Art of Dockerizing Java Apps',
     speakers: ['dhaval-gajjar'],
     event: 'march-meetup-2025',
     type: 'talk',
-    startTime: '10:00',
-    endTime: '12:00',
   },
   {
     slug: 'april-meetup-2025-reactive-programming-in-java',
-    title:
-      'Reactive Programming in Java',
+    title: 'Reactive Programming in Java',
     speakers: ['akshay-vadsara'],
     event: 'april-meetup-2025',
     type: 'talk',
-    startTime: '10:00',
-    endTime: '12:00',
   },
   {
     slug: 'april-meetup-2025-rapid-java-fullstack-development',
-    title:
-      'The Secret Sauce of Rapid Java Fullstack Development',
+    title: 'The Secret Sauce of Rapid Java Fullstack Development',
     speakers: ['bharat-ranpariya'],
     event: 'april-meetup-2025',
     type: 'talk',
-    startTime: '10:00',
-    endTime: '12:00',
   },
   {
     slug: 'java-turns-30-erp-microservices',
-    title:
-      'From Legacy to Legendary: Unleashing Business Agility Through ERP Microservices',
+    title: 'From Legacy to Legendary: Unleashing Business Agility Through ERP Microservices',
     speakers: ['niraj-salot'],
     event: 'java-turns-30',
     type: 'talk',
@@ -173,8 +158,7 @@ export const sessions = [
   },
   {
     slug: 'java-meetup-june-2025-openrewrite',
-    title:
-      'Migration Engineering as Code with OpenRewrite',
+    title: 'Migration Engineering as Code with OpenRewrite',
     speakers: ['vikas-rajput'],
     event: 'java-meetup-june-2025',
     type: 'talk',
@@ -183,8 +167,7 @@ export const sessions = [
   },
   {
     slug: 'java-meetup-june-2025-ai-proof-engineer-panel',
-    title:
-      'Panel Discussion: Becoming an AI-Proof Engineer',
+    title: 'Panel Discussion: Becoming an AI-Proof Engineer',
     speakers: ['jigar-shah', 'nidhi-arora', 'bhagyesh-radiya'],
     event: 'java-meetup-june-2025',
     type: 'panel',
@@ -193,8 +176,7 @@ export const sessions = [
   },
   {
     slug: 'july-java-meetup-junior-dev-workshop',
-    title:
-      'Junior Java Dev Special: Deploying Modern Java Apps: Spring Boot, React & AWS in Action',
+    title: 'Junior Java Dev Special: Deploying Modern Java Apps: Spring Boot, React & AWS in Action',
     speakers: ['jeemy-patel', 'vaibhav-savaliya'],
     event: 'july-java-meetup-junior-dev-workshop',
     type: 'workshop',
@@ -203,8 +185,7 @@ export const sessions = [
   },
   {
     slug: 'building-rag-with-spring-ai',
-    title:
-      'Building RAG with Spring AI',
+    title: 'Building RAG with Spring AI',
     speakers: ['ketan-bhavsar'],
     event: 'building-rag-with-spring-ai',
     type: 'talk',
@@ -213,8 +194,7 @@ export const sessions = [
   },
   {
     slug: 'java-for-ai-build-your-own-mcp-server-with-spring-ai',
-    title:
-      'Java for AI: Build Your Own MCP Server with Spring AI',
+    title: 'Java for AI: Build Your Own MCP Server with Spring AI',
     speakers: ['milind-mehta'],
     event: 'java-for-ai-build-your-own-mcp-server-with-spring-ai',
     type: 'talk',
@@ -223,8 +203,7 @@ export const sessions = [
   },
   {
     slug: 'build-and-scale-modern-java-fullstack-app-on-gcp',
-    title:
-      'Build & Scale Modern Java Fullstack App on GCP: From Code to Scalable Cloud Deployment',
+    title: 'Build & Scale Modern Java Fullstack App on GCP: From Code to Scalable Cloud Deployment',
     speakers: ['falgun-bhalsod'],
     event: 'build-and-scale-modern-java-fullstack-app-on-gcp',
     type: 'workshop',
@@ -233,8 +212,7 @@ export const sessions = [
   },
   {
     slug: 'java-25-virtual-threads',
-    title:
-      'Java 25 Virtual Threads',
+    title: 'Java 25 Virtual Threads',
     speakers: ['tanvir-dhanani'],
     event: 'java-25-virtual-threads',
     type: 'talk',
@@ -243,8 +221,7 @@ export const sessions = [
   },
   {
     slug: 'java-25-unveiled-elevating-developer-experience',
-    title:
-      'Java 25 Unveiled: Elevating Developer Experience',
+    title: 'Java 25 Unveiled: Elevating Developer Experience',
     speakers: ['divyeshkumar-prajapati'],
     event: 'java-25-unveiled-elevating-developer-experience',
     type: 'talk',
@@ -253,8 +230,7 @@ export const sessions = [
   },
   {
     slug: 'powering-smart-ai-with-java',
-    title:
-      'Powering Smart AI with Vector Databases & RAG with Java',
+    title: 'Powering Smart AI with Vector Databases & RAG with Java',
     speakers: ['bharat-ranpariya', 'aniket-datt'],
     event: 'powering-smart-ai-with-java',
     type: 'talk',
@@ -263,8 +239,7 @@ export const sessions = [
   },
   {
     slug: 'building-intelligent-agents-with-java',
-    title:
-      'Building Intelligent Agents with Java',
+    title: 'Building Intelligent Agents with Java',
     speakers: ['jigar-shah'],
     event: 'building-intelligent-agents-with-java',
     type: 'talk',
@@ -273,8 +248,7 @@ export const sessions = [
   },
   {
     slug: 'java-21-migration-playbook',
-    title:
-      'The Java 21 Playbook: Expert Insights & Technical Deep-Dive',
+    title: 'The Java 21 Playbook: Expert Insights & Technical Deep-Dive',
     speakers: ['vikas-rajput', 'dhaval-gajjar'],
     event: 'java-21-migration-playbook',
     type: 'talk',
@@ -283,8 +257,7 @@ export const sessions = [
   },
   {
     slug: 'agentic-enterprise-ai-driven-product-engineering',
-    title:
-      'Agentic Enterprise & AI-Driven Product Engineering',
+    title: 'Agentic Enterprise & AI-Driven Product Engineering',
     speakers: ['vinayak-joglekar'],
     event: 'agentic-enterprise-ai-driven-product-engineering',
     type: 'workshop',
@@ -293,22 +266,16 @@ export const sessions = [
   },
   {
     slug: 'java-september-meetup-2026-jugaad-vs-jfr',
-    title:
-      'Jugaad vs. JFR: What Your Java Libraries Are Really Costing You',
+    title: 'Jugaad vs. JFR: What Your Java Libraries Are Really Costing You',
     speakers: ['ashish-vaghela'],
     event: 'java-september-meetup-2026',
     type: 'talk',
-    startTime: '10:30',
-    endTime: '13:00',
   },
   {
     slug: 'java-september-meetup-2026-jobrunr',
-    title:
-      'JobRunr - Easy Distributed Job Scheduling',
+    title: 'JobRunr - Easy Distributed Job Scheduling',
     speakers: ['ronald-dehuysser'],
     event: 'java-september-meetup-2026',
     type: 'talk',
-    startTime: '10:30',
-    endTime: '13:00',
   },
 ];
