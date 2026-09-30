@@ -304,15 +304,23 @@ export const getVenueHistory = (venueSlug) => ({
   conferences: conferences.filter((c) => (c.venues ?? []).includes(venueSlug)).sort(byStartDesc),
 });
 
-/** Venue partners, most recent (or next) host first; venues that haven't hosted yet keep file order, last. */
+/**
+ * Venue partners: conference hosts first, then meetup hosts; each group most
+ * recent (or next) host first. Venues that haven't hosted yet keep file order, last.
+ */
 export const getVenuesByLatest = () => {
-  const latest = new Map(
+  const latest = (list) => Math.max(-1, ...list.map(startMs));
+  const keys = new Map(
     venues.map((v) => {
       const { events: e, conferences: c } = getVenueHistory(v.slug);
-      return [v.slug, Math.max(-1, ...[...e, ...c].map(startMs))];
+      return [v.slug, [latest(c), latest(e)]];
     }),
   );
-  return [...venues].sort((a, b) => latest.get(b.slug) - latest.get(a.slug));
+  return [...venues].sort((a, b) => {
+    const [ca, ea] = keys.get(a.slug);
+    const [cb, eb] = keys.get(b.slug);
+    return cb - ca || eb - ea;
+  });
 };
 
 // ---------- galleries ----------
