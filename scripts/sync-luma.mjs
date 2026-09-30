@@ -121,6 +121,7 @@ function toEvent(vevent) {
     ...(end?.date === start.date && end.time && end.time > start.time && { endTime: end.time }),
     ...toPlace(get('LOCATION')),
     externalUrl: url,
+    registrationUrl: url,
     source: 'luma',
   };
 }

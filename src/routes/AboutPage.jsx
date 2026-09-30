@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { formatDateRange, getConferencesOldestFirst, getAllEvents, getOpenCfpUrl, getStatus, getStartDateTime, site } from '../content';
+import { formatDateRange, getConferencesOldestFirst, getAllEvents, getOpenCfpUrl, getPastEvents, getStatus, getStartDateTime, site } from '../content';
 import Seo from '../components/Seo';
 import PageHero from '../components/ui/PageHero';
 import Container from '../components/ui/Container';
@@ -58,11 +58,13 @@ export default function AboutPage() {
   const noindex = events.some((e) => e.isSample);
   const openCfpUrl = getOpenCfpUrl(now);
   const timeline = getConferencesOldestFirst();
+  // Meetups held so far (upcoming ones don't count yet); newest first, so the oldest is last.
+  const held = getPastEvents(now);
   const journey = [
-    ...(events.length
+    ...(held.length
       ? [
-          { value: yearsSinceLabel(getStartDateTime(events.at(-1)), now), label: 'Since inception' },
-          { value: String(events.length), label: 'Meetups' },
+          { value: yearsSinceLabel(getStartDateTime(held.at(-1)), now), label: 'Since inception' },
+          { value: String(held.length), label: 'Meetups' },
         ]
       : []),
     ...(site.journey ?? []),
