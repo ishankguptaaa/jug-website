@@ -1,7 +1,7 @@
 
 const team = [
-    { id: 1, name: "Bharat Ranpariya", image: "/Team/Bharat.webp", expertise: "Tech Lead at " , profession:"Thompson Reuters" },
-    { id: 2, name: "Vikas Rajput", image: "/Team/Vikas.webp", expertise: "Sr. Java Consultant at " , profession:"TechXplore"},
+    { id: 1, name: "Bharat Ranpariya", image: "/Team/Bharat.webp", expertise: "Engineering Manager at " , profession:"DataOrb" },
+    { id: 2, name: "Vikas Rajput", image: "/Team/Vikas.webp", expertise: "Founder of " , profession:"TechXplore"},
     { id: 3, name: "Dhaval Gajjar", image: "/Team/Dhaval.webp", expertise: "System Architect at " , profession:"Staunchsys" },
     { id: 4, name: "Harshvardhan Parmar", image: "/Team/Harsh.webp", expertise: "LFX'25 Mentee at ", profession:"Microcks" },
     { id: 5, name: "Vinay Rajput", image: "/Team/Vinay.webp", expertise: "Visual Designer at " , profession:"Apexure"},

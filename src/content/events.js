@@ -23,4 +23,14 @@
 //   isSample?        true for placeholder records
 
 export const events = [
+  {
+    slug: 'building-modular-monoliths-using-spring-modulith',
+    name: 'Building Modular Monoliths Using Spring Modulith',
+    description: 'Online meetup hosted by Java User Group Gujarat, Vikas Rajput and Bharat Ranpariya.',
+    date: '2024-09-29',
+    startTime: '10:00',
+    endTime: '11:30',
+    online: true,
+    externalUrl: 'https://luma.com/tw7wx50t',
+  },
 ];

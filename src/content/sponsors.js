@@ -44,6 +44,14 @@ export const sponsors = [
     kind: 'sponsor',
   },
 
+  {
+    slug: 'jetbrains',
+    name: 'JetBrains',
+    logo: '/Sponsors/jetbrains.svg',
+    website: 'https://www.jetbrains.com/idea/',
+    kind: 'sponsor',
+  },
+
   // ---- Individual community supporters ----
   {
     slug: 'rajesh-c',
@@ -96,7 +104,29 @@ export const sponsors = [
     kind: 'jug',
   },
 
+  {
+    slug: 'vjug',
+    name: 'Virtual Java User Group (vJUG)',
+    logo: '/Sponsors/vjug.webp',
+    website: 'https://virtualjug.com/',
+    kind: 'jug',
+  },
+
   // ---- Partner communities ----
+  {
+    slug: 'ahmedabad-aws-cloud-meetup',
+    name: 'Ahmedabad Amazon AWS Cloud Meetup',
+    logo: '/Sponsors/ahmedabad-aws-cloud-meetup.webp',
+    website: 'https://www.meetup.com/ahmedabad-amazon-aws-cloud-meetup/',
+    kind: 'community',
+  },
+  {
+    slug: 'devconf-india',
+    name: 'DevConf India',
+    logo: '/Sponsors/devconf-india.svg',
+    website: 'https://www.devconf.info/in/',
+    kind: 'community',
+  },
   {
     slug: 'docker-ahmedabad',
     name: 'Docker Ahmedabad',

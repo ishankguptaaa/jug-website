@@ -21,6 +21,14 @@ export const site = {
   stats: {
     members: '500',
   },
+  // About page "Our Journey" figures, from the "Our Journey" slide of the
+  // CDJ 2026 sponsorship deck (update them together when the deck changes).
+  journey: [
+    { value: '1.5+ years', label: 'Since inception' },
+    { value: '19', label: 'Meetups' },
+    { value: '2600+', label: 'Registrations' },
+    { value: '1100+', label: 'In-person attendees' },
+  ],
   socials: {
     linkedin: 'https://www.linkedin.com/company/juggujarat/',
     x: 'https://x.com/juggujarat',
@@ -31,24 +39,16 @@ export const site = {
     'Gujarat Java User Group (Gujarat JUG) is a thriving community of Java developers, architects, students, and technology enthusiasts passionate about learning, sharing, and growing together.',
   mission:
     'Our mission is to empower Java professionals, promote best practices, and create a platform where developers can connect, collaborate, and innovate.',
-  // TODO: set to false once the milestones / whatWeDo / nonCommercial / participate copy below is real.
-  aboutCopyIsSample: true,
-
-  // TODO: replace with the real milestones (sample text; no dates until confirmed).
-  milestones: [
-    { title: 'A community is born', body: 'A few Java enthusiasts start meeting to share what they learn.' },
-    { title: 'Meetups take off', body: 'Regular meetups and workshops bring in speakers and members.' },
-    { title: 'Community Day for Java', body: 'Our flagship conference brings the community together for a day of talks.' },
-  ],
-  // TODO: replace with the real descriptions (sample text).
+  // About page copy, from the Gujarat JUG sponsorship decks (2025 and 2026).
   whatWeDo: {
-    meetups: 'Regular sessions where developers share what they are building and learning.',
-    workshops: 'Hands-on sessions where you write code alongside people who use the tools every day.',
-    conferences: 'Community conferences with talks, workshops and time to meet other developers.',
+    meetups:
+      'Community meetups and technical sessions that bring together Java developers, students and industry experts to learn, collaborate and grow.',
+    workshops: 'Hands-on workshops and technical labs designed for deep, practical learning.',
+    conferences:
+      'Community Day for Java, our flagship annual conference: a full-day technical immersive designed to celebrate innovation and collaboration.',
   },
-  // TODO: replace with the real statement (sample text).
-  nonCommercial: 'We are a community-driven, non-commercial group, run by volunteers.',
-  // TODO: replace with the real "get involved" copy (sample text).
+  nonCommercial:
+    'Gujarat JUG is a community-driven, volunteer-run initiative and part of the worldwide Java User Group network, registered with Oracle.',
   participate: {
     attend: 'Come along to a meetup or conference, and follow our Luma calendar so you never miss one.',
     speak: 'Have something to share? Submit a talk while a call for papers is open.',
