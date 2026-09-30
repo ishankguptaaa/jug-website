@@ -57,6 +57,7 @@ export default function SessionItem({
   const time = formatTimeRange(session.startTime, session.endTime);
   const date = showDate ? getSessionDate(session) : undefined;
   const typeLabel = TYPE_LABELS[session.type];
+  const hasMeta = Boolean(date || time || typeLabel);
   const resources = RESOURCES.filter(({ key }) => session[key]);
 
   return (
@@ -64,22 +65,24 @@ export default function SessionItem({
       id={id}
       className={`grid grid-cols-12 gap-6 sm:gap-3 md:gap-3 p-8 sm:p-5 bg-white border border-black rounded-[24px] ${className}`}
     >
-      <div className="col-span-3 sm:col-span-12 md:col-span-12 font-medium text-[16px] leading-[24px] sm:text-[13px] sm:leading-[20px]">
-        {date ? (
-          <p>
-            <time dateTime={date}>{formatDate(date)}</time>
-          </p>
-        ) : null}
-        {time ? <p>{time}</p> : null}
-        {typeLabel ? (
-          <p className="pt-2">
-            <Pill size="compact" tone="bg-[#FFEFC6] border-[#E8C52A]">
-              {typeLabel}
-            </Pill>
-          </p>
-        ) : null}
-      </div>
-      <div className="col-span-9 sm:col-span-12 md:col-span-12 min-w-0">
+      {hasMeta ? (
+        <div className="col-span-3 sm:col-span-12 md:col-span-12 font-medium text-[16px] leading-[24px] sm:text-[13px] sm:leading-[20px]">
+          {date ? (
+            <p>
+              <time dateTime={date}>{formatDate(date)}</time>
+            </p>
+          ) : null}
+          {time ? <p>{time}</p> : null}
+          {typeLabel ? (
+            <p className="pt-2">
+              <Pill size="compact" tone="bg-[#FFEFC6] border-[#E8C52A]">
+                {typeLabel}
+              </Pill>
+            </p>
+          ) : null}
+        </div>
+      ) : null}
+      <div className={`${hasMeta ? 'col-span-9' : 'col-span-12'} sm:col-span-12 md:col-span-12 min-w-0`}>
         <Heading className="font-raleway font-bold text-[24px] leading-[30px] sm:text-[18px] sm:leading-[24px] break-words">
           {titleTo ? (
             <Link to={titleTo} className={`underline underline-offset-4 hover:text-gray-600 ${focusRing}`}>

@@ -12,6 +12,7 @@ import Pill from '../components/ui/Pill';
 import SpeakerChip from '../components/events/SpeakerChip';
 import SessionItem from '../components/events/SessionItem';
 import GalleryPreview from '../components/events/GalleryPreview';
+import EventPlace from '../components/events/EventPlace';
 import VenueCard from '../components/events/VenueCard';
 import {
   formatDate,
@@ -25,21 +26,12 @@ import {
   getSpeakersForEvent,
   getStatus,
   getVenueForEvent,
+  isLumaUrl,
+  lumaKey,
 } from '../content';
 import { useNow } from '../lib/useNow';
 import { breadcrumbJsonLd, eventJsonLd } from '../lib/jsonLd';
 import NotFoundPage from './NotFoundPage';
-
-/** True for lu.ma / luma.com (incl. subdomains) event links. */
-function isLuma(url) {
-  if (!url) return false;
-  try {
-    const host = new URL(url).hostname.toLowerCase();
-    return host === 'lu.ma' || host === 'luma.com' || host.endsWith('.luma.com');
-  } catch {
-    return false;
-  }
-}
 
 export default function EventDetailPage() {
   const { slug } = useParams();
@@ -59,7 +51,13 @@ export default function EventDetailPage() {
   const conference = event.conference ? getConferenceBySlug(event.conference) : undefined;
   const time = formatTimeRange(event.startTime, event.endTime);
   const where = getEventPlaceLabel(event);
-  const hasCtas = canRegister || Boolean(event.externalUrl);
+  // Show each URL once: skip "More details" when it points where "Register now" does.
+  const sameAsRegister =
+    canRegister &&
+    (event.externalUrl === event.registrationUrl ||
+      (lumaKey(event.externalUrl) && lumaKey(event.externalUrl) === lumaKey(event.registrationUrl)));
+  const showExternal = Boolean(event.externalUrl) && !sameAsRegister;
+  const hasCtas = canRegister || showExternal;
   // Same test VenueCard uses to decide whether it renders anything.
   const hasVenue = Boolean(venue?.name || place?.name || place?.online);
 
@@ -75,7 +73,7 @@ export default function EventDetailPage() {
           eventJsonLd(event, {
             path,
             description: event.description,
-            places: [{ ...place, isSample: venue?.isSample }],
+            places: hasVenue ? [{ ...place, isSample: venue?.isSample }] : [],
             speakers,
           }),
           breadcrumbJsonLd('/events', { name: event.name, path }),
@@ -110,10 +108,12 @@ export default function EventDetailPage() {
                 <dd>{time}</dd>
               </>
             ) : null}
-            {where ? (
+            {where || event.externalUrl ? (
               <>
                 <dt className="font-semibold">Where</dt>
-                <dd className="min-w-0 break-words">{where}</dd>
+                <dd className="min-w-0 break-words">
+                  <EventPlace event={event} />
+                </dd>
               </>
             ) : null}
           </dl>
@@ -124,9 +124,9 @@ export default function EventDetailPage() {
                   Register now
                 </Button>
               ) : null}
-              {event.externalUrl ? (
+              {showExternal ? (
                 <Button href={event.externalUrl} shape="card">
-                  {isLuma(event.externalUrl) ? 'More details on Luma' : 'Event page'}
+                  {isLumaUrl(event.externalUrl) ? 'More details on Luma' : 'Event page'}
                 </Button>
               ) : null}
             </div>
@@ -153,7 +153,7 @@ export default function EventDetailPage() {
         <Container size="xl" className="sm:max-w-[345px] pb-[100px] sm:pb-[50px]">
           {event.description ? (
             <DetailSection title="About this" squiggle="meetup">
-              <p className="max-w-[900px] font-raleway text-[20px] leading-[32px] sm:text-[15px] sm:leading-[24px]">
+              <p className="max-w-[900px] font-raleway text-[20px] leading-[32px] sm:text-[15px] sm:leading-[24px] whitespace-pre-line">
                 {event.description}
               </p>
             </DetailSection>
@@ -195,12 +195,7 @@ export default function EventDetailPage() {
 
           {hasVenue ? (
             <DetailSection title={venue ? 'Venue' : 'Where'} squiggle={venue ? 'Partner' : undefined}>
-              <VenueCard
-                place={place}
-                venue={venue}
-                onlineUrl={event.externalUrl}
-                bg="bg-[#EDD7FF]"
-              />
+              <VenueCard place={place} venue={venue} bg="bg-[#EDD7FF]" />
             </DetailSection>
           ) : null}
 

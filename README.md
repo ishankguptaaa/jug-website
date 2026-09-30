@@ -195,12 +195,13 @@ The site is prerendered, so pages reflect the status at build time and update in
 
 ## Luma sync
 
-`npm run build` first runs `scripts/sync-luma.mjs`, which reads the JUG Gujarat Luma calendar (ICS feed, `site.lumaIcsUrl`) and writes every upcoming event that is not already in `src/content/events.js` (matched by its Luma URL) to `src/content/generated/luma-events.json`. These appear on the site next to the native meetups, with a "More details on Luma" link. Native records always win.
+`npm run build` first runs `scripts/sync-luma.mjs`, which reads the JUG Gujarat Luma calendar (the official ICS feed in `site.lumaIcsUrl`, calendar `cal-Fl3NDi747v81PTV`) and writes every event in it, past and future, whose Luma URL is not already a native event's `externalUrl` or `registrationUrl` to `src/content/generated/luma-events.json`. URLs are compared after normalising (`lu.ma` = `luma.com`, no query or trailing slash). Synced events sit next to the native meetups and keep showing after they end, with a "More details on Luma" link. Native records always win.
 
+- Only the title, date, time, description (Luma boilerplate removed) and Luma link are synced. Luma's `LOCATION` is its own event URL for Zoom events and for events with a hidden address, so the place comes only from a Zoom / Google Meet / Teams link (online) or a real street address (name, address, city). Otherwise the event has no place and shows "Venue details on Luma".
 - Future meetups must be created on (or added to) the JUG Gujarat Luma calendar to be picked up. Redeploy to refresh; a Vercel deploy hook on a daily schedule works too.
-- To add speakers, talks or a banner to a meetup, add a native record to `events.js` with the Luma page in `externalUrl`. It then replaces the synced one.
+- To add speakers, talks or a banner to a meetup, add a native record to `events.js` with the Luma page in `externalUrl`. It then replaces the synced one. Sessions of a meetup may leave out `startTime` / `endTime` (give both or neither); conference sessions need them.
 - To test locally, run `LUMA_ICS_FILE=./sample.ics npm run build` with a local `.ics` file, then restore `luma-events.json` with `git checkout src/content/generated`.
-- The sync never fails the build. On a network or parse error it prints a warning and keeps the last committed JSON.
+- The sync never fails the build. On a network or parse error, or if a synced event would fail content validation, it prints a warning and keeps the last committed JSON.
 
 Put the Luma page in `externalUrl` and/or `registrationUrl` for native meetups too.
 

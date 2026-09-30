@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { formatDateRange, getConferencesOldestFirst, getAllEvents, getOpenCfpUrl, getStatus, site } from '../content';
+import { formatDateRange, getConferencesOldestFirst, getAllEvents, getOpenCfpUrl, getStatus, getStartDateTime, site } from '../content';
 import Seo from '../components/Seo';
 import PageHero from '../components/ui/PageHero';
 import Container from '../components/ui/Container';
@@ -20,6 +20,14 @@ const CARD_TITLE = 'font-raleway font-bold text-[24px] leading-[32px] sm:text-[2
 const CARD_TEXT = 'mt-3 font-raleway text-[18px] leading-[28px] sm:text-[14px] sm:leading-[24px]';
 
 const JOURNEY_BGS = ['bg-[#EDD7FF]', 'bg-[#D7FFF1]', 'bg-[#FFEFC6]', 'bg-[#CAF8FC]'];
+
+const YEAR_MS = 365.25 * 24 * 60 * 60 * 1000;
+
+/** "2+ years" style label: years since `since`, rounded down to the nearest 0.5. */
+const yearsSinceLabel = (since, now) => {
+  const years = Math.floor(((now - since) / YEAR_MS) * 2) / 2;
+  return `${years}+ years`;
+};
 
 const WHAT_WE_DO = [
   {
@@ -50,6 +58,15 @@ export default function AboutPage() {
   const noindex = events.some((e) => e.isSample);
   const openCfpUrl = getOpenCfpUrl(now);
   const timeline = getConferencesOldestFirst();
+  const journey = [
+    ...(events.length
+      ? [
+          { value: yearsSinceLabel(getStartDateTime(events.at(-1)), now), label: 'Since inception' },
+          { value: String(events.length), label: 'Meetups' },
+        ]
+      : []),
+    ...(site.journey ?? []),
+  ];
 
   const participate = [
     {
@@ -117,9 +134,9 @@ export default function AboutPage() {
             <SectionHeading id="history-heading" squiggle="Journey" className="sm:text-center">
               Our
             </SectionHeading>
-            {site.journey?.length ? (
+            {journey.length ? (
               <dl className="pt-[48px] sm:pt-[24px] grid grid-cols-4 sm:grid-cols-2 md:grid-cols-2 gap-6 sm:gap-3">
-                {site.journey.map((stat, i) => (
+                {journey.map((stat, i) => (
                   <Card key={stat.label} bg={JOURNEY_BGS[i % JOURNEY_BGS.length]} className="p-8 sm:p-4 flex flex-col-reverse text-center">
                     <dt className="mt-2 font-raleway font-medium text-[18px] leading-[26px] sm:text-[14px] sm:leading-[20px]">
                       {stat.label}

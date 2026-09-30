@@ -9,8 +9,13 @@ const IST_OFFSET_MINUTES = 5 * 60 + 30;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const TIME_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
 
+const istIso = (now) => new Date(now.getTime() + IST_OFFSET_MINUTES * 60 * 1000).toISOString();
+
 /** 'YYYY-MM-DD' calendar date in Asia/Kolkata for an absolute Date. */
-export const dateInIST = (now) => new Date(now.getTime() + IST_OFFSET_MINUTES * 60 * 1000).toISOString().slice(0, 10);
+export const dateInIST = (now) => istIso(now).slice(0, 10);
+
+/** 'HH:mm' wall-clock time in Asia/Kolkata for an absolute Date. */
+export const timeInIST = (now) => istIso(now).slice(11, 16);
 
 /** Calendar year in Asia/Kolkata for an absolute Date. */
 export const getYearInIST = (now) => Number(dateInIST(now).slice(0, 4));
