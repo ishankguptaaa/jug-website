@@ -166,6 +166,13 @@ export function validateContent(content, { assetExists } = {}) {
     if (c.featuredSpeaker && !c.featuredSpeaker.speaker) err(where('conferences', c), '"featuredSpeaker.speaker" is missing');
     art('aboutImage', ['src'], ['width', 'height']);
     (c.goodies ?? []).forEach((g, i) => asset('conferences', c, `goodies[${i}].image`, g.image));
+    const volunteerNames = new Set();
+    (c.volunteers ?? []).forEach((v, i) => {
+      if (!v.name || !v.image) err(where('conferences', c), `volunteers[${i}] needs "name" and "image"`);
+      else if (volunteerNames.has(v.name)) err(where('conferences', c), `duplicate volunteer "${v.name}"`);
+      volunteerNames.add(v.name);
+      asset('conferences', c, `volunteers[${i}].image`, v.image);
+    });
     if (c.cfp !== undefined) {
       if (!c.cfp?.url) err(where('conferences', c), '"cfp" needs a "url"');
       if (c.cfp?.closesOn !== undefined && !isValidDate(c.cfp.closesOn)) {

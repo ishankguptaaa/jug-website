@@ -1,12 +1,11 @@
-import volunteer from '../data/eventVolunteerData';
 import { site } from '../content';
 import ExternalLink from '../components/ui/ExternalLink';
 
-const EventVolunteer = () => {
+const EventVolunteer = ({ volunteers }) => {
 
 
   return (
-    <div className="bg-[#FFFFFF] ">
+    <div className="bg-[#FFFFFF] overflow-x-clip">
     <div className="container mx-auto 2xl:max-w-screen-2xl   ">
       <div className='pt-[128px] pb-[100px] sm:pt-[50px] sm:pb-[50px]'>
         <div className="flex justify-between items-center sm:flex-col">
@@ -26,17 +25,17 @@ const EventVolunteer = () => {
             </ExternalLink>
         </div>
 
-        <div className="grid xl:grid-cols-6 sm:grid-cols-2 md:grid-cols-4 gap-y-11 gap-x-6 sm:gap-x-5 sm:gap-12 pt-[48px] sm:pt-[32px]">
-          {volunteer.map((expert, index) => (
-            <div key={expert.id} className="justify-items-center text-center"  data-aos="fade-right"   data-aos-delay={`${index * 200}`}>
+        <div className="grid xl:grid-cols-6 lg:grid-cols-5 sm:grid-cols-2 md:grid-cols-4 gap-y-11 gap-x-6 sm:gap-x-5 sm:gap-12 pt-[48px] sm:pt-[32px]">
+          {volunteers.map((expert) => (
+            <div key={expert.name} className="justify-items-center text-center" data-aos="fade-right">
                <img src={expert.image} alt="" width="186" height="193" loading="lazy" decoding="async" className="h-auto sm:w-[320px]" />
                 <h3 className="pt-6 font-raleway font-bold text-[18px] leading-[22px] sm:text-[12px] sm:leading-[18px] sm:pt-3">
-                  {expert.linkedinlink ? (
-                    <ExternalLink href={expert.linkedinlink} className="hover:underline underline-offset-4">{expert.name}</ExternalLink>
+                  {expert.linkedin ? (
+                    <ExternalLink href={expert.linkedin} className="hover:underline underline-offset-4">{expert.name}</ExternalLink>
                   ) : expert.name}
                 </h3>
-                <p className="text-black font-raleway font-normal text-[14px] leading-[21px] pt-2 sm:text-[12px] sm:leading-[18px] sm:pt-1">{expert.profession} </p>
-                <p className='text-black font-raleway font-bold text-[12px] leading-[20px] pt-2 sm:pt-1'>{expert.organsitions}</p>
+                <p className="text-black font-raleway font-normal text-[14px] leading-[21px] pt-2 sm:text-[12px] sm:leading-[18px] sm:pt-1">{expert.role}</p>
+                <p className='text-black font-raleway font-bold text-[12px] leading-[20px] pt-2 sm:pt-1'>{expert.company}</p>
 
             </div>
           ))}

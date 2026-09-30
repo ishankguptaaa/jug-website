@@ -42,9 +42,10 @@ export const speakers = [
     slug: 'dhaval-shah',
     name: 'Dhaval Shah',
     photo: '/Experts/Dhaval.webp',
-    designation: 'Principal Software Engineer',
-    company: 'Mastercard',
-    rolePrefix: 'Principal Software Engineer',
+    designation: 'Principal Consulting Architect',
+    bio:
+      'Fintech and payments infrastructure expert with 20+ years architecting high-scale distributed systems, optimizing provisioning for large user bases.',
+    socials: { linkedin: 'https://www.linkedin.com/in/dhavalshah201279/' },
   },
   {
     slug: 'siva-reddy',
@@ -52,13 +53,24 @@ export const speakers = [
     photo: '/Experts/Siva.webp',
     designation: 'Developer Advocate',
     company: 'JetBrains',
+    bio:
+      'Developer Advocate at JetBrains, focusing on empowering the developer community through technical advocacy and engagement.',
+    socials: { linkedin: 'https://www.linkedin.com/in/ksivaprasadreddy/' },
   },
   {
     slug: 'vikas-rajput',
     name: 'Vikas Rajput',
     photo: '/Experts/Vikas.webp',
-    designation: 'Sr. Java Consultant',
+    designation: 'Founder',
     company: 'TechXplore',
+    rolePrefix: 'Founder of',
+    bio:
+      'Founder of Techxplore and a Java Enterprise Architect. He also serves as a Community Manager for JUG Gujarat, empowering developers through knowledge sharing.',
+    socials: {
+      linkedin: 'https://linkedin.com/in/vikasrajputin',
+      x: 'https://x.com/vikasrajputin',
+      website: 'https://vikasrajput.in',
+    },
   },
   {
     slug: 'rohan-kumar',
@@ -66,31 +78,5 @@ export const speakers = [
     photo: '/Experts/Rohan.webp',
     designation: 'Software Developer',
     company: 'Red Hat',
-  },
-
-  // ---- Sample speakers (placeholders — replace with real people) ----
-  {
-    slug: 'sample-speaker-asha',
-    name: 'Asha Sample',
-    designation: 'Sample Backend Engineer',
-    company: 'Example Corp',
-    bio: 'Placeholder speaker used to preview the new event pages. Not a real person.',
-    isSample: true,
-  },
-  {
-    slug: 'sample-speaker-rahul',
-    name: 'Rahul Placeholder',
-    designation: 'Sample Java Architect',
-    company: 'Example Labs',
-    bio: 'Placeholder speaker used to preview the new event pages. Not a real person.',
-    isSample: true,
-  },
-  {
-    slug: 'sample-speaker-meera',
-    name: 'Meera Demo',
-    designation: 'Sample Developer Advocate',
-    company: 'Demo Systems',
-    bio: 'Placeholder speaker used to preview the new event pages. Not a real person.',
-    isSample: true,
   },
 ];

@@ -1,6 +1,7 @@
 import {
   formatDateRange,
   getSessionsForConference,
+  getConferenceSpeakerCount,
   getSpeakersForConference,
   getSponsorsForConference,
   getWorkshopsForConference,
@@ -16,7 +17,10 @@ const SUBHEADING = 'font-raleway font-bold text-[24px] leading-[30px] sm:text-[1
 /** Homepage block for the live / upcoming conference. */
 export default function ConferenceHighlights({ conference: c, status }) {
   const stats = [
-    { value: getSpeakersForConference(c.slug).length, label: 'Speakers' },
+    {
+      value: getConferenceSpeakerCount(c),
+      label: getSpeakersForConference(c.slug).length ? 'Speakers' : 'Expected speakers',
+    },
     { value: getSessionsForConference(c.slug).filter((s) => isSpeakerSession(s) && s.type !== 'workshop').length, label: 'Sessions' },
     { value: getWorkshopsForConference(c.slug).length, label: 'Workshops' },
     { value: c.tracks?.length, label: 'Tracks' },
@@ -57,7 +61,7 @@ export default function ConferenceHighlights({ conference: c, status }) {
       {sponsors.length ? (
         <div className="mt-12 sm:mt-8">
           <h3 className={SUBHEADING}>Sponsors</h3>
-          <PartnerLogos partners={sponsors} className="mt-6 sm:mt-4" />
+          <PartnerLogos partners={sponsors} justify="justify-start" className="mt-6 sm:mt-4" />
         </div>
       ) : null}
 

@@ -1,4 +1,3 @@
-import './App.css';
 import { useRoutes } from 'react-router-dom';
 import { PageChromeContext } from './layouts/pageChrome';
 import { routes } from './router';

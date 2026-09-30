@@ -6,6 +6,16 @@ const supporterStyles = {
   'hemal-trivedi': { img: 'mb-6 sm:mb-3 rounded-2xl sm:border-[1.5px] border-[2px] border-black h-[60%]' },
 };
 
+const TIER_ROW = 'flex flex-wrap justify-center gap-x-8 gap-y-4 sm:gap-x-3 sm:mt-[25px] mt-[24px] mb-11 sm:mb-4';
+
+const SponsorTile = ({ sponsor, className }) => (
+  <ExternalLink href={sponsor.website}>
+    <div className={`flex h-[112px] w-[285px] items-center justify-center rounded-3xl bg-[#FFFFFF] ${className}`}>
+      <img src={sponsor.logo} alt={sponsor.logoAlt ?? sponsor.name} loading="lazy" decoding="async" />
+    </div>
+  </ExternalLink>
+);
+
 const Sponsors = ({ sponsors, venueSponsors }) => {
   const platinumSponsors = sponsors.filter((s) => s.tier === 'platinum');
   const silverSponsors = sponsors.filter((s) => s.tier === 'silver');
@@ -50,20 +60,10 @@ const Sponsors = ({ sponsors, venueSponsors }) => {
             </div>
 
 
-            <div className="flex justify-center items-center sm:mt-[25px] mt-[24px] mb-11 sm:mb-4 ">
-              <div className="grid grid-cols-2 sm:grid-cols-2 sm:gap-y-4 gap-x-8 sm:gap-x-3   rounded-lg md:grid-cols-2 
-                      place-items-center text-center">
-
-                {platinumSponsors.map((sponsor) => (
-                <ExternalLink key={sponsor.slug} href={sponsor.website}>
-                  <div className="flex h-[112px] w-[285px] sm:w-[154px] sm:h-[76px] items-center justify-center rounded-3xl 
-                      bg-[#FFFFFF] text-gray-400 sm:px-4 cursor-pointer">
-                    <img src={sponsor.logo} alt={sponsor.logoAlt ?? sponsor.name} loading="lazy" decoding="async" className='' />
-                  </div>
-                </ExternalLink>
-                ))}
-
-              </div>
+            <div className={TIER_ROW}>
+              {platinumSponsors.map((sponsor) => (
+              <SponsorTile key={sponsor.slug} sponsor={sponsor} className="sm:w-[154px] sm:h-[76px] sm:px-4" />
+              ))}
             </div>
             </>
             ) : null}
@@ -107,24 +107,10 @@ const Sponsors = ({ sponsors, venueSponsors }) => {
             </div>
 
 
-            <div className="flex justify-center items-center sm:mt-[25px] mt-[24px] mb-11 sm:mb-4  ">
-              <div className="grid grid-cols-2 sm:grid-cols-2 gap-x-8 sm:gap-y-4 sm:gap-x-4 rounded-lg md:grid-cols-2 
-      pl-3 sm:pl-0 place-items-center">
-                {goldSponsors.map((sponsor) => (
-                <ExternalLink key={sponsor.slug} href={sponsor.website}>
-                <div className="flex h-[112px] w-[285px] sm:w-[148px] sm:h-[84px] items-center justify-center rounded-3xl 
-        bg-[#FFFFFF] text-gray-400 px-4 sm:px-2">
-                  <img src={sponsor.logo} alt={sponsor.logoAlt ?? sponsor.name} loading="lazy" decoding="async" />
-                </div>
-                </ExternalLink>
-                ))}
-
-                {/* <div className="flex h-[112px] w-[285px] sm:w-[148px] sm:h-[84px] items-center justify-center rounded-3xl 
-        bg-[#FFFFFF] text-gray-400 sm:col-span-2">
-                  Coming Soon
-                </div> */}
-
-              </div>
+            <div className={TIER_ROW}>
+              {goldSponsors.map((sponsor) => (
+              <SponsorTile key={sponsor.slug} sponsor={sponsor} className="px-4 sm:w-[148px] sm:h-[84px] sm:px-2" />
+              ))}
             </div>
 
 
@@ -137,13 +123,9 @@ const Sponsors = ({ sponsors, venueSponsors }) => {
                 Silver
               </h3>
             </div>
-            <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 sm:gap-x-3 sm:mt-[25px] mt-[24px] mb-11 sm:mb-4">
+            <div className={TIER_ROW}>
               {silverSponsors.map((sponsor) => (
-              <ExternalLink key={sponsor.slug} href={sponsor.website}>
-                <div className="flex h-[112px] w-[285px] sm:w-[148px] sm:h-[84px] items-center justify-center rounded-3xl bg-[#FFFFFF] px-4 sm:px-2">
-                  <img src={sponsor.logo} alt={sponsor.logoAlt ?? sponsor.name} loading="lazy" decoding="async" />
-                </div>
-              </ExternalLink>
+              <SponsorTile key={sponsor.slug} sponsor={sponsor} className="px-4 sm:w-[148px] sm:h-[84px] sm:px-2" />
               ))}
             </div>
             </>

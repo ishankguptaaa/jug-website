@@ -59,10 +59,6 @@ export const allSample = (list) => list.every((record) => record.isSample);
 
 // ---------- speakers ----------
 
-/** All speakers in file order. Pass `{ includeSamples: false }` to hide samples. */
-export const getAllSpeakers = ({ includeSamples = true } = {}) =>
-  includeSamples ? speakers : speakers.filter((s) => !s.isSample);
-
 /**
  * Text shown before the company on speaker cards, e.g. "JVM Engineer at".
  * Uses `rolePrefix` when present, else `${designation} at`.
@@ -177,8 +173,12 @@ export const getEventsForConference = (conferenceSlug) =>
 
 // ---------- conferences ----------
 
-/** All conferences, newest first. */
-export const getAllConferences = () => [...conferences].sort(byStartDesc);
+/** All conferences, oldest first (About page timeline). */
+export const getConferencesOldestFirst = () => [...conferences].sort(byStartAsc);
+
+/** Announced speaker count, else the expected figure (`stats.speakers`) before the lineup is out. */
+export const getConferenceSpeakerCount = (conference) =>
+  getSpeakersForConference(conference.slug).length || conference.stats?.speakers;
 
 export const getUpcomingConferences = (now = new Date()) =>
   conferences.filter((c) => getStatus(c, now) !== 'completed').sort(byStartAsc);
@@ -298,11 +298,22 @@ export const getEventPlaceLabel = (eventOrSlug) => {
     : place.name;
 };
 
-/** Everything hosted at a venue, each list newest first: { events, conferences } */
+/** Everything held (or scheduled) at a venue, each list newest first: { events, conferences } */
 export const getVenueHistory = (venueSlug) => ({
   events: events.filter((e) => e.venue === venueSlug).sort(byStartDesc),
   conferences: conferences.filter((c) => (c.venues ?? []).includes(venueSlug)).sort(byStartDesc),
 });
+
+/** Venue partners, most recent (or next) host first; venues that haven't hosted yet keep file order, last. */
+export const getVenuesByLatest = () => {
+  const latest = new Map(
+    venues.map((v) => {
+      const { events: e, conferences: c } = getVenueHistory(v.slug);
+      return [v.slug, Math.max(-1, ...[...e, ...c].map(startMs))];
+    }),
+  );
+  return [...venues].sort((a, b) => latest.get(b.slug) - latest.get(a.slug));
+};
 
 // ---------- galleries ----------
 

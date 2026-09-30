@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { allSample, formatDateRange, getVenueHistory, site, sponsors, venues } from '../content';
+import { allSample, formatDateRange, getStatus, getVenueHistory, getVenuesByLatest, site, sponsors, venues } from '../content';
+import { useNow } from '../lib/useNow';
 import Seo from '../components/Seo';
 import PageHero from '../components/ui/PageHero';
 import Container from '../components/ui/Container';
@@ -10,12 +11,13 @@ import { linkClass } from '../components/ui/linkClass';
 import VenueCard from '../components/events/VenueCard';
 import SpeakerPhoto from '../components/speakers/SpeakerPhoto';
 import PartnerLogos from '../components/partners/PartnerLogos';
+import StatusBadge from '../components/ui/StatusBadge';
 
 const DESCRIPTION = `The venue partners, sponsors and communities that make ${site.name} meetups and conferences happen.`;
 
 const GROUP_HEADING = 'font-raleway font-bold text-[16px] leading-[22px] tracking-[0.5em] uppercase';
 
-function HostedList({ title, base, items }) {
+function HostedList({ title, base, items, now }) {
   if (!items.length) return null;
   return (
     <div>
@@ -23,11 +25,13 @@ function HostedList({ title, base, items }) {
       <ul className="mt-2 space-y-2 text-[16px] leading-[24px] sm:text-[14px] sm:leading-[22px]">
         {items.map((item) => {
           const start = item.date ?? item.startDate;
+          const status = getStatus(item, now);
           return (
             <li key={item.slug}>
               <Link to={`${base}/${item.slug}`} className={`${linkClass} ${focusRing}`}>
                 {item.name}
               </Link>
+              {status === 'completed' ? null : <StatusBadge status={status} size="xs" className="ml-2 align-middle" />}
               <time dateTime={start} className="block">{formatDateRange(start, item.endDate)}</time>
             </li>
           );
@@ -37,14 +41,14 @@ function HostedList({ title, base, items }) {
   );
 }
 
-function VenueHistory({ venueSlug }) {
+function VenueHistory({ venueSlug, now }) {
   const { events, conferences } = getVenueHistory(venueSlug);
   if (!events.length && !conferences.length) return null;
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-1 gap-6 pt-6">
-      <HostedList title="Events hosted" base="/events" items={events} />
-      <HostedList title="Conferences hosted" base="/conferences" items={conferences} />
+      <HostedList title="Events" base="/events" items={events} now={now} />
+      <HostedList title="Conferences" base="/conferences" items={conferences} now={now} />
     </div>
   );
 }
@@ -68,6 +72,7 @@ function LogoGroup({ title, partners }) {
 }
 
 export default function PartnersPage() {
+  const now = useNow();
   const ofKind = (kind) => sponsors.filter((s) => s.kind === kind);
   const companies = ofKind('sponsor');
   const supporters = ofKind('supporter');
@@ -90,10 +95,10 @@ export default function PartnersPage() {
               Venue
             </SectionHeading>
             <ul className="pt-[48px] sm:pt-[24px] space-y-8 sm:space-y-6 text-left">
-              {venues.map((venue) => (
+              {getVenuesByLatest().map((venue) => (
                 <li key={venue.slug}>
                   <VenueCard venue={venue} bg="bg-[#EDD7FF]">
-                    <VenueHistory venueSlug={venue.slug} />
+                    <VenueHistory venueSlug={venue.slug} now={now} />
                   </VenueCard>
                 </li>
               ))}

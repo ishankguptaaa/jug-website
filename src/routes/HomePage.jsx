@@ -32,6 +32,7 @@ import { JoinJug } from '../pages/JoinJug';
 const conferenceFeature = (c, status) => ({
   name: c.name,
   status,
+  record: c,
   dateIso: c.startDate,
   dateLabel: formatDateRange(c.startDate, c.endDate),
   place: c.location,
@@ -44,6 +45,7 @@ const conferenceFeature = (c, status) => ({
 const eventFeature = (e, status) => ({
   name: e.name,
   status,
+  record: e,
   dateIso: e.date,
   dateLabel: formatDate(e.date),
   place: getEventPlaceLabel(e),

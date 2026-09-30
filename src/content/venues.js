@@ -27,16 +27,14 @@ export const venues = [
     mapEmbedUrl:
       'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3672.9108100708986!2d72.485711!3d22.990307!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e9aee6c89a621%3A0x872df2d55fbb0008!2sLJ%20University!5e0!3m2!1sen!2sin!4v1744317485542!5m2!1sen!2sin',
   },
-
-  // ---- Sample venue (placeholder — replace with a real venue partner) ----
   {
-    slug: 'sample-tech-hub',
-    name: 'Sample Tech Hub',
-    logo: '/Img/JugIcon.svg',
-    website: 'https://example.com/',
-    description: 'Placeholder venue used to preview the new event pages. Not a real venue.',
-    address: '123 Sample Road, Example Nagar',
+    slug: 'gujarat-university-cpc',
+    name: 'Gujarat University Centre For Professional Courses',
+    logo: '/Img/gujarat-university-cpc.webp',
+    website: 'https://gucpc.in/',
+    address: 'Centre for Professional Courses Department, Gujarat University, Ahmedabad',
     city: 'Ahmedabad',
-    isSample: true,
+    mapUrl: 'https://www.google.com/maps?q=23.038873494473062,72.54532835582141',
+    mapEmbedUrl: 'https://www.google.com/maps?q=23.038873494473062,72.54532835582141&output=embed',
   },
 ];

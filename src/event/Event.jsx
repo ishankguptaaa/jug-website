@@ -1,19 +1,23 @@
 import BookYourSlotButton from '../components/BookYourSlotButton'
 import Button from '../components/ui/Button'
 import StatusBadge from '../components/ui/StatusBadge'
+import Countdown from '../components/ui/Countdown'
 import { HERO_IMG_PRIORITY } from '../components/ui/heroImg'
 import { BANNER_SIZES, bannerSrcSet } from '../lib/images'
-import { getSpeakerBySlug } from '../content'
+import { getConferenceSpeakerCount, getSpeakerBySlug } from '../content'
 
-const Event = ({ conference, status, speakerCount, registrationUrl }) => {
+const Event = ({ conference, status, registrationUrl }) => {
+    const speakerCount = getConferenceSpeakerCount(conference);
     const { heroLogo, featuredSpeaker, stats = {}, highlights = [] } = conference;
     const speaker = getSpeakerBySlug(featuredSpeaker?.speaker);
+    const hasArt = Boolean(heroLogo || speaker || conference.banner);
 
     return (
         <div className="bg-[#F6EAFF] relative">
             <div className=" container mx-auto xl:max-w-screen-xl  sm:mx-auto overflow-hidden ">
                 <div className="pt-[72px] sm:pt-6 ">
                     <div className="grid grid-cols-12 sm:grid-cols-1 gap-10">
+                    {hasArt ? (
                     <div className=" col-span-6  sm:order-2">
                             {heroLogo ? (
                             <div className='pl-[120px]    sm:pl-0 sm:hidden  '>
@@ -50,21 +54,22 @@ const Event = ({ conference, status, speakerCount, registrationUrl }) => {
                             />
                             ) : null}
                             </div>
-                        <div className="  col-span-6  sm:grid-cols-1  sm:order-1" data-aos="fade-left">
+                    ) : null}
+                        <div className={hasArt ? '  col-span-6  sm:grid-cols-1  sm:order-1' : 'col-span-12 flex flex-col items-center text-center pb-[72px] sm:pb-8'} data-aos="fade-left">
                         {heroLogo ? (
                         <div className=' sm:pl-0 sm:mt-0 flex items-center justify-center ' >
                                                     <img src={heroLogo.srcSm} alt='' width={heroLogo.widthSm} height={heroLogo.heightSm} className="xl:hidden" />
                                                     </div>
                         ) : null}
 
-                            <div className="flex gap-4  sm:items-center sm:justify-center sm:mt-4">
+                            <div className={`flex gap-4  sm:items-center sm:justify-center sm:mt-4 ${hasArt ? '' : 'justify-center'}`}>
                                 {stats.attendees ? (
                                 <div className="px-4 py-[6px] sm:px-2 sm:py-[4px] rounded-full   bg-[#D7FFF1] border border-[#1AD090]
                                  font-medium text-[12px] sm:text-[10px]  tracking-[1%]">
                                     {stats.attendees} Participant
                                 </div>
                                 ) : null}
-                                {speakerCount > 0 ? (
+                                {speakerCount ? (
                                 <div className="px-[18px] py-2  rounded-full  sm:px-2 sm:py-[4px] bg-[#FFFCEF] border  border-[#E8C52A]
                                   font-medium text-[12px]  tracking-[1%] sm:text-[10px] ">
                                     {speakerCount} Industry Speaker
@@ -82,6 +87,9 @@ const Event = ({ conference, status, speakerCount, registrationUrl }) => {
                              ) : conference.name}
                             </h1>
                             </div>
+                            {status === 'upcoming' ? (
+                            <Countdown entity={conference} className={`mt-6 sm:justify-center ${hasArt ? '' : 'justify-center'}`} />
+                            ) : null}
 
                               {highlights.length > 0 ? (
                               <div>
@@ -97,7 +105,7 @@ const Event = ({ conference, status, speakerCount, registrationUrl }) => {
                                 </ul>
                                 </div>
                               ) : null}
-                                <div className="flex justify-start sm:justify-center">
+                                <div className={`flex sm:justify-center ${hasArt ? 'justify-start' : 'justify-center'}`}>
                                 <div className='mt-[41px] sm:items-center sm:justify-center sm:flex sm:flex-col  '>
                                 <BookYourSlotButton href={registrationUrl}/>
                                 {conference.externalUrl ? (
