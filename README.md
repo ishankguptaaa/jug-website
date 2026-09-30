@@ -193,9 +193,16 @@ Set `statusOverride: 'upcoming' | 'live' | 'completed'` only to force a status (
 
 The site is prerendered, so pages reflect the status at build time and update in the browser once loaded. Redeploy after an event ends if you want the static HTML to be current.
 
-## Luma and registration links
+## Luma sync
 
-`src/content/events.js` is the source of truth for meetups. Luma is not synced automatically. Put the Luma page in `externalUrl` and/or `registrationUrl` when you add the meetup, and update the event record if details change on Luma.
+`npm run build` first runs `scripts/sync-luma.mjs`, which reads the JUG Gujarat Luma calendar (ICS feed, `site.lumaIcsUrl`) and writes every upcoming event that is not already in `src/content/events.js` (matched by its Luma URL) to `src/content/generated/luma-events.json`. These appear on the site next to the native meetups, with a "More details on Luma" link. Native records always win.
+
+- Future meetups must be created on (or added to) the JUG Gujarat Luma calendar to be picked up. Redeploy to refresh; a Vercel deploy hook on a daily schedule works too.
+- To add speakers, talks or a banner to a meetup, add a native record to `events.js` with the Luma page in `externalUrl`. It then replaces the synced one.
+- To test locally, run `LUMA_ICS_FILE=./sample.ics npm run build` with a local `.ics` file, then restore `luma-events.json` with `git checkout src/content/generated`.
+- The sync never fails the build. On a network or parse error it prints a warning and keeps the last committed JSON.
+
+Put the Luma page in `externalUrl` and/or `registrationUrl` for native meetups too.
 
 ## Images
 
